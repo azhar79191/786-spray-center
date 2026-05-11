@@ -14,7 +14,7 @@ const SEO = ({
 }) => {
   const siteName = import.meta.env.VITE_APP_NAME || 'Bismillah Spray Center'
   const fullTitle = title ? `${title} | ${siteName}` : siteName
-  const defaultDescription = 'Premium agricultural pesticides, fertilizers, and seeds in Minchinabad, Pakistan. Trusted by farmers since 2010.'
+  const defaultDescription = 'Premium agricultural pesticides, fertilizers, and seeds in Minchinabad, Pakistan. Trusted by farmers since 2018.'
 
   return (
     <Helmet>

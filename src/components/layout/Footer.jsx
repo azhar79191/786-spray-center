@@ -58,7 +58,7 @@ const Footer = () => {
             </div>
             <p className="text-primary-300 text-sm leading-relaxed mb-6">
               Your trusted partner for premium agricultural solutions in Minchinabad, Pakistan. 
-              Serving farmers with genuine products since 2010.
+              Serving farmers with genuine products since 2018.
             </p>
             <div className="flex items-center gap-3">
               <a 

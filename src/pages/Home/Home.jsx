@@ -47,7 +47,7 @@ const Home = () => {
     <>
       <SEO 
         title="Home" 
-        description="Premium agricultural pesticides, fertilizers, and seeds in Minchinabad, Pakistan. Trusted by farmers since 2010."
+        description="Premium agricultural pesticides, fertilizers, and seeds in Minchinabad, Pakistan. Trusted by farmers since 2018."
       />
 
       {/* Hero Section */}
@@ -68,7 +68,7 @@ const Home = () => {
               <div className="flex items-center gap-2 mb-6">
                 <div className="h-px w-12 bg-gold" />
                 <span className="text-gold text-sm font-semibold tracking-widest uppercase">
-                  Since 2010
+                  Since 2018
                 </span>
               </div>
 
@@ -207,7 +207,7 @@ const Home = () => {
               </h2>
 
               <p className="text-primary-400 leading-relaxed mb-6">
-                Bismillah Spray Center has been serving the agricultural community of Minchinabad and surrounding areas since 2010. We provide genuine, high-quality agricultural inputs including pesticides, fertilizers, seeds, and spraying equipment from world-renowned brands.
+                Bismillah Spray Center has been serving the agricultural community of Minchinabad and surrounding areas since 2018. We provide genuine, high-quality agricultural inputs including pesticides, fertilizers, seeds, and spraying equipment from world-renowned brands.
               </p>
 
               <p className="text-primary-400 leading-relaxed mb-8">

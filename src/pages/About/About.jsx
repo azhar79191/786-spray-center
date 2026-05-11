@@ -27,7 +27,7 @@ const About = () => {
     <>
       <SEO 
         title="About Us" 
-        description="Learn about Bismillah Spray Center - your trusted agricultural partner in Minchinabad since 2010."
+        description="Learn about Bismillah Spray Center - your trusted agricultural partner in Minchinabad since 2018."
       />
 
       {/* Hero */}
@@ -50,7 +50,7 @@ const About = () => {
               About <span className="text-gold">Bismillah</span> Spray Center
             </h1>
             <p className="text-primary-400 text-lg max-w-2xl mx-auto">
-              Serving the agricultural community of Minchinabad with genuine products and expert guidance since 2010.
+              Serving the agricultural community of Minchinabad with genuine products and expert guidance since 2018.
             </p>
           </motion.div>
         </div>
