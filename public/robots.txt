@@ -1,0 +1,11 @@
+# Robots.txt for Bismillah Spray Center
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://bismillahspraycenter.vercel.app/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
