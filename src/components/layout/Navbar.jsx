@@ -4,9 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { 
   FaBars, 
   FaTimes, 
-  FaPhone, 
   FaLeaf,
-  FaChevronDown 
 } from 'react-icons/fa'
 
 /**
