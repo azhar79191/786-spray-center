@@ -53,22 +53,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Top bar */}
-      <div className={`hidden lg:block transition-all duration-300 ${isScrolled ? 'h-0 overflow-hidden' : 'h-10'}`} role="banner">
-        <div className="bg-gold text-primary">
-          <div className="container-premium flex items-center justify-between h-10 text-sm">
-            <address className="flex items-center gap-4 not-italic">
-              <a href="tel:+92-41-1234567" className="flex items-center gap-1 hover:text-white transition-colors">
-                <FaPhone className="w-3 h-3" aria-hidden="true" />
-                <span>+92-41-1234567</span>
-              </a>
-            </address>
-            <div className="flex items-center gap-4">
-              <span>Free delivery on orders above PKR 5,000</span>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Main navbar */}
       <motion.nav
