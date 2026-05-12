@@ -23,7 +23,7 @@
             background: white;
             border-radius: 20px;
             padding: 40px;
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
@@ -40,17 +40,22 @@
         .canvas-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 30px;
             margin-top: 30px;
+            justify-content: center;
         }
         .icon-preview {
             text-align: center;
+            background: #F8FAFC;
+            padding: 20px;
+            border-radius: 12px;
         }
         canvas {
             border: 2px solid #E2E8F0;
             border-radius: 12px;
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         button {
             background: #10B981;
@@ -69,10 +74,25 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
         }
+        .generate-btn {
+            background: #0F172A;
+            padding: 16px 32px;
+            font-size: 16px;
+        }
+        .generate-btn:hover {
+            background: #1E293B;
+        }
         .size-label {
+            color: #0F172A;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .file-name {
             color: #64748B;
             font-size: 12px;
-            font-weight: 600;
+            font-family: monospace;
+            margin-bottom: 10px;
         }
         .instructions {
             background: #F1F5F9;
@@ -100,34 +120,86 @@
             border-radius: 8px;
             margin-top: 20px;
             display: none;
+            text-align: center;
+            font-weight: 600;
+        }
+        .style-options {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .style-option {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .style-option:hover {
+            border-color: #10B981;
+            background: #F0FDF4;
+        }
+        .style-option.active {
+            border-color: #10B981;
+            background: #D1FAE5;
+        }
+        .style-option h4 {
+            color: #0F172A;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .style-option p {
+            color: #64748B;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🌾 PWA Icon Generator</h1>
-        <p class="subtitle">Generate PWA icons for Bismillah Spray Center</p>
+        <h1>🌾 Professional PWA Icon Generator</h1>
+        <p class="subtitle">Create beautiful, professional icons for Bismillah Spray Center</p>
         
         <div class="instructions">
-            <h3>📋 Instructions:</h3>
-            <ol>
-                <li>Click the "Generate Icons" button below</li>
-                <li>Right-click each icon and select "Save image as..."</li>
-                <li>Save them in the <code>public/</code> folder with the exact names shown</li>
-                <li>Rebuild your app with <code>npm run build</code></li>
-            </ol>
+            <h3>📋 Choose Your Style:</h3>
         </div>
 
-        <button onclick="generateIcons()">✨ Generate Icons</button>
+        <div class="style-options">
+            <div class="style-option active" onclick="selectStyle('modern')" id="style-modern">
+                <h4>🎨 Modern Gradient</h4>
+                <p>Vibrant green gradient with leaf</p>
+            </div>
+            <div class="style-option" onclick="selectStyle('minimal')" id="style-minimal">
+                <h4>✨ Minimal Clean</h4>
+                <p>Simple, clean design</p>
+            </div>
+            <div class="style-option" onclick="selectStyle('professional')" id="style-professional">
+                <h4>💼 Professional</h4>
+                <p>Business-focused design</p>
+            </div>
+        </div>
+
+        <button class="generate-btn" onclick="generateIcons()">✨ Generate Professional Icons</button>
 
         <div class="canvas-container" id="canvasContainer"></div>
         
         <div class="success" id="successMessage">
-            ✅ Icons generated successfully! Right-click each icon to save.
+            ✅ Icons generated successfully! Click the download buttons or right-click to save.
         </div>
     </div>
 
     <script>
+        let selectedStyle = 'modern';
+
+        function selectStyle(style) {
+            selectedStyle = style;
+            document.querySelectorAll('.style-option').forEach(el => el.classList.remove('active'));
+            document.getElementById('style-' + style).classList.add('active');
+        }
+
         function generateIcons() {
             const sizes = [
                 { size: 192, name: 'favicon-192x192.png' },
@@ -143,76 +215,179 @@
                 canvas.height = size;
                 const ctx = canvas.getContext('2d');
 
-                // Background
-                ctx.fillStyle = '#0F172A';
-                ctx.fillRect(0, 0, size, size);
-
-                // Green circle
-                const centerX = size / 2;
-                const centerY = size / 2;
-                const radius = size * 0.35;
-                
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-                ctx.fillStyle = '#10B981';
-                ctx.fill();
-
-                // Leaf icon (simplified)
-                ctx.save();
-                ctx.translate(centerX, centerY);
-                
-                // Leaf shape
-                ctx.beginPath();
-                ctx.fillStyle = 'white';
-                const leafSize = size * 0.25;
-                ctx.moveTo(-leafSize * 0.3, leafSize * 0.2);
-                ctx.quadraticCurveTo(-leafSize * 0.5, -leafSize * 0.3, 0, -leafSize * 0.5);
-                ctx.quadraticCurveTo(leafSize * 0.5, -leafSize * 0.3, leafSize * 0.3, leafSize * 0.2);
-                ctx.quadraticCurveTo(0, leafSize * 0.1, -leafSize * 0.3, leafSize * 0.2);
-                ctx.fill();
-
-                // Leaf vein
-                ctx.beginPath();
-                ctx.strokeStyle = '#10B981';
-                ctx.lineWidth = size * 0.01;
-                ctx.moveTo(0, -leafSize * 0.5);
-                ctx.lineTo(0, leafSize * 0.2);
-                ctx.stroke();
-
-                ctx.restore();
-
-                // Text
-                const fontSize = size * 0.12;
-                ctx.fillStyle = 'white';
-                ctx.font = `bold ${fontSize}px Arial`;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText('BSC', centerX, size * 0.8);
+                if (selectedStyle === 'modern') {
+                    drawModernIcon(ctx, size);
+                } else if (selectedStyle === 'minimal') {
+                    drawMinimalIcon(ctx, size);
+                } else {
+                    drawProfessionalIcon(ctx, size);
+                }
 
                 // Create preview
                 const preview = document.createElement('div');
                 preview.className = 'icon-preview';
                 
-                const label = document.createElement('div');
-                label.className = 'size-label';
-                label.textContent = `${size}x${size}`;
+                const sizeLabel = document.createElement('div');
+                sizeLabel.className = 'size-label';
+                sizeLabel.textContent = `${size}×${size}px`;
+                
+                const fileName = document.createElement('div');
+                fileName.className = 'file-name';
+                fileName.textContent = name;
                 
                 const downloadBtn = document.createElement('button');
-                downloadBtn.textContent = `💾 Save ${name}`;
+                downloadBtn.textContent = `💾 Download`;
                 downloadBtn.onclick = () => {
                     const link = document.createElement('a');
                     link.download = name;
-                    link.href = canvas.toDataURL();
+                    link.href = canvas.toDataURL('image/png');
                     link.click();
                 };
 
+                preview.appendChild(sizeLabel);
+                preview.appendChild(fileName);
                 preview.appendChild(canvas);
-                preview.appendChild(label);
                 preview.appendChild(downloadBtn);
                 container.appendChild(preview);
             });
 
             document.getElementById('successMessage').style.display = 'block';
+        }
+
+        function drawModernIcon(ctx, size) {
+            // Gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#10B981');
+            gradient.addColorStop(1, '#059669');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+
+            // White circle background
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const circleRadius = size * 0.35;
+            
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+
+            // Green leaf/spray icon
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            
+            // Stylized spray/leaf
+            const leafSize = size * 0.2;
+            ctx.fillStyle = '#10B981';
+            
+            // Main leaf shape
+            ctx.beginPath();
+            ctx.moveTo(0, -leafSize);
+            ctx.quadraticCurveTo(leafSize * 0.8, -leafSize * 0.5, leafSize * 0.6, leafSize * 0.3);
+            ctx.quadraticCurveTo(leafSize * 0.3, leafSize * 0.5, 0, leafSize * 0.8);
+            ctx.quadraticCurveTo(-leafSize * 0.3, leafSize * 0.5, -leafSize * 0.6, leafSize * 0.3);
+            ctx.quadraticCurveTo(-leafSize * 0.8, -leafSize * 0.5, 0, -leafSize);
+            ctx.fill();
+
+            // Stem
+            ctx.fillStyle = '#059669';
+            ctx.fillRect(-size * 0.01, -leafSize, size * 0.02, leafSize * 1.8);
+
+            ctx.restore();
+
+            // Text
+            const fontSize = size * 0.1;
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${fontSize}px Arial, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('BSC', centerX, size * 0.85);
+        }
+
+        function drawMinimalIcon(ctx, size) {
+            // Clean white background
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, size, size);
+
+            const centerX = size / 2;
+            const centerY = size / 2;
+
+            // Green circle
+            const circleRadius = size * 0.38;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
+            ctx.fillStyle = '#10B981';
+            ctx.fill();
+
+            // White simple leaf icon
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.fillStyle = 'white';
+            
+            const leafSize = size * 0.18;
+            ctx.beginPath();
+            ctx.ellipse(0, 0, leafSize * 0.5, leafSize, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.moveTo(0, -leafSize);
+            ctx.lineTo(0, leafSize);
+            ctx.strokeStyle = '#10B981';
+            ctx.lineWidth = size * 0.015;
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        function drawProfessionalIcon(ctx, size) {
+            // Dark professional background
+            ctx.fillStyle = '#0F172A';
+            ctx.fillRect(0, 0, size, size);
+
+            const centerX = size / 2;
+            const centerY = size / 2;
+
+            // Gold accent circle
+            const circleRadius = size * 0.36;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
+            ctx.fillStyle = '#D4AF37';
+            ctx.fill();
+
+            // Dark inner circle
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, circleRadius * 0.85, 0, Math.PI * 2);
+            ctx.fillStyle = '#0F172A';
+            ctx.fill();
+
+            // Professional leaf emblem
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.fillStyle = '#D4AF37';
+            
+            const leafSize = size * 0.15;
+            
+            // Symmetrical leaves
+            for (let i = 0; i < 3; i++) {
+                ctx.save();
+                ctx.rotate((i * Math.PI * 2) / 3);
+                ctx.beginPath();
+                ctx.moveTo(0, -leafSize * 0.3);
+                ctx.quadraticCurveTo(leafSize * 0.4, -leafSize * 0.5, leafSize * 0.3, leafSize * 0.2);
+                ctx.quadraticCurveTo(0, leafSize * 0.1, 0, -leafSize * 0.3);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            ctx.restore();
+
+            // Professional text
+            const fontSize = size * 0.08;
+            ctx.fillStyle = '#D4AF37';
+            ctx.font = `bold ${fontSize}px Arial, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('BISMILLAH', centerX, size * 0.88);
         }
     </script>
 </body>
