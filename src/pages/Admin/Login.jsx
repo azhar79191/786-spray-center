@@ -137,14 +137,6 @@ const Login = () => {
                 {loading ? 'Logging in...' : 'Login'}
               </button>
             </form>
-
-            {/* Demo Credentials */}
-            <div className="mt-6 p-4 bg-gold/10 rounded-lg border border-gold/20">
-              <p className="text-xs text-primary-300 text-center">
-                <strong>Default Credentials:</strong><br />
-                Username: admin | Password: admin123
-              </p>
-            </div>
           </div>
         </motion.div>
       </section>
