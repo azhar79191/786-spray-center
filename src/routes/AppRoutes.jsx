@@ -5,15 +5,15 @@ import AdminLayout from '../layouts/AdminLayout'
 import LoadingScreen from '../components/loaders/LoadingScreen'
 
 // Lazy load public pages
-const Home = lazy(() => import('../pages/Home/Home'))
-const About = lazy(() => import('../pages/About/About'))
-const Products = lazy(() => import('../pages/Products/Products'))
+const Home = lazy(() => import('../pages/Home'))
+const About = lazy(() => import('../pages/About'))
+const Products = lazy(() => import('../pages/Products'))
 const ProductDetails = lazy(() => import('../pages/ProductDetails/ProductDetails'))
-const Services = lazy(() => import('../pages/Services/Services'))
-const Brands = lazy(() => import('../pages/Brands/Brands'))
-const FAQ = lazy(() => import('../pages/FAQ/FAQ'))
-const Gallery = lazy(() => import('../pages/Gallery/Gallery'))
-const Contact = lazy(() => import('../pages/Contact/Contact'))
+const Services = lazy(() => import('../pages/Services'))
+const Brands = lazy(() => import('../pages/Brands'))
+const FAQ = lazy(() => import('../pages/FAQ'))
+const Gallery = lazy(() => import('../pages/Gallery'))
+const Contact = lazy(() => import('../pages/Contact'))
 const NotFound = lazy(() => import('../pages/NotFound/NotFound'))
 
 // Lazy load admin pages
@@ -25,6 +25,8 @@ const GalleryList = lazy(() => import('../pages/Admin/Gallery/GalleryList'))
 const GalleryForm = lazy(() => import('../pages/Admin/Gallery/GalleryForm'))
 const BrandList = lazy(() => import('../pages/Admin/Brands/BrandList'))
 const BrandForm = lazy(() => import('../pages/Admin/Brands/BrandForm'))
+const ServiceRequestList = lazy(() => import('../pages/Admin/ServiceRequests/ServiceRequestList'))
+const TestimonialList = lazy(() => import('../pages/Admin/Testimonials/TestimonialList'))
 const FAQList = lazy(() => import('../pages/Admin/FAQs/FAQList'))
 const FAQForm = lazy(() => import('../pages/Admin/FAQs/FAQForm'))
 const ContactList = lazy(() => import('../pages/Admin/Contacts/ContactList'))
@@ -64,6 +66,8 @@ const AppRoutes = () => {
         <Route path="brands" element={<Suspense fallback={<LoadingScreen />}><BrandList /></Suspense>} />
         <Route path="brands/new" element={<Suspense fallback={<LoadingScreen />}><BrandForm /></Suspense>} />
         <Route path="brands/edit/:id" element={<Suspense fallback={<LoadingScreen />}><BrandForm /></Suspense>} />
+        <Route path="service-requests" element={<Suspense fallback={<LoadingScreen />}><ServiceRequestList /></Suspense>} />
+        <Route path="testimonials" element={<Suspense fallback={<LoadingScreen />}><TestimonialList /></Suspense>} />
         <Route path="faqs" element={<Suspense fallback={<LoadingScreen />}><FAQList /></Suspense>} />
         <Route path="faqs/new" element={<Suspense fallback={<LoadingScreen />}><FAQForm /></Suspense>} />
         <Route path="faqs/:id/edit" element={<Suspense fallback={<LoadingScreen />}><FAQForm /></Suspense>} />

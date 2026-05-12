@@ -1,0 +1,35 @@
+PWA Setup Instructions for Bismillah Spray Center
+==================================================
+
+Current Status:
+✅ manifest.json exists and is linked in index.html
+✅ Icons configured in manifest
+❌ Service Worker not installed
+❌ vite-plugin-pwa not installed
+
+To Complete PWA Setup:
+======================
+
+1. Install vite-plugin-pwa:
+   npm install -D vite-plugin-pwa
+
+2. Update vite.config.js with the configuration below
+
+3. Generate favicon PNG files:
+   - Open http://localhost:5173/generate-favicons.html
+   - Download all PNG files
+   - Save to public/ folder
+
+4. Test PWA:
+   - Build: npm run build
+   - Preview: npm run preview
+   - Open in browser and check for "Install App" prompt
+
+Benefits After Setup:
+=====================
+✅ Offline functionality
+✅ Install as app on mobile/desktop
+✅ Faster load times with caching
+✅ Background sync
+✅ Push notifications (optional)
+✅ Better performance scores

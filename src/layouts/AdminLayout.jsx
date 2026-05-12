@@ -11,7 +11,9 @@ import {
   FaTimes,
   FaLeaf,
   FaImage,
-  FaGlobe
+  FaGlobe,
+  FaCog,
+  FaStar
 } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { useState } from 'react'
@@ -74,6 +76,16 @@ const AdminLayout = () => {
       name: 'Brands',
       path: '/admin/brands',
       icon: FaGlobe
+    },
+    {
+      name: 'Service Requests',
+      path: '/admin/service-requests',
+      icon: FaCog
+    },
+    {
+      name: 'Testimonials',
+      path: '/admin/testimonials',
+      icon: FaStar
     },
     {
       name: 'FAQs',
