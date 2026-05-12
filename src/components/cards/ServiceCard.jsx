@@ -1,16 +1,50 @@
 import { motion } from 'framer-motion'
-import * as GiIcons from 'react-icons/gi'
-import * as FaIcons from 'react-icons/fa'
+import {
+  GiFarmer,
+  GiMicroscope,
+  GiSpray,
+  GiTestTubes,
+  GiWrench,
+  GiDeliveryDrone,
+  GiInsectJaws,
+  GiPlantRoots,
+  GiMushroomGills,
+  GiFertilizerBag,
+  GiSeedling,
+  GiCheckMark,
+  GiTeacher,
+  GiPriceTag,
+  GiTruck,
+} from 'react-icons/gi'
 
 /**
  * Service card component
  * Displays services with icon, title, and description
  */
+
+// Icon mapping - only import what we need
+const iconMap = {
+  GiFarmer,
+  GiMicroscope,
+  GiSpray,
+  GiTestTubes,
+  GiWrench,
+  GiDeliveryDrone,
+  GiInsectJaws,
+  GiPlantRoots,
+  GiMushroomGills,
+  GiFertilizerBag,
+  GiSeedling,
+  GiCheckMark,
+  GiTeacher,
+  GiPriceTag,
+  GiTruck,
+}
+
 const ServiceCard = ({ service, index = 0 }) => {
-  // Dynamic icon loading
+  // Dynamic icon loading from specific imports only
   const getIcon = (iconName) => {
-    const icons = { ...GiIcons, ...FaIcons }
-    const IconComponent = icons[iconName] || GiIcons.GiSpray
+    const IconComponent = iconMap[iconName] || GiSpray
     return <IconComponent className="w-8 h-8" />
   }
 

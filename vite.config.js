@@ -53,6 +53,8 @@ export default defineConfig({
         ]
       },
       workbox: {
+        // Increase file size limit for large chunks
+        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10 MB
         // Cache strategies
         runtimeCaching: [
           {
@@ -117,7 +119,10 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
         // Skip waiting
         skipWaiting: true,
-        clientsClaim: true
+        clientsClaim: true,
+        // Exclude large files from precaching
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        globIgnores: ['**/node_modules/**/*']
       },
       devOptions: {
         enabled: true // Enable in dev to test PWA
@@ -136,12 +141,36 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
+    chunkSizeWarningLimit: 1000, // Increase warning limit to 1000 KB
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          animations: ['framer-motion'],
-          ui: ['react-icons', 'react-toastify'],
+        manualChunks: (id) => {
+          // Split node_modules into separate chunks
+          if (id.includes('node_modules')) {
+            if (id.includes('react-dom')) {
+              return 'vendor-react-dom';
+            }
+            if (id.includes('react-router')) {
+              return 'vendor-router';
+            }
+            if (id.includes('react')) {
+              return 'vendor-react';
+            }
+            if (id.includes('framer-motion')) {
+              return 'vendor-framer';
+            }
+            if (id.includes('react-icons')) {
+              return 'vendor-icons';
+            }
+            if (id.includes('axios')) {
+              return 'vendor-axios';
+            }
+            if (id.includes('react-toastify')) {
+              return 'vendor-toast';
+            }
+            // Other node_modules
+            return 'vendor-misc';
+          }
         },
       },
     },
