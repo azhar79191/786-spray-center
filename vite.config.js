@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'favicon-*.png', 'apple-touch-icon.png', 'og-image.png'],
+      includeAssets: ['favicon.svg', 'favicon-*.png', 'apple-touch-icon.png', 'og-image.png', 'robots.txt', 'sitemap.xml'],
       manifest: {
         name: 'Bismillah Spray Center',
         short_name: 'Bismillah Spray',
@@ -122,7 +122,9 @@ export default defineConfig({
         clientsClaim: true,
         // Exclude large files from precaching
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
-        globIgnores: ['**/node_modules/**/*']
+        globIgnores: ['**/node_modules/**/*'],
+        // Don't precache sitemap and robots
+        navigateFallback: null
       },
       devOptions: {
         enabled: true // Enable in dev to test PWA

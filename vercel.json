@@ -30,7 +30,7 @@
       "headers": [
         {
           "key": "Content-Type",
-          "value": "application/xml"
+          "value": "application/xml; charset=utf-8"
         },
         {
           "key": "Cache-Control",
@@ -43,7 +43,7 @@
       "headers": [
         {
           "key": "Content-Type",
-          "value": "text/plain"
+          "value": "text/plain; charset=utf-8"
         },
         {
           "key": "Cache-Control",
@@ -54,7 +54,7 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!sitemap\\.xml|robots\\.txt|favicon|.*\\.(png|jpg|jpeg|svg|ico|webp|css|js|json)).*)",
       "destination": "/index.html"
     }
   ]
