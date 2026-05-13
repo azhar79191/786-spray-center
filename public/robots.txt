@@ -1,11 +1,43 @@
 # Robots.txt for Bismillah Spray Center
+# Optimized for maximum search engine visibility
+
 User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
+Disallow: /admin/*
+Disallow: /*.json$
 
-# Sitemap
+# Allow important resources
+Allow: /assets/
+Allow: /public/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.svg$
+Allow: /*.webp$
+
+# Sitemap location
 Sitemap: https://bismillahspraycenter.vercel.app/sitemap.xml
 
-# Crawl-delay
+# Crawl-delay for polite crawling
 Crawl-delay: 1
+
+# Specific bot instructions
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
