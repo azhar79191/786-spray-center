@@ -1,4 +1,12 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/((?!sitemap\\.xml|robots\\.txt|favicon|.*\\.(png|jpg|jpeg|svg|ico|webp|css|js|json)).*)",
+      "destination": "/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -50,12 +58,6 @@
           "value": "public, max-age=86400, must-revalidate"
         }
       ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/((?!sitemap\\.xml|robots\\.txt|favicon|.*\\.(png|jpg|jpeg|svg|ico|webp|css|js|json)).*)",
-      "destination": "/index.html"
     }
   ]
 }
