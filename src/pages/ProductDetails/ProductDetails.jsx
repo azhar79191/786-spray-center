@@ -109,6 +109,15 @@ const ProductDetails = () => {
         title={product.name}
         description={product.description}
         keywords={`${product.name}, ${product.brand}, ${product.category}, agricultural products, Minchinabad`}
+        product={{
+          name: product.name,
+          description: product.description,
+          brand: product.brand,
+          image: product.image,
+          price: selectedSize?.price || product.minPrice || 0,
+          currency: 'PKR',
+          availability: product.stockStatus === 'In Stock' ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
+        }}
       />
 
       {/* Breadcrumb */}

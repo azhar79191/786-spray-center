@@ -25,7 +25,8 @@ const Home = () => {
     <>
       <SEO 
         title="Home" 
-        description="Premium agricultural pesticides, fertilizers, seeds, and spray machines in Faisalabad, Pakistan. Trusted by farmers since 2010."
+        description="Bismillah Spray Center - Leading agricultural supplier in Minchinabad, Bahawalnagar. Premium pesticides, fertilizers, seeds from Syngenta, Bayer, FMC, Engro. Expert crop consultation, competitive prices, and quality products for Pakistani farmers."
+        keywords="agricultural products Minchinabad, pesticides Bahawalnagar, fertilizers Punjab, Syngenta dealer Pakistan, Bayer pesticides, FMC products, Engro fertilizers, farming supplies, crop protection, agricultural store near me"
       />
 
       {/* Above the fold - Load immediately */}

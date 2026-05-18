@@ -13,8 +13,9 @@ const Services = () => {
   return (
     <>
       <SEO 
-        title="Our Services" 
-        description="Professional agricultural services including crop consultation, pest identification, spraying services, soil testing, and equipment repair."
+        title="Agricultural Services" 
+        description="Professional agricultural services in Minchinabad: crop consultation, pest identification, disease diagnosis, spraying services, soil testing, fertilizer recommendations, and equipment repair. Expert advice from experienced agronomists."
+        keywords="crop consultation Pakistan, pest identification service, agricultural consultant Minchinabad, soil testing Bahawalnagar, spraying services, fertilizer recommendation, farm equipment repair, agronomist consultation"
       />
 
       <ServicesHero />

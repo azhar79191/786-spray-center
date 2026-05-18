@@ -31,8 +31,9 @@ const FAQ = () => {
   return (
     <>
       <SEO 
-        title="FAQ" 
-        description="Find answers to frequently asked questions about our products, services, orders, and shipping."
+        title="Frequently Asked Questions" 
+        description="Find answers to common questions about agricultural products, pesticides, fertilizers, seeds, ordering, delivery, product usage, safety guidelines, and farming advice. Expert answers from experienced agronomists."
+        keywords="agricultural FAQ Pakistan, pesticide usage questions, fertilizer application guide, seed selection help, farming questions answered, crop protection FAQ, agricultural advice Pakistan"
       />
 
       <FAQHero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />

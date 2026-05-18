@@ -38,8 +38,9 @@ const Gallery = () => {
   return (
     <>
       <SEO 
-        title="Gallery" 
-        description="Explore our product gallery, shop images, and agricultural field work photos."
+        title="Photo Gallery" 
+        description="Browse our photo gallery featuring agricultural products, store images, farming equipment, crop protection solutions, and field work. See our premium pesticides, fertilizers, seeds, and spray machines in action."
+        keywords="agricultural products photos, pesticide images, fertilizer pictures, farming equipment gallery, agricultural store photos Minchinabad, crop protection images, spray machines photos"
       />
 
       <GalleryHero />

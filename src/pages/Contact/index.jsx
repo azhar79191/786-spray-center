@@ -22,7 +22,8 @@ const Contact = () => {
     <>
       <SEO 
         title="Contact Us" 
-        description="Get in touch with Bismillah Spray Center for agricultural products, consultation, and support."
+        description="Contact Bismillah Spray Center in Minchinabad, Bahawalnagar. Visit our store at Behramka Hithar, call +92 300 1331616, or email zafarwattoo@gmail.com. Open Monday-Saturday 8AM-8PM. Get expert agricultural advice and quality products."
+        keywords="contact Bismillah Spray Center, agricultural store Minchinabad address, pesticide shop Bahawalnagar phone, farming supplies contact, agricultural consultation Minchinabad, Behramka Hithar location"
       />
 
       {/* Hero */}

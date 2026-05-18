@@ -11,7 +11,10 @@ const SEO = ({
   ogImage = 'https://bismillahspraycenter.vercel.app/og-image.png', 
   ogType = 'website',
   canonical = '',
+  noIndex = false, // For admin pages
   article = null, // For blog posts: { publishedTime, modifiedTime, author, tags }
+  product = null, // For product pages: { name, price, currency, availability, brand, image }
+  faqSchema = null, // For FAQ pages: array of { question, answer }
 }) => {
   const siteName = import.meta.env.VITE_APP_NAME || 'Bismillah Spray Center'
   const siteUrl = 'https://bismillahspraycenter.vercel.app'
@@ -24,6 +27,11 @@ const SEO = ({
   const baseKeywords = 'pesticides Pakistan, fertilizers Minchinabad, agricultural products, Syngenta dealer, Bayer products, FMC pesticides, Engro fertilizers, farming supplies, crop protection, seeds Pakistan, agricultural store Bahawalnagar, insecticides, herbicides, fungicides, farm equipment, agricultural consultation'
   const finalKeywords = keywords ? `${keywords}, ${baseKeywords}` : baseKeywords
 
+  // Robots meta tag
+  const robotsContent = noIndex 
+    ? 'noindex, nofollow' 
+    : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+
   return (
     <Helmet>
       {/* Primary Meta Tags */}
@@ -32,9 +40,9 @@ const SEO = ({
       <meta name="description" content={finalDescription} />
       <meta name="keywords" content={finalKeywords} />
       <meta name="author" content={siteName} />
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-      <meta name="googlebot" content="index, follow" />
-      <meta name="bingbot" content="index, follow" />
+      <meta name="robots" content={robotsContent} />
+      <meta name="googlebot" content={robotsContent} />
+      <meta name="bingbot" content={robotsContent} />
       <link rel="canonical" href={finalCanonical} />
 
       {/* Language and Region */}
@@ -201,6 +209,52 @@ const SEO = ({
           ]
         })}
       </script>
+
+      {/* Product Structured Data */}
+      {product && (
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": product.name,
+            "image": product.image || ogImage,
+            "description": product.description || finalDescription,
+            "brand": {
+              "@type": "Brand",
+              "name": product.brand || siteName
+            },
+            "offers": {
+              "@type": "Offer",
+              "url": finalCanonical,
+              "priceCurrency": product.currency || "PKR",
+              "price": product.price,
+              "availability": product.availability || "https://schema.org/InStock",
+              "seller": {
+                "@type": "Organization",
+                "name": siteName
+              }
+            }
+          })}
+        </script>
+      )}
+
+      {/* FAQ Structured Data */}
+      {faqSchema && faqSchema.length > 0 && (
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": faqSchema.map(faq => ({
+              "@type": "Question",
+              "name": faq.question,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+              }
+            }))
+          })}
+        </script>
+      )}
     </Helmet>
   )
 }

@@ -16,7 +16,8 @@ const About = () => {
     <>
       <SEO 
         title="About Us" 
-        description="Learn about Bismillah Spray Center - your trusted agricultural partner in Minchinabad since 2018."
+        description="Bismillah Spray Center - Your trusted agricultural partner in Minchinabad since 2018. Authorized dealer of premium brands: Syngenta, Bayer, FMC, Engro. Serving farmers across Bahawalnagar, Punjab with quality products, expert advice, and competitive prices."
+        keywords="about Bismillah Spray Center, agricultural dealer Minchinabad, Syngenta authorized dealer, Bayer dealer Pakistan, farming supplies Bahawalnagar, agricultural company Punjab, pesticide distributor"
       />
 
       <AboutHero />
