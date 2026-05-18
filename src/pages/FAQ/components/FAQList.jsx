@@ -33,8 +33,8 @@ const FAQList = memo(({ loading, filteredFAQs, clearFilters }) => {
 
   return (
     <div className="max-w-3xl mx-auto space-y-4">
-      {filteredFAQs.map((faq, index) => (
-        <FAQItem key={faq._id || index} faq={faq} index={index} />
+      {filteredFAQs.map((faq) => (
+        <FAQItem key={faq._id} faq={faq} />
       ))}
     </div>
   )

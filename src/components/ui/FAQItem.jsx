@@ -1,25 +1,19 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { FaChevronDown, FaQuestionCircle } from 'react-icons/fa'
 
 /**
- * FAQ accordion item component
- * Expandable/collapsible question and answer
+ * Optimized FAQ accordion item component
+ * Uses CSS transitions instead of Framer Motion for better performance
  */
-const FAQItem = ({ faq, index = 0 }) => {
+const FAQItem = ({ faq }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
-      className="bg-white rounded-xl shadow-card overflow-hidden"
-    >
+    <div className="bg-white rounded-xl shadow-card overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between p-6 text-left hover:bg-primary-700/50 transition-colors"
+        aria-expanded={isOpen}
       >
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 bg-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -29,33 +23,28 @@ const FAQItem = ({ faq, index = 0 }) => {
             {faq.question}
           </h3>
         </div>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="flex-shrink-0"
-        >
-          <FaChevronDown className={`w-5 h-5 ${isOpen ? 'text-gold' : 'text-primary-300'}`} />
-        </motion.div>
+        <div className="flex-shrink-0">
+          <FaChevronDown 
+            className={`w-5 h-5 transition-transform duration-300 ${
+              isOpen ? 'rotate-180 text-gold' : 'text-primary-300'
+            }`} 
+          />
+        </div>
       </button>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="overflow-hidden"
-          >
-            <div className="px-6 pb-6 pl-20">
-              <p className="text-primary-300 text-sm leading-relaxed">
-                {faq.answer}
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+      {/* Answer section with CSS transition */}
+      <div 
+        className={`overflow-hidden transition-all duration-300 ${
+          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="px-6 pb-6 pl-20">
+          <p className="text-primary-300 text-sm leading-relaxed">
+            {faq.answer}
+          </p>
+        </div>
+      </div>
+    </div>
   )
 }
 

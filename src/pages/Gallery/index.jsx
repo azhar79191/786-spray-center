@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import SEO from '../../components/common/SEO'
 import { getAllGalleryImages } from '../../services/galleryService'
-import Spinner from '../../components/loaders/Spinner'
 import GalleryHero from './components/GalleryHero'
 import GalleryFilter from './components/GalleryFilter'
 import GalleryGrid from './components/GalleryGrid'
+import GalleryGridSkeleton from './components/GalleryGridSkeleton'
 import GalleryLightbox from './components/GalleryLightbox'
 
 const Gallery = () => {
@@ -19,7 +19,6 @@ const Gallery = () => {
 
   const fetchImages = async () => {
     try {
-      setLoading(true)
       const response = await getAllGalleryImages({ isActive: true })
       setImages(response.data || [])
     } catch (error) {
@@ -43,34 +42,38 @@ const Gallery = () => {
         keywords="agricultural products photos, pesticide images, fertilizer pictures, farming equipment gallery, agricultural store photos Minchinabad, crop protection images, spray machines photos"
       />
 
+      {/* Hero loads immediately */}
       <GalleryHero />
 
+      {/* Grid section - always visible */}
       <section className="section-padding bg-surface">
         <div className="container-premium">
+          {/* Show filter immediately if we have images */}
+          {!loading && images.length > 0 && (
+            <GalleryFilter 
+              categories={categories}
+              activeFilter={activeFilter}
+              setActiveFilter={setActiveFilter}
+            />
+          )}
+
+          {/* Show skeleton while loading */}
           {loading ? (
-            <div className="flex justify-center items-center h-64">
-              <Spinner />
-            </div>
+            <GalleryGridSkeleton count={12} />
           ) : images.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-primary-300 text-lg">No images available at the moment.</p>
             </div>
           ) : (
-            <>
-              <GalleryFilter 
-                categories={categories}
-                activeFilter={activeFilter}
-                setActiveFilter={setActiveFilter}
-              />
-              <GalleryGrid 
-                filteredImages={filteredImages}
-                setSelectedImage={setSelectedImage}
-              />
-            </>
+            <GalleryGrid 
+              filteredImages={filteredImages}
+              setSelectedImage={setSelectedImage}
+            />
           )}
         </div>
       </section>
 
+      {/* Lightbox */}
       <GalleryLightbox 
         selectedImage={selectedImage}
         setSelectedImage={setSelectedImage}
