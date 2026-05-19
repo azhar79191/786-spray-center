@@ -91,15 +91,74 @@ const Products = () => {
         keywords="buy pesticides online Pakistan, agricultural products catalog, insecticides price, herbicides for crops, fungicides Pakistan, fertilizers online, seeds dealer, Syngenta products, Bayer crop science, FMC pesticides Pakistan"
       />
 
-      {/* SEO-friendly static content for crawlers */}
-      <div style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}>
-        <h1>Agricultural Products - Bismillah Spray Center</h1>
-        <p>Browse our extensive catalog of premium agricultural products including pesticides, insecticides, herbicides, fungicides, fertilizers, and seeds. We are authorized dealers of leading brands like Syngenta, Bayer, FMC, and Engro.</p>
-        <p>Categories: Pesticides, Insecticides, Herbicides, Fungicides, Fertilizers, Seeds, Plant Growth Regulators</p>
-        <p>Brands: Syngenta, Bayer, FMC, Engro, ICI Pakistan, Four Brothers, Ali Akbar Group</p>
-        <p>Location: Minchinabad, Bahawalnagar, Punjab, Pakistan</p>
-        <p>Contact: +92 300 1331616</p>
-      </div>
+      {/* Enhanced Structured Data for Products Page */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "Agricultural Products",
+          "description": "Browse premium agricultural products including pesticides, insecticides, herbicides, fungicides, fertilizers, and seeds",
+          "url": "https://bismillahspraycenter.vercel.app/products",
+          "inLanguage": "en-PK",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Bismillah Spray Center",
+            "url": "https://bismillahspraycenter.vercel.app"
+          },
+          "about": {
+            "@type": "Thing",
+            "name": "Agricultural Products",
+            "description": "Pesticides, Insecticides, Herbicides, Fungicides, Fertilizers, Seeds"
+          },
+          "mainEntity": {
+            "@type": "ItemList",
+            "name": "Agricultural Products Catalog",
+            "description": "Complete catalog of agricultural products available at Bismillah Spray Center",
+            "numberOfItems": pagination.totalItems || 50,
+            "itemListElement": products.slice(0, 10).map((product, index) => ({
+              "@type": "ListItem",
+              "position": index + 1,
+              "item": {
+                "@type": "Product",
+                "name": product.name,
+                "description": product.description,
+                "image": product.image,
+                "brand": {
+                  "@type": "Brand",
+                  "name": product.brand?.name || "Bismillah Spray Center"
+                },
+                "category": product.category,
+                "offers": {
+                  "@type": "Offer",
+                  "availability": "https://schema.org/InStock",
+                  "priceCurrency": "PKR",
+                  "seller": {
+                    "@type": "Organization",
+                    "name": "Bismillah Spray Center"
+                  }
+                }
+              }
+            }))
+          },
+          "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://bismillahspraycenter.vercel.app"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Products",
+                "item": "https://bismillahspraycenter.vercel.app/products"
+              }
+            ]
+          }
+        })}
+      </script>
 
       {/* Header with search */}
       <ProductsHeader 
