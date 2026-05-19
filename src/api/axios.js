@@ -2,24 +2,49 @@ import axios from 'axios'
 
 /**
  * Centralized Axios instance with interceptors
- * Handles authentication, error handling, and request/response transformation
+ * Handles authentication, error handling, request/response transformation, and caching
  */
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'https://myshop-1sp3.onrender.com/api',
-  timeout: 30000, // Increased timeout for production
+  timeout: 15000, // Reduced timeout for faster failure detection
   headers: {
     'Content-Type': 'application/json',
+    'Accept-Encoding': 'gzip, deflate, br', // Enable compression
   },
 })
 
+// Simple in-memory cache for GET requests
+const cache = new Map();
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
 /**
  * Request interceptor
- * Adds auth token, logging, and request metadata
+ * Adds auth token, logging, caching, and request metadata
  */
 apiClient.interceptors.request.use(
   (config) => {
     // Add timestamp for request tracking
     config.metadata = { startTime: new Date() }
+
+    // Check cache for GET requests
+    if (config.method === 'get') {
+      const cacheKey = `${config.url}?${JSON.stringify(config.params || {})}`;
+      const cached = cache.get(cacheKey);
+      
+      if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+        // Return cached response
+        config.adapter = () => {
+          return Promise.resolve({
+            data: cached.data,
+            status: 200,
+            statusText: 'OK (Cached)',
+            headers: {},
+            config,
+            request: {},
+          });
+        };
+      }
+    }
 
     // Add auth token if available (check both token and adminToken)
     const token = localStorage.getItem('token') || localStorage.getItem('adminToken')
@@ -36,7 +61,7 @@ apiClient.interceptors.request.use(
 
 /**
  * Response interceptor
- * Handles success responses, errors, and token refresh
+ * Handles success responses, errors, caching, and token refresh
  */
 apiClient.interceptors.response.use(
   (response) => {
@@ -44,13 +69,23 @@ apiClient.interceptors.response.use(
     const duration = new Date() - response.config.metadata?.startTime
 
     if (import.meta.env.DEV) {
-      console.log(`[${response.config.method?.toUpperCase()}] ${response.config.url} - ${duration}ms`)
+      const cached = response.statusText === 'OK (Cached)' ? ' (CACHED)' : '';
+      console.log(`[${response.config.method?.toUpperCase()}] ${response.config.url} - ${duration}ms${cached}`)
+    }
+
+    // Cache GET responses
+    if (response.config.method === 'get' && response.status === 200) {
+      const cacheKey = `${response.config.url}?${JSON.stringify(response.config.params || {})}`;
+      cache.set(cacheKey, {
+        data: response.data,
+        timestamp: Date.now(),
+      });
     }
 
     return response
   },
   (error) => {
-    const { response, request, config } = error
+    const { response, config } = error
 
     // Log error in development
     if (import.meta.env.DEV) {
@@ -107,6 +142,21 @@ apiClient.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+/**
+ * Clear cache manually
+ */
+export const clearCache = () => {
+  cache.clear();
+};
+
+/**
+ * Clear specific cache entry
+ */
+export const clearCacheEntry = (url, params = {}) => {
+  const cacheKey = `${url}?${JSON.stringify(params)}`;
+  cache.delete(cacheKey);
+};
 
 /**
  * File upload helper with multipart/form-data
