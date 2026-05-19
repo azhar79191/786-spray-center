@@ -22,6 +22,11 @@ export const useProducts = (initialFilters = {}) => {
 
   // Fetch products with filters
   const fetchProducts = useCallback(async (customFilters = {}) => {
+    // Skip API calls during pre-rendering
+    if (typeof window !== 'undefined' && window.navigator.userAgent === 'ReactSnap') {
+      return { success: true, data: [], pagination: { currentPage: 1, totalPages: 1, totalItems: 0, itemsPerPage: 12 } }
+    }
+
     const mergedFilters = { ...filters, ...customFilters }
     setLoading(true)
     setError(null)

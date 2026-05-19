@@ -91,6 +91,16 @@ const Products = () => {
         keywords="buy pesticides online Pakistan, agricultural products catalog, insecticides price, herbicides for crops, fungicides Pakistan, fertilizers online, seeds dealer, Syngenta products, Bayer crop science, FMC pesticides Pakistan"
       />
 
+      {/* SEO-friendly static content for crawlers */}
+      <div style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}>
+        <h1>Agricultural Products - Bismillah Spray Center</h1>
+        <p>Browse our extensive catalog of premium agricultural products including pesticides, insecticides, herbicides, fungicides, fertilizers, and seeds. We are authorized dealers of leading brands like Syngenta, Bayer, FMC, and Engro.</p>
+        <p>Categories: Pesticides, Insecticides, Herbicides, Fungicides, Fertilizers, Seeds, Plant Growth Regulators</p>
+        <p>Brands: Syngenta, Bayer, FMC, Engro, ICI Pakistan, Four Brothers, Ali Akbar Group</p>
+        <p>Location: Minchinabad, Bahawalnagar, Punjab, Pakistan</p>
+        <p>Contact: +92 300 1331616</p>
+      </div>
+
       {/* Header with search */}
       <ProductsHeader 
         searchQuery={searchQuery}
