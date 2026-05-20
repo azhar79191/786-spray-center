@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import App from './App.jsx'
+import { DataProvider } from './contexts/DataContext.jsx'
 import './styles/globals.css'
 
 const rootElement = document.getElementById('root')
@@ -18,24 +19,26 @@ ReactDOM.createRoot(rootElement).render(
           v7_relativeSplatPath: true,
         }}
       >
-        <App />
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-          toastStyle={{
-            background: '#0F172A',
-            color: '#F8FAFC',
-            border: '1px solid #D4A017',
-          }}
-        />
+        <DataProvider>
+          <App />
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+            toastStyle={{
+              background: '#0F172A',
+              color: '#F8FAFC',
+              border: '1px solid #D4A017',
+            }}
+          />
+        </DataProvider>
       </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>,
