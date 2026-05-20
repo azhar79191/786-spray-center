@@ -49,43 +49,59 @@ const WorkingHours = memo(() => {
             </h3>
 
             <div className="space-y-4">
-              <a 
-                href={getPhoneLink(CONTACT.phone)} 
-                className="flex items-center gap-4 p-4 bg-primary-700 rounded-xl hover:bg-primary-50 transition-colors group"
+              <a
+                href={getPhoneLink(CONTACT.phone)}
+                className="group flex items-center gap-4 p-4 bg-primary-700 rounded-xl hover:bg-primary-50 transition-colors group"
               >
                 <div className="w-12 h-12 bg-gold rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                   <FaPhone className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-primary-300 text-xs">Phone</p>
-                  <p className="text-primary font-semibold">{CONTACT.phone}</p>
+                  <p className="text-primary-300 group-hover:text-[#D4A017] text-xs">Phone</p>
+                  <p className="text-primary group-hover:text-[#D4A017] font-semibold">{CONTACT.phone}</p>
                 </div>
               </a>
 
-              <a 
-                href={getWhatsAppLink(CONTACT.whatsapp)} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="flex items-center gap-4 p-4 bg-primary-700 rounded-xl hover:bg-primary-50 transition-colors group"
+              <a
+                href={getWhatsAppLink(CONTACT.whatsapp)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 p-4 bg-primary-700 rounded-xl hover:bg-primary-50 transition-colors"
               >
                 <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                   <FaWhatsapp className="w-5 h-5 text-white" />
                 </div>
+
                 <div>
-                  <p className="text-primary-300 text-xs">WhatsApp</p>
-                  <p className="text-primary font-semibold">+92-{CONTACT.whatsapp.slice(2)}</p>
+                  <p className="text-primary-300 group-hover:text-[#D4A017] transition-colors text-xs">
+                    WhatsApp
+                  </p>
+
+                  <p className="text-primary group-hover:text-[#D4A017] transition-colors font-semibold">
+                    +92-{CONTACT.whatsapp.slice(2)}
+                  </p>
                 </div>
               </a>
 
-              <div className="flex items-center gap-4 p-4 bg-primary-700 rounded-xl">
+              <a
+                href="https://maps.app.goo.gl/fQ84ruXiC83vPDm1A"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 p-4 bg-primary-700 rounded-xl hover:bg-primary-50 transition-colors"
+              >
                 <div className="w-12 h-12 bg-gold rounded-lg flex items-center justify-center">
                   <FaMapMarkerAlt className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-primary-300 text-xs">Address</p>
-                  <p className="text-primary font-semibold text-sm">{CONTACT.address}</p>
+                  <div>
+                    <p className="text-primary-300 group-hover:text-[#D4A017] text-xs">Address
+                    </p> 
+                  <p className="text-primary group-hover:text-[#D4A017] text-underline-[#D4A017] font-semibold text-sm">
+                    {CONTACT.address}
+                    </p>
+                    </div>
                 </div>
-              </div>
+              </a>
             </div>
           </motion.div>
         </div>
