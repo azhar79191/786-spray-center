@@ -1,3 +1,0 @@
-Contact: mailto:zafarwattoo@gmail.com
-Preferred-Languages: en, ur
-Canonical: https://bismillahspraycenter.vercel.app/.well-known/security.txt

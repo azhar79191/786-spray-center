@@ -168,7 +168,11 @@
         </div>
 
         <div class="style-options">
-            <div class="style-option active" onclick="selectStyle('modern')" id="style-modern">
+            <div class="style-option active" onclick="selectStyle('bismillah')" id="style-bismillah">
+                <h4>💎 Bismillah Diamond</h4>
+                <p>Golden diamond with B letter</p>
+            </div>
+            <div class="style-option" onclick="selectStyle('modern')" id="style-modern">
                 <h4>🎨 Modern Gradient</h4>
                 <p>Vibrant green gradient with leaf</p>
             </div>
@@ -192,7 +196,7 @@
     </div>
 
     <script>
-        let selectedStyle = 'modern';
+        let selectedStyle = 'bismillah';
 
         function selectStyle(style) {
             selectedStyle = style;
@@ -202,6 +206,9 @@
 
         function generateIcons() {
             const sizes = [
+                { size: 16, name: 'favicon-16x16.png' },
+                { size: 32, name: 'favicon-32x32.png' },
+                { size: 180, name: 'apple-touch-icon.png' },
                 { size: 192, name: 'favicon-192x192.png' },
                 { size: 512, name: 'favicon-512x512.png' }
             ];
@@ -215,7 +222,9 @@
                 canvas.height = size;
                 const ctx = canvas.getContext('2d');
 
-                if (selectedStyle === 'modern') {
+                if (selectedStyle === 'bismillah') {
+                    drawBismillahIcon(ctx, size);
+                } else if (selectedStyle === 'modern') {
                     drawModernIcon(ctx, size);
                 } else if (selectedStyle === 'minimal') {
                     drawMinimalIcon(ctx, size);
@@ -252,6 +261,85 @@
             });
 
             document.getElementById('successMessage').style.display = 'block';
+        }
+
+        function drawBismillahIcon(ctx, size) {
+            // Dark blue textured background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#1a2942');
+            gradient.addColorStop(0.5, '#0F172A');
+            gradient.addColorStop(1, '#1a2942');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+
+            // Add subtle texture
+            ctx.save();
+            ctx.globalAlpha = 0.05;
+            for (let i = 0; i < 100; i++) {
+                ctx.fillStyle = Math.random() > 0.5 ? '#ffffff' : '#000000';
+                ctx.fillRect(
+                    Math.random() * size,
+                    Math.random() * size,
+                    Math.random() * 3,
+                    Math.random() * 3
+                );
+            }
+            ctx.restore();
+
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const diamondSize = size * 0.35;
+
+            // Draw outer diamond with striped pattern
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(Math.PI / 4);
+
+            // Outer diamond border (gold)
+            const outerSize = diamondSize * 1.15;
+            ctx.fillStyle = '#D4AF37';
+            ctx.fillRect(-outerSize, -outerSize, outerSize * 2, outerSize * 2);
+
+            // Draw horizontal stripes
+            ctx.fillStyle = '#0F172A';
+            const stripeWidth = outerSize * 0.08;
+            for (let i = -outerSize; i < outerSize; i += stripeWidth * 2) {
+                ctx.fillRect(-outerSize, i, outerSize * 2, stripeWidth);
+            }
+
+            // Inner solid diamond (golden)
+            const innerSize = diamondSize * 0.85;
+            const goldGradient = ctx.createLinearGradient(-innerSize, -innerSize, innerSize, innerSize);
+            goldGradient.addColorStop(0, '#F4E4B0');
+            goldGradient.addColorStop(0.5, '#D4AF37');
+            goldGradient.addColorStop(1, '#B8941F');
+            ctx.fillStyle = goldGradient;
+            ctx.fillRect(-innerSize, -innerSize, innerSize * 2, innerSize * 2);
+
+            // Add metallic shine effect
+            const shineGradient = ctx.createLinearGradient(-innerSize, -innerSize, innerSize, 0);
+            shineGradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+            shineGradient.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
+            shineGradient.addColorStop(1, 'rgba(0, 0, 0, 0.2)');
+            ctx.fillStyle = shineGradient;
+            ctx.fillRect(-innerSize, -innerSize, innerSize * 2, innerSize * 2);
+
+            ctx.restore();
+
+            // Draw letter "B" in center
+            const fontSize = size * 0.28;
+            ctx.fillStyle = '#0F172A';
+            ctx.font = `bold ${fontSize}px Arial, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('B', centerX, centerY + size * 0.01);
+
+            // Add subtle shadow to B
+            ctx.save();
+            ctx.globalAlpha = 0.3;
+            ctx.fillStyle = '#000000';
+            ctx.fillText('B', centerX + size * 0.005, centerY + size * 0.015);
+            ctx.restore();
         }
 
         function drawModernIcon(ctx, size) {

@@ -1,0 +1,129 @@
+═══════════════════════════════════════════════════════════════
+  CHANGE APP ICON & SPLASH SCREEN - SIMPLE 3-STEP GUIDE
+═══════════════════════════════════════════════════════════════
+
+METHOD 1: USE BUILT-IN GENERATOR (EASIEST - 2 MINUTES)
+───────────────────────────────────────────────────────────────
+
+STEP 1: Open the Generator
+   → Open file: frontend/public/generate-pwa-icons.html
+   → Double-click to open in your browser
+
+STEP 2: Choose Style & Generate
+   → Choose from 3 professional styles:
+      • Modern Gradient (Green with leaf)
+      • Minimal Clean (Simple white & green)
+      • Professional (Dark with gold)
+   → Click "✨ Generate Professional Icons"
+
+STEP 3: Download & Replace
+   → Click "💾 Download" on each icon
+   → Replace these files in frontend/public/:
+      • favicon-192x192.png
+      • favicon-512x512.png
+
+DONE! ✅ Your new icons are ready!
+
+═══════════════════════════════════════════════════════════════
+
+METHOD 2: USE YOUR OWN LOGO (5 MINUTES)
+───────────────────────────────────────────────────────────────
+
+STEP 1: Prepare Your Logo
+   → Get your logo image (PNG, JPG, or SVG)
+   → Make sure it's square or will be cropped to square
+
+STEP 2: Use Online Generator
+   → Go to: https://realfavicongenerator.net/
+   → Upload your logo
+   → Click "Generate favicons"
+   → Download the package
+
+STEP 3: Replace Files
+   → Extract downloaded files
+   → Copy these to frontend/public/:
+      • favicon-16x16.png
+      • favicon-32x32.png
+      • favicon-192x192.png
+      • favicon-512x512.png
+      • apple-touch-icon.png
+
+DONE! ✅ Your custom logo is now the app icon!
+
+═══════════════════════════════════════════════════════════════
+
+FILES TO REPLACE (All in frontend/public/)
+───────────────────────────────────────────────────────────────
+
+REQUIRED FILES:
+✓ favicon-192x192.png  → Android home screen icon
+✓ favicon-512x512.png  → Android splash screen
+✓ apple-touch-icon.png → iOS home screen icon
+
+OPTIONAL (for better quality):
+✓ favicon-16x16.png    → Browser tab (small)
+✓ favicon-32x32.png    → Browser tab (normal)
+✓ favicon.svg          → Modern browsers
+✓ og-image.png         → Social media preview
+
+═══════════════════════════════════════════════════════════════
+
+AFTER REPLACING FILES
+───────────────────────────────────────────────────────────────
+
+1. REBUILD THE APP:
+   cd frontend
+   npm run build
+
+2. DEPLOY:
+   git add .
+   git commit -m "Update app icons"
+   git push
+
+3. CLEAR CACHE:
+   → On mobile: Uninstall PWA and reinstall
+   → On browser: Ctrl+Shift+Delete → Clear cache
+   → Hard refresh: Ctrl+F5
+
+═══════════════════════════════════════════════════════════════
+
+QUICK TIPS
+───────────────────────────────────────────────────────────────
+
+✓ Use PNG format for best quality
+✓ Keep file sizes under 100KB each
+✓ Use simple designs that work at small sizes
+✓ Test on both Android and iOS devices
+✓ Icons should have transparent or solid background
+
+═══════════════════════════════════════════════════════════════
+
+CURRENT ICON SETTINGS
+───────────────────────────────────────────────────────────────
+
+App Name: Bismillah Spray Center
+Short Name: Bismillah Spray
+Theme Color: #0F172A (Dark Blue)
+Background: #0F172A (Dark Blue)
+
+To change colors, edit: frontend/vite.config.js
+Look for: theme_color and background_color
+
+═══════════════════════════════════════════════════════════════
+
+NEED HELP?
+───────────────────────────────────────────────────────────────
+
+Option 1: Use the built-in generator (easiest!)
+   → Open: frontend/public/generate-pwa-icons.html
+
+Option 2: Use online tool
+   → https://realfavicongenerator.net/
+
+Option 3: Use PWA Builder
+   → https://www.pwabuilder.com/imageGenerator
+
+═══════════════════════════════════════════════════════════════
+
+THAT'S IT! 🎉
+Your app icon and splash screen will be updated!

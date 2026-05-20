@@ -167,7 +167,7 @@ const Footer = () => {
                   className="flex items-start gap-3 text-primary-300 hover:text-gold transition-colors group"
                 >
                   <FaEnvelope className="w-5 h-5 mt-0.5 text-gold group-hover:scale-110 transition-transform" />
-                  <span className="text-sm">{CONTACT.email}</span>
+                  <span className="text-sm text-xs">{CONTACT.email}</span>
                 </a>
               </li>
               <li className="flex items-start gap-3 text-primary-300">

@@ -1,0 +1,118 @@
+HOW TO UPDATE APP ICON AND SPLASH SCREEN
+==========================================
+
+STEP 1: Prepare Your Logo/Icon
+-------------------------------
+1. Create or get your logo image (PNG format recommended)
+2. Make sure it's square (e.g., 1024x1024 pixels)
+3. Use a simple, clear design that works at small sizes
+
+STEP 2: Generate Icon Sizes
+----------------------------
+You need to create these sizes from your logo:
+
+Required Files:
+- favicon.svg (or favicon.ico)
+- favicon-16x16.png
+- favicon-32x32.png
+- favicon-192x192.png (for Android)
+- favicon-512x512.png (for Android splash)
+- apple-touch-icon.png (180x180 for iOS)
+- og-image.png (1200x630 for social media)
+
+STEP 3: Replace Files
+----------------------
+Replace these files in: frontend/public/
+
+1. favicon.svg (or favicon.ico)
+2. favicon-16x16.png
+3. favicon-32x32.png
+4. favicon-192x192.png
+5. favicon-512x512.png
+6. apple-touch-icon.png
+7. og-image.png
+
+STEP 4: Online Tools to Generate Icons
+---------------------------------------
+Use these FREE online tools:
+
+1. Favicon Generator:
+   https://realfavicongenerator.net/
+   - Upload your logo
+   - It generates ALL sizes automatically
+   - Download and replace files
+
+2. PWA Icon Generator:
+   https://www.pwabuilder.com/imageGenerator
+   - Upload your logo
+   - Generates PWA icons
+   - Download and replace
+
+3. Simple Favicon Generator:
+   https://favicon.io/
+   - Upload image or use text
+   - Generates all sizes
+   - Download and replace
+
+STEP 5: Quick Method (Using Existing HTML File)
+------------------------------------------------
+You already have: frontend/public/generate-pwa-icons.html
+
+1. Open this file in your browser
+2. Upload your logo image
+3. It will generate all required sizes
+4. Download and replace the files in public folder
+
+STEP 6: Verify Changes
+-----------------------
+1. Delete frontend/dist folder (if exists)
+2. Run: npm run build
+3. Test on mobile device or browser
+4. Check if new icon appears
+
+STEP 7: Clear Cache
+--------------------
+After updating icons:
+1. Clear browser cache (Ctrl+Shift+Delete)
+2. On mobile: Clear app data or reinstall PWA
+3. Hard refresh: Ctrl+F5 (Windows) or Cmd+Shift+R (Mac)
+
+CURRENT ICON LOCATIONS:
+-----------------------
+All icons are in: frontend/public/
+
+Files to replace:
+✓ favicon.svg
+✓ favicon-16x16.png
+✓ favicon-32x32.png
+✓ favicon-192x192.png (Android home screen)
+✓ favicon-512x512.png (Android splash screen)
+✓ apple-touch-icon.png (iOS home screen)
+✓ og-image.png (Social media preview)
+
+SPLASH SCREEN:
+--------------
+The splash screen uses:
+- favicon-512x512.png (main image)
+- Background color: #0F172A (dark blue)
+- Theme color: #0F172A
+
+To change splash screen:
+1. Replace favicon-512x512.png with your logo
+2. Make sure logo has transparent background
+3. Or edit vite.config.js to change background_color
+
+IMPORTANT NOTES:
+----------------
+- Use PNG format for best quality
+- Keep file sizes small (< 100KB each)
+- Use transparent background for icons
+- Test on both Android and iOS devices
+- Icons should be simple and recognizable at small sizes
+
+QUICK COMMAND TO REBUILD:
+--------------------------
+cd frontend
+npm run build
+
+Then deploy to see changes on production.
