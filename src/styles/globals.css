@@ -13,6 +13,7 @@
     color: #0F172A;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -131,4 +132,7 @@
   .animate-delay-500 {
     animation-delay: 500ms;
   }
+}
+#root {
+  overflow-x: hidden;
 }

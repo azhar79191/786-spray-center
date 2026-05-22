@@ -1,19 +1,14 @@
 import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { 
-  FaHome, 
-  FaBox, 
-  FaTags, 
-  FaImages, 
-  FaQuestionCircle, 
-  FaEnvelope 
+import {
+  FaHome,
+  FaBox,
+  FaTags,
+  FaImages,
+  FaQuestionCircle,
+  FaEnvelope,
 } from 'react-icons/fa'
 
-/**
- * Mobile Bottom Navigation Bar
- * Fixed bottom navigation with icons for mobile devices
- * Only visible on screens smaller than 768px (md breakpoint)
- */
 const MobileBottomNav = () => {
   const location = useLocation()
 
@@ -34,36 +29,45 @@ const MobileBottomNav = () => {
   }
 
   return (
-    <nav 
-      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-primary/95 backdrop-blur-md border-t border-primary-50 shadow-lg"
+    <nav
+      className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-primary border-t border-primary-50 shadow-lg overflow-hidden"
       role="navigation"
       aria-label="Mobile bottom navigation"
     >
-      <div className="grid grid-cols-6 h-16">
+      <div className="grid grid-cols-6 h-16 w-full">
         {navItems.map((item) => {
           const Icon = item.icon
           const active = isActive(item.path)
-          
+
           return (
             <Link
               key={item.path}
               to={item.path}
-              className={`relative flex flex-col items-center justify-center gap-0.5 transition-colors duration-200 ${
-                active ? 'text-gold' : 'text-primary-400 hover:text-white'
+              className={`relative flex flex-col items-center justify-center transition-all duration-200 ${
+                active
+                  ? 'text-gold'
+                  : 'text-primary-400 hover:text-white'
               }`}
               aria-label={item.name}
               aria-current={active ? 'page' : undefined}
             >
-              <Icon className="w-4 h-4" aria-hidden="true" />
-              <span className="text-[8px] font-medium">{item.name}</span>
-              
+              <Icon className="w-4 h-4 mb-0.5" />
+
+              {/* Text always visible */}
+              <span className="text-[8px] font-medium leading-none">
+                {item.name}
+              </span>
+
               {/* Active indicator */}
               {active && (
                 <motion.div
                   layoutId="mobileActiveNav"
-                  className="absolute top-0 left-1/5 -translate-x-1/2 w-8 h-1 bg-gold rounded-b-full"
-                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  aria-hidden="true"
+                  className="absolute top-0 w-8 h-1 bg-gold rounded-b-full"
+                  transition={{
+                    type: 'spring',
+                    stiffness: 380,
+                    damping: 30,
+                  }}
                 />
               )}
             </Link>
