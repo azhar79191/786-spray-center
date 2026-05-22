@@ -66,7 +66,7 @@ const Navbar = () => {
         aria-label="Main navigation"
       >
         <div className="container-premium">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="hidden md:flex items-center justify-between h-20">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3" aria-label="Bismillah Spray Center Home">
               <div className="w-10 h-10 bg-gold rounded-lg flex items-center justify-center" aria-hidden="true">

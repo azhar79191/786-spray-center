@@ -17,7 +17,7 @@ const ContactInfo = memo(() => {
       transition={{ duration: 0.6 }}
       className="lg:col-span-1"
     >
-      <div className="bg-white rounded-2xl p-8 shadow-card sticky top-24">
+      <div className="bg-white rounded-2xl p-4 sm:p-8 shadow-card sticky top-24">
         <h3 className="text-primary font-display font-bold text-2xl mb-8">
           Contact Information
         </h3>
