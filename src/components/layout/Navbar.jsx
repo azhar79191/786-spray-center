@@ -117,61 +117,8 @@ const Navbar = () => {
                 Get a Quote
               </Link>
             </div>
-
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-gold hover:bg-primary-50 rounded-lg transition-colors"
-              aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={isMobileMenuOpen}
-              aria-controls="mobile-menu"
-            >
-              {isMobileMenuOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
-            </button>
           </div>
         </div>
-
-        {/* Mobile menu */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              id="mobile-menu"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="lg:hidden bg-primary border-t border-primary-50 overflow-hidden"
-            >
-              <nav className="container-premium py-4 space-y-1" aria-label="Mobile navigation">
-                {navLinks.map((link, index) => (
-                  <motion.div
-                    key={link.path}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <Link
-                      to={link.path}
-                      className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                        isActive(link.path)
-                          ? 'bg-gold/10 text-gold'
-                          : 'text-primary-400 hover:bg-primary-50 hover:text-white'
-                      }`}
-                      aria-current={isActive(link.path) ? 'page' : undefined}
-                    >
-                      {link.name}
-                    </Link>
-                  </motion.div>
-                ))}
-                <div className="pt-4 px-4">
-                  <Link to="/contact" className="btn-primary w-full text-center">
-                    Get a Quote
-                  </Link>
-                </div>
-              </nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.nav>
     </>
   )

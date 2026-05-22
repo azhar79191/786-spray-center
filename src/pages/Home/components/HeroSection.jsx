@@ -37,7 +37,7 @@ const HeroSection = memo(() => {
             </h1>
 
             <p className="text-primary-400 text-lg md:text-xl max-w-lg mb-8 leading-relaxed">
-              Your trusted partner for genuine pesticides, fertilizers, seeds, and spray machines in Faisalabad, Pakistan.
+              Your trusted partner for genuine pesticides, fertilizers, seeds, and spray machines in Minchinabad, Pakistan.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -53,12 +53,12 @@ const HeroSection = memo(() => {
             {/* Stats */}
             <div className="flex items-center gap-8 mt-12 pt-8 border-t border-primary-50">
               <div>
-                <p className="text-gold text-3xl font-bold">15+</p>
+                <p className="text-gold text-3xl font-bold">10+</p>
                 <p className="text-primary-400 text-sm">Years Experience</p>
               </div>
               <div className="h-12 w-px bg-primary-50" />
               <div>
-                <p className="text-gold text-3xl font-bold">5000+</p>
+                <p className="text-gold text-3xl font-bold">1000+</p>
                 <p className="text-primary-400 text-sm">Happy Farmers</p>
               </div>
               <div className="h-12 w-px bg-primary-50" />

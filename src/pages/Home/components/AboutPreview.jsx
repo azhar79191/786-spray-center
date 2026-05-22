@@ -42,7 +42,7 @@ const AboutPreview = memo(() => {
             </h2>
 
             <p className="text-primary-400 leading-relaxed mb-6">
-              Bismillah Spray Center has been serving the agricultural community of Faisalabad and surrounding areas since 2010. We provide genuine, high-quality agricultural inputs including pesticides, fertilizers, seeds, and spraying equipment from world-renowned brands.
+              Bismillah Spray Center has been serving the agricultural community of Minchinabad and surrounding areas since 2018. We provide genuine, high-quality agricultural inputs including pesticides, fertilizers, seeds, and spraying equipment from world-renowned brands.
             </p>
 
             <p className="text-primary-400 leading-relaxed mb-8">
