@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import SEO from '../../components/common/SEO'
-import { useFetch } from '../../hooks/useFetch'
+import { useFAQs } from '../../hooks/useFAQs'
 import FAQHero from './components/FAQHero'
 import FAQCategories from './components/FAQCategories'
 import FAQList from './components/FAQList'
@@ -9,11 +9,10 @@ const FAQ = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('All')
 
-  const { data: faqData, loading } = useFetch('/faqs')
-  const { data: categoryData } = useFetch('/faqs/categories/all')
+  // Use preloaded data from DataContext - instant loading!
+  const { faqs, categories, loading } = useFAQs()
 
-  const categories = ['All', ...(categoryData?.data || ['General', 'Products', 'Orders', 'Usage', 'Shipping'])]
-  const faqs = faqData?.data || []
+  const allCategories = ['All', ...categories]
 
   const filteredFAQs = faqs.filter((faq) => {
     const matchesCategory = activeCategory === 'All' || faq.category === activeCategory
@@ -41,7 +40,7 @@ const FAQ = () => {
       <section className="section-padding bg-surface">
         <div className="container-premium">
           <FAQCategories 
-            categories={categories}
+            categories={allCategories}
             activeCategory={activeCategory}
             setActiveCategory={setActiveCategory}
           />

@@ -1,18 +1,21 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { FaSave, FaArrowLeft, FaImage } from 'react-icons/fa';
-import { toast } from 'react-toastify';
+import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { FaSave, FaArrowLeft, FaImage } from 'react-icons/fa'
+import { toast } from 'react-toastify'
 import {
   createGalleryImage,
   updateGalleryImage,
   getGalleryImageById,
 } from '../../../services/galleryService';
+import { useData } from '../../../contexts/DataContext';
+import { clearCacheByType } from '../../../utils/cacheUtils';
 import Spinner from '../../../components/loaders/Spinner';
 
 const GalleryForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditMode = Boolean(id);
+  const { refreshData } = useData();
 
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(isEditMode);
@@ -115,6 +118,11 @@ const GalleryForm = () => {
         await createGalleryImage(formData);
         toast.success('Image created successfully');
       }
+      
+      // Clear gallery caches
+      clearCacheByType('gallery');
+      await refreshData('gallery');
+      
       navigate('/admin/gallery');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to save image');

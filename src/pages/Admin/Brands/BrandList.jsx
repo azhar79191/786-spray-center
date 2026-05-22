@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom';
 import { FaPlus, FaEdit, FaTrash, FaGlobe, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { getAllBrands, deleteBrand } from '../../../services/brandService';
+import { useData } from '../../../contexts/DataContext';
+import { clearCacheByType } from '../../../utils/cacheUtils';
 import Spinner from '../../../components/loaders/Spinner';
 
 const BrandList = () => {
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
+  const { refreshData } = useData(); // Get refresh function from DataContext
 
   useEffect(() => {
     fetchBrands();
@@ -32,6 +35,15 @@ const BrandList = () => {
     try {
       await deleteBrand(id);
       toast.success('Brand deleted successfully');
+      
+      // Clear brand caches
+      clearCacheByType('brands');
+      
+      // Refresh DataContext
+      await refreshData('brandList');
+      await refreshData('brands');
+      
+      // Refresh local list
       fetchBrands();
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to delete brand');

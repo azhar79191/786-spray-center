@@ -5,6 +5,8 @@ import { FaPlus, FaEdit, FaTrash, FaSearch, FaFilter } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import SEO from '../../../components/common/SEO'
 import { useProducts } from '../../../hooks/useProducts'
+import { useData } from '../../../contexts/DataContext'
+import { clearCacheByType } from '../../../utils/cacheUtils'
 import Spinner from '../../../components/loaders/Spinner'
 import apiClient from '../../../api/axios'
 import ENDPOINTS from '../../../api/endpoints'
@@ -15,6 +17,7 @@ import ENDPOINTS from '../../../api/endpoints'
  */
 const ProductList = () => {
   const { products, loading, fetchProducts, categories, brands } = useProducts()
+  const { refreshData } = useData()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedBrand, setSelectedBrand] = useState('')
@@ -35,6 +38,14 @@ const ProductList = () => {
     try {
       await apiClient.delete(ENDPOINTS.products.delete(id))
       toast.success('Product deleted successfully')
+      
+      // Clear product caches
+      clearCacheByType('products')
+      await refreshData('products')
+      await refreshData('featuredProducts')
+      await refreshData('categories')
+      await refreshData('brands')
+      
       fetchProducts()
     } catch (error) {
       toast.error(error.message || 'Failed to delete product')

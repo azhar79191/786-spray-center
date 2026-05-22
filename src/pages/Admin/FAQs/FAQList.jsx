@@ -5,6 +5,8 @@ import { FaPlus, FaEdit, FaTrash, FaSearch } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import SEO from '../../../components/common/SEO'
 import { useFetch } from '../../../hooks/useFetch'
+import { useData } from '../../../contexts/DataContext'
+import { clearCacheByType } from '../../../utils/cacheUtils'
 import Spinner from '../../../components/loaders/Spinner'
 import apiClient from '../../../api/axios'
 import ENDPOINTS from '../../../api/endpoints'
@@ -17,6 +19,7 @@ const FAQList = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
   const [deleting, setDeleting] = useState(null)
+  const { refreshData } = useData()
   
   const { data, loading, refetch } = useFetch('/faqs', {
     params: {
@@ -35,6 +38,12 @@ const FAQList = () => {
     try {
       await apiClient.delete(ENDPOINTS.faqs.delete(id))
       toast.success('FAQ deleted successfully')
+      
+      // Clear FAQ caches
+      clearCacheByType('faqs')
+      await refreshData('faqs')
+      await refreshData('faqCategories')
+      
       refetch()
     } catch (error) {
       toast.error(error.message || 'Failed to delete FAQ')

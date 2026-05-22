@@ -43,7 +43,11 @@ export const useProducts = (initialFilters = {}) => {
     try {
       // Use preloaded data if no specific filters
       if (!mergedFilters.search && !mergedFilters.category && !mergedFilters.brand) {
-        const allProducts = dataContext.products
+        let allProducts = dataContext.products
+        
+        // Filter out products with stockStatus 'Out of Stock' if needed
+        allProducts = allProducts.filter(p => p.stockStatus !== 'Out of Stock')
+        
         const page = mergedFilters.page || 1
         const limit = mergedFilters.limit || 12
         const start = (page - 1) * limit
@@ -55,7 +59,11 @@ export const useProducts = (initialFilters = {}) => {
       }
 
       // Apply filters to preloaded data
-      const filtered = dataContext.filterProducts(mergedFilters)
+      let filtered = dataContext.filterProducts(mergedFilters)
+      
+      // Filter out 'Out of Stock' products
+      filtered = filtered.filter(p => p.stockStatus !== 'Out of Stock')
+      
       const page = mergedFilters.page || 1
       const limit = mergedFilters.limit || 12
       const start = (page - 1) * limit
@@ -152,7 +160,10 @@ export const useProducts = (initialFilters = {}) => {
     }
   }, [dataContext])
 
-  // No initial fetch needed - data is preloaded in context
+  // Initial load - fetch products when filters change or on mount
+  useEffect(() => {
+    fetchProducts()
+  }, [filters.category, filters.brand, filters.page])
 
   return {
     products,

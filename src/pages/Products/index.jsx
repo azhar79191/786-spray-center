@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import SEO from '../../components/common/SEO'
 import { useProducts } from '../../hooks/useProducts'
@@ -44,10 +44,7 @@ const Products = () => {
     brand: searchParams.get('brand') || '',
   })
 
-  // Fetch products on mount and when filters change
-  useEffect(() => {
-    fetchProducts()
-  }, [filters])
+  // Data is already filtered in useProducts hook - no need for useEffect!
 
   const handleSearch = (e) => {
     e.preventDefault()

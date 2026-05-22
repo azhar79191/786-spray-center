@@ -1,6 +1,6 @@
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import SEO from '../../components/common/SEO'
-import { getAllBrands } from '../../services/brandService'
+import { useBrands } from '../../hooks/useBrands'
 import Spinner from '../../components/loaders/Spinner'
 import BrandsHero from './components/BrandsHero'
 import BrandsGrid from './components/BrandsGrid'
@@ -9,25 +9,8 @@ const WhyBrandsMatter = lazy(() => import('./components/WhyBrandsMatter'))
 const BrandsCTA = lazy(() => import('./components/BrandsCTA'))
 
 const Brands = () => {
-  const [brands, setBrands] = useState([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    fetchBrands()
-  }, [])
-
-  const fetchBrands = async () => {
-    try {
-      setLoading(true)
-      const response = await getAllBrands({ isActive: true })
-      setBrands(response.data || [])
-    } catch (error) {
-      console.error('Failed to fetch brands:', error)
-      setBrands([])
-    } finally {
-      setLoading(false)
-    }
-  }
+  // Use preloaded data from DataContext - instant loading!
+  const { brands, loading } = useBrands()
 
   return (
     <>

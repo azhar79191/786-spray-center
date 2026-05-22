@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom';
 import { FaPlus, FaEdit, FaTrash, FaImage, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { getAllGalleryImages, deleteGalleryImage } from '../../../services/galleryService';
+import { useData } from '../../../contexts/DataContext';
+import { clearCacheByType } from '../../../utils/cacheUtils';
 import Spinner from '../../../components/loaders/Spinner';
 
 const GalleryList = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
+  const { refreshData } = useData();
 
   useEffect(() => {
     fetchImages();
@@ -32,6 +35,11 @@ const GalleryList = () => {
     try {
       await deleteGalleryImage(id);
       toast.success('Image deleted successfully');
+      
+      // Clear gallery caches
+      clearCacheByType('gallery');
+      await refreshData('gallery');
+      
       fetchImages();
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to delete image');

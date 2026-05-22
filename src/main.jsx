@@ -6,9 +6,13 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import App from './App.jsx'
 import { DataProvider } from './contexts/DataContext.jsx'
+import { startKeepAlive } from './utils/keepAlive.js'
 import './styles/globals.css'
 
 const rootElement = document.getElementById('root')
+
+// Start backend keepalive service to prevent cold starts
+startKeepAlive()
 
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>

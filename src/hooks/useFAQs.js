@@ -17,6 +17,9 @@ export const useFAQs = (initialFilters = {}) => {
   const faqs = useMemo(() => {
     let filtered = [...allFaqs]
 
+    // Always filter out inactive FAQs
+    filtered = filtered.filter(faq => faq.isActive !== false)
+
     if (filters.category) {
       filtered = filtered.filter(faq => faq.category === filters.category)
     }

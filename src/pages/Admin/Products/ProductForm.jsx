@@ -6,6 +6,8 @@ import { toast } from 'react-toastify'
 import SEO from '../../../components/common/SEO'
 import Spinner from '../../../components/loaders/Spinner'
 import { getProductById, createProduct, updateProduct } from '../../../services/productService'
+import { useData } from '../../../contexts/DataContext'
+import { clearCacheByType } from '../../../utils/cacheUtils'
 
 /**
  * Admin Product Form
@@ -15,6 +17,7 @@ const ProductForm = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const isEdit = Boolean(id)
+  const { refreshData } = useData()
 
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -160,6 +163,13 @@ const ProductForm = () => {
         await createProduct(payload)
         toast.success('Product created successfully')
       }
+      
+      // Clear product caches
+      clearCacheByType('products')
+      await refreshData('products')
+      await refreshData('featuredProducts')
+      await refreshData('categories')
+      await refreshData('brands')
       
       navigate('/admin/products')
     } catch (error) {

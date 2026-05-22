@@ -16,6 +16,9 @@ export const useBrands = (initialFilters = {}) => {
   const brands = useMemo(() => {
     let filtered = [...allBrands]
 
+    // Always filter out inactive brands on frontend
+    filtered = filtered.filter(brand => brand.isActive !== false)
+
     if (filters.featured !== undefined) {
       filtered = filtered.filter(brand => brand.featured === filters.featured)
     }
@@ -35,9 +38,9 @@ export const useBrands = (initialFilters = {}) => {
     return filtered
   }, [allBrands, filters])
 
-  // Get featured brands
+  // Get featured brands (only active)
   const featuredBrands = useMemo(() => {
-    return allBrands.filter(brand => brand.featured)
+    return allBrands.filter(brand => brand.featured && brand.isActive !== false)
   }, [allBrands])
 
   // Update filters

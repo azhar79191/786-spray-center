@@ -6,6 +6,8 @@ import SEO from '../../../components/common/SEO'
 import Spinner from '../../../components/loaders/Spinner'
 import apiClient from '../../../api/axios'
 import ENDPOINTS from '../../../api/endpoints'
+import { useData } from '../../../contexts/DataContext'
+import { clearCacheByType } from '../../../utils/cacheUtils'
 
 /**
  * Admin FAQ Form
@@ -15,6 +17,7 @@ const FAQForm = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const isEdit = Boolean(id)
+  const { refreshData } = useData()
 
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -76,6 +79,11 @@ const FAQForm = () => {
         await apiClient.post(ENDPOINTS.faqs.create, payload)
         toast.success('FAQ created successfully')
       }
+      
+      // Clear FAQ caches
+      clearCacheByType('faqs')
+      await refreshData('faqs')
+      await refreshData('faqCategories')
       
       navigate('/admin/faqs')
     } catch (error) {

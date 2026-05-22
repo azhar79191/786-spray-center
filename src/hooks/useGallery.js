@@ -16,6 +16,9 @@ export const useGallery = (initialFilters = {}) => {
   const galleryImages = useMemo(() => {
     let filtered = [...allGalleryImages]
 
+    // Always filter out inactive gallery images
+    filtered = filtered.filter(img => img.isActive !== false)
+
     if (filters.category) {
       filtered = filtered.filter(img => img.category === filters.category)
     }

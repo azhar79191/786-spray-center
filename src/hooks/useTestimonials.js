@@ -16,6 +16,9 @@ export const useTestimonials = (initialFilters = {}) => {
   const testimonials = useMemo(() => {
     let filtered = [...allTestimonials]
 
+    // Always filter out non-approved testimonials
+    filtered = filtered.filter(t => t.isApproved !== false)
+
     if (filters.rating) {
       filtered = filtered.filter(t => t.rating >= filters.rating)
     }

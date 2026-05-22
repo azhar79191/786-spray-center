@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import SEO from '../../components/common/SEO'
-import { getAllGalleryImages } from '../../services/galleryService'
+import { useGallery } from '../../hooks/useGallery'
 import GalleryHero from './components/GalleryHero'
 import GalleryFilter from './components/GalleryFilter'
 import GalleryGrid from './components/GalleryGrid'
@@ -10,29 +10,14 @@ import GalleryLightbox from './components/GalleryLightbox'
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null)
   const [activeFilter, setActiveFilter] = useState('All')
-  const [images, setImages] = useState([])
-  const [loading, setLoading] = useState(true)
+  
+  // Use preloaded data from DataContext - instant loading!
+  const { galleryImages, loading } = useGallery()
 
-  useEffect(() => {
-    fetchImages()
-  }, [])
-
-  const fetchImages = async () => {
-    try {
-      const response = await getAllGalleryImages({ isActive: true })
-      setImages(response.data || [])
-    } catch (error) {
-      console.error('Failed to fetch gallery images:', error)
-      setImages([])
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const categories = ['All', ...new Set(images.map(img => img.category))]
+  const categories = ['All', ...new Set(galleryImages.map(img => img.category))]
   const filteredImages = activeFilter === 'All' 
-    ? images 
-    : images.filter(img => img.category === activeFilter)
+    ? galleryImages 
+    : galleryImages.filter(img => img.category === activeFilter)
 
   return (
     <>
@@ -61,7 +46,7 @@ const Gallery = () => {
             "name": "Agricultural Products Gallery",
             "description": "Images of pesticides, fertilizers, seeds, farming equipment, and agricultural store"
           },
-          "image": images.slice(0, 10).map(img => ({
+          "image": galleryImages.slice(0, 10).map(img => ({
             "@type": "ImageObject",
             "contentUrl": img.image,
             "name": img.title,
@@ -156,7 +141,7 @@ const Gallery = () => {
       <section className="section-padding bg-surface">
         <div className="container-premium">
           {/* Show filter immediately if we have images */}
-          {!loading && images.length > 0 && (
+          {!loading && galleryImages.length > 0 && (
             <GalleryFilter 
               categories={categories}
               activeFilter={activeFilter}
@@ -167,7 +152,7 @@ const Gallery = () => {
           {/* Show skeleton while loading */}
           {loading ? (
             <GalleryGridSkeleton count={12} />
-          ) : images.length === 0 ? (
+          ) : galleryImages.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-primary-300 text-lg">No images available at the moment.</p>
             </div>

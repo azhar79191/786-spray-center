@@ -126,8 +126,8 @@ export const DataProvider = ({ children }) => {
         setLoading(false)
         console.log('✅ Data loaded from cache')
         
-        // Refresh in background
-        setTimeout(() => preloadData(true), 1000)
+        // Refresh in background after 30 seconds to avoid double loading
+        setTimeout(() => preloadData(true), 30000)
         return
       }
     }
@@ -155,8 +155,8 @@ export const DataProvider = ({ children }) => {
         apiClient.get('/products/featured/list', { params: { limit: 6 } }),
         apiClient.get('/products/categories/all'),
         apiClient.get('/products/brands/all'),
-        apiClient.get('/brands', { params: { limit: 50 } }),
-        apiClient.get('/gallery', { params: { limit: 50 } }),
+        apiClient.get('/brands', { params: { limit: 50, isActive: true } }),
+        apiClient.get('/gallery', { params: { limit: 50, isActive: true } }),
         apiClient.get('/faqs', { params: { limit: 100 } }),
         apiClient.get('/faqs/categories/all'),
         apiClient.get('/testimonials/approved', { params: { limit: 20 } }),
@@ -208,50 +208,85 @@ export const DataProvider = ({ children }) => {
       switch (dataType) {
         case 'products':
           response = await apiClient.get('/products', { params: { limit: 100 } })
-          setData(prev => ({ ...prev, products: response.data.data || [] }))
+          setData(prev => {
+            const newData = { ...prev, products: response.data.data || [] }
+            saveToCache(newData)
+            return newData
+          })
           break
         case 'featuredProducts':
           response = await apiClient.get('/products/featured/list', { params: { limit: 6 } })
-          setData(prev => ({ ...prev, featuredProducts: response.data.data || [] }))
+          setData(prev => {
+            const newData = { ...prev, featuredProducts: response.data.data || [] }
+            saveToCache(newData)
+            return newData
+          })
           break
         case 'categories':
           response = await apiClient.get('/products/categories/all')
-          setData(prev => ({ ...prev, categories: response.data.data || [] }))
+          setData(prev => {
+            const newData = { ...prev, categories: response.data.data || [] }
+            saveToCache(newData)
+            return newData
+          })
           break
         case 'brands':
           response = await apiClient.get('/products/brands/all')
-          setData(prev => ({ ...prev, brands: response.data.data || [] }))
+          setData(prev => {
+            const newData = { ...prev, brands: response.data.data || [] }
+            saveToCache(newData)
+            return newData
+          })
           break
         case 'brandList':
-          response = await apiClient.get('/brands', { params: { limit: 50 } })
-          setData(prev => ({ ...prev, brandList: response.data.data || [] }))
+          response = await apiClient.get('/brands', { params: { limit: 50, isActive: true } })
+          setData(prev => {
+            const newData = { ...prev, brandList: response.data.data || [] }
+            saveToCache(newData)
+            return newData
+          })
           break
         case 'gallery':
-          response = await apiClient.get('/gallery', { params: { limit: 50 } })
-          setData(prev => ({ ...prev, gallery: response.data.data || [] }))
+          response = await apiClient.get('/gallery', { params: { limit: 50, isActive: true } })
+          setData(prev => {
+            const newData = { ...prev, gallery: response.data.data || [] }
+            saveToCache(newData)
+            return newData
+          })
           break
         case 'faqs':
           response = await apiClient.get('/faqs', { params: { limit: 100 } })
-          setData(prev => ({ ...prev, faqs: response.data.data || [] }))
+          setData(prev => {
+            const newData = { ...prev, faqs: response.data.data || [] }
+            saveToCache(newData)
+            return newData
+          })
           break
         case 'faqCategories':
           response = await apiClient.get('/faqs/categories/all')
-          setData(prev => ({ ...prev, faqCategories: response.data.data || [] }))
+          setData(prev => {
+            const newData = { ...prev, faqCategories: response.data.data || [] }
+            saveToCache(newData)
+            return newData
+          })
           break
         case 'testimonials':
           response = await apiClient.get('/testimonials/approved', { params: { limit: 20 } })
-          setData(prev => ({ ...prev, testimonials: response.data.data || [] }))
+          setData(prev => {
+            const newData = { ...prev, testimonials: response.data.data || [] }
+            saveToCache(newData)
+            return newData
+          })
           break
         default:
           console.warn(`Unknown data type: ${dataType}`)
       }
       
-      // Update cache
-      saveToCache(data)
+      console.log(`✅ Refreshed ${dataType}`)
     } catch (err) {
       console.error(`Failed to refresh ${dataType}:`, err)
     }
-  }, [data, saveToCache])
+  }, [saveToCache])
 
   /**
    * Get product by ID from cached data
