@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -195,6 +196,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>🎨 PWA Icon Generator</h1>
@@ -252,14 +254,14 @@
         let originalImage = null;
         const canvases = {};
 
-        document.getElementById('fileInput').addEventListener('change', function(e) {
+        document.getElementById('fileInput').addEventListener('change', function (e) {
             const file = e.target.files[0];
             if (!file) return;
 
             const reader = new FileReader();
-            reader.onload = function(event) {
+            reader.onload = function (event) {
                 const img = new Image();
-                img.onload = function() {
+                img.onload = function () {
                     originalImage = img;
                     document.getElementById('originalImage').src = event.target.result;
                     document.getElementById('previewSection').classList.add('active');
@@ -283,11 +285,25 @@
                 // Fill with transparent background
                 ctx.clearRect(0, 0, icon.size, icon.size);
 
-                // Draw image centered and scaled to fit
-                const scale = Math.min(icon.size / originalImage.width, icon.size / originalImage.height);
-                const x = (icon.size / 2) - (originalImage.width / 2) * scale;
-                const y = (icon.size / 2) - (originalImage.height / 2) * scale;
-                ctx.drawImage(originalImage, x, y, originalImage.width * scale, originalImage.height * scale);
+                // Draw image without margins (cover mode)
+                const scale = Math.max(
+                    icon.size / originalImage.width,
+                    icon.size / originalImage.height
+                );
+
+                const scaledWidth = originalImage.width * scale;
+                const scaledHeight = originalImage.height * scale;
+
+                const x = (icon.size - scaledWidth) / 2;
+                const y = (icon.size - scaledHeight) / 2;
+
+                ctx.drawImage(
+                    originalImage,
+                    x,
+                    y,
+                    scaledWidth,
+                    scaledHeight
+                );
 
                 canvases[icon.name] = canvas;
 
@@ -313,7 +329,7 @@
 
         function downloadIcon(name) {
             const canvas = canvases[name];
-            canvas.toBlob(function(blob) {
+            canvas.toBlob(function (blob) {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
@@ -364,4 +380,5 @@
         }
     </script>
 </body>
+
 </html>
