@@ -51,7 +51,7 @@ const HeroSection = memo(() => {
             </div>
 
             {/* Stats */}
-            <div className="flex items-center gap-8 mt-12 pt-8 border-t border-primary-50">
+            <div className="flex items-center gap-4 md:gap-8 mt-12 pt-8 border-t border-primary-50">
               <div>
                 <p className="text-gold text-3xl font-bold">10+</p>
                 <p className="text-primary-400 text-sm">Years Experience</p>

@@ -61,7 +61,7 @@ const MobileBottomNav = () => {
               {active && (
                 <motion.div
                   layoutId="mobileActiveNav"
-                  className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 bg-gold rounded-b-full"
+                  className="absolute top-0 left-1/5 -translate-x-1/2 w-12 h-1 bg-gold rounded-b-full"
                   transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   aria-hidden="true"
                 />

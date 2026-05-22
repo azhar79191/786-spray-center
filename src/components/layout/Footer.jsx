@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { 
-  FaPhone, 
-  FaEnvelope, 
-  FaMapMarkerAlt, 
+import {
+  FaPhone,
+  FaEnvelope,
+  FaMapMarkerAlt,
   FaWhatsapp,
   FaFacebook,
   FaInstagram,
@@ -57,29 +57,29 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-primary-300 text-sm leading-relaxed mb-6">
-              Your trusted partner for premium agricultural solutions in Minchinabad, Pakistan. 
+              Your trusted partner for premium agricultural solutions in Minchinabad, Pakistan.
               Serving farmers with genuine products since 2018.
             </p>
             <div className="flex items-center gap-3">
-              <a 
-                href={SOCIAL.facebook} 
-                target="_blank" 
+              <a
+                href={SOCIAL.facebook}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-primary-50 rounded-lg flex items-center justify-center text-primary-300 hover:bg-gold hover:text-primary transition-all duration-300"
               >
                 <FaFacebook className="w-5 h-5" />
               </a>
-              <a 
-                href={SOCIAL.instagram} 
-                target="_blank" 
+              <a
+                href={SOCIAL.instagram}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-primary-50 rounded-lg flex items-center justify-center text-primary-300 hover:bg-gold hover:text-primary transition-all duration-300"
               >
                 <FaInstagram className="w-5 h-5" />
               </a>
-              <a 
-                href={SOCIAL.youtube} 
-                target="_blank" 
+              <a
+                href={SOCIAL.youtube}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-primary-50 rounded-lg flex items-center justify-center text-primary-300 hover:bg-gold hover:text-primary transition-all duration-300"
               >
@@ -99,7 +99,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.path}>
-                  <Link 
+                  <Link
                     to={link.path}
                     className="text-primary-300 hover:text-gold transition-colors duration-200 text-sm"
                   >
@@ -121,7 +121,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {productLinks.map((link) => (
                 <li key={link.name}>
-                  <Link 
+                  <Link
                     to={link.path}
                     className="text-primary-300 hover:text-gold transition-colors duration-200 text-sm"
                   >
@@ -142,7 +142,7 @@ const Footer = () => {
             <h4 className="text-gold font-semibold text-lg mb-6">Contact Us</h4>
             <ul className="space-y-4">
               <li>
-                <a 
+                <a
                   href={getPhoneLink(CONTACT.phone)}
                   className="flex items-start gap-3 text-primary-300 hover:text-gold transition-colors group"
                 >
@@ -151,7 +151,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a 
+                <a
                   href={getWhatsAppLink(CONTACT.whatsapp)}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -162,12 +162,15 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a 
+                <a
                   href={getEmailLink(CONTACT.email)}
-                  className="flex items-start gap-3 text-primary-300 hover:text-gold transition-colors group"
+                  className="flex items-start gap-3 text-primary-300 hover:text-gold transition-colors group overflow-hidden"
                 >
-                  <FaEnvelope className="w-5 h-5 mt-0.5 text-gold group-hover:scale-110 transition-transform" />
-                  <span className="text-sm text-xs">{CONTACT.email}</span>
+                  <FaEnvelope className="w-5 h-5 mt-0.5 text-gold group-hover:scale-110 transition-transform flex-shrink-0" />
+
+                  <span className="text-xs break-all leading-relaxed">
+                    {CONTACT.email}
+                  </span>
                 </a>
               </li>
               <li className="flex items-start gap-3 text-primary-300">
