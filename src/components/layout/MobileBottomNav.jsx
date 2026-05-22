@@ -48,20 +48,20 @@ const MobileBottomNav = () => {
             <Link
               key={item.path}
               to={item.path}
-              className={`relative flex flex-col items-center justify-center gap-1 transition-colors duration-200 ${
+              className={`relative flex flex-col items-center justify-center gap-0.5 transition-colors duration-200 ${
                 active ? 'text-gold' : 'text-primary-400 hover:text-white'
               }`}
               aria-label={item.name}
               aria-current={active ? 'page' : undefined}
             >
-              <Icon className="w-5 h-5" aria-hidden="true" />
-              <span className="text-[10px] font-medium">{item.name}</span>
+              <Icon className="w-4 h-4" aria-hidden="true" />
+              <span className="text-[8px] font-medium">{item.name}</span>
               
               {/* Active indicator */}
               {active && (
                 <motion.div
                   layoutId="mobileActiveNav"
-                  className="absolute top-0 left-1/5 -translate-x-1/2 w-12 h-1 bg-gold rounded-b-full"
+                  className="absolute top-0 left-1/5 -translate-x-1/2 w-8 h-1 bg-gold rounded-b-full"
                   transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   aria-hidden="true"
                 />
