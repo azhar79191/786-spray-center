@@ -153,8 +153,13 @@ const Footer = () => {
                 </a>
               </li>
               <li className="flex items-start gap-3 text-primary-300">
+                <a
+                  href={getEmailLink(CONTACT.address)}
+                  className="flex items-start gap-3 text-primary-300 hover:text-gold transition-colors group overflow-hidden"
+                >
                 <FaMapMarkerAlt className="w-5 h-5 mt-0.5 text-gold flex-shrink-0" />
                 <span className="text-sm">{CONTACT.address}</span>
+                </a>
               </li>
             </ul>
 
