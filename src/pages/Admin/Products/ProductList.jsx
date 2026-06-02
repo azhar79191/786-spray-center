@@ -4,7 +4,6 @@ import { FaPlus, FaEdit, FaTrash, FaSearch, FaFilter, FaExclamationTriangle } fr
 import { toast } from 'react-toastify'
 import SEO from '../../../components/common/SEO'
 import { useData } from '../../../contexts/DataContext'
-import { clearCacheByType } from '../../../utils/cacheUtils'
 import Spinner from '../../../components/loaders/Spinner'
 import apiClient from '../../../api/axios'
 import ENDPOINTS from '../../../api/endpoints'
@@ -30,8 +29,7 @@ const ProductList = () => {
       const params = { limit: 100 }
       if (searchTerm) params.search = searchTerm
       if (selectedCategory) params.category = selectedCategory
-      clearCacheByType('products') // always bypass cache for admin list
-      const res = await apiClient.get('/products', { params })
+      const res = await apiClient.get('/products', { params, _skipCache: true })
       setProducts(res.data.data || [])
     } catch {
       toast.error('Failed to load products')

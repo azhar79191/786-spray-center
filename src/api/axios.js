@@ -26,12 +26,11 @@ apiClient.interceptors.request.use(
     config.metadata = { startTime: new Date() }
 
     // Check cache for GET requests
-    if (config.method === 'get') {
+    if (config.method === 'get' && !config._skipCache) {
       const cacheKey = `${config.url}?${JSON.stringify(config.params || {})}`;
       const cached = cache.get(cacheKey);
       
       if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
-        // Return cached response
         config.adapter = () => {
           return Promise.resolve({
             data: cached.data,
