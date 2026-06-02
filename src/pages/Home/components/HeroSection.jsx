@@ -10,10 +10,7 @@ import { FaArrowRight, FaLeaf } from 'react-icons/fa'
 const HeroSection = memo(() => {
   return (
     <section className="relative min-h-[90vh] flex items-center bg-primary overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1920&q=80')] bg-cover bg-center" />
-      </div>
+      {/* Background overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80" />
 
       <div className="container-premium relative z-10 py-20">
@@ -82,6 +79,8 @@ const HeroSection = memo(() => {
                 alt="Agricultural products"
                 className="relative rounded-3xl shadow-premium w-full h-[500px] object-cover"
                 loading="eager"
+                width="800"
+                height="500"
               />
 
               {/* Floating card */}

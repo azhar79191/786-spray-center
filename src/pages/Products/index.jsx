@@ -14,6 +14,23 @@ import ProductsGrid from './components/ProductsGrid'
 const ProductsFilters = lazy(() => import('./components/ProductsFilters'))
 const Pagination = lazy(() => import('./components/Pagination'))
 
+const PRODUCTS_STRUCTURED_DATA = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Agricultural Products",
+  "description": "Browse premium agricultural products including pesticides, insecticides, herbicides, fungicides, fertilizers, and seeds",
+  "url": "https://bismillahspraycenter.vercel.app/products",
+  "inLanguage": "en-PK",
+  "isPartOf": { "@type": "WebSite", "name": "Bismillah Spray Center", "url": "https://bismillahspraycenter.vercel.app" },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://bismillahspraycenter.vercel.app" },
+      { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://bismillahspraycenter.vercel.app/products" }
+    ]
+  }
+})
+
 /**
  * Products Page
  * Product listing with search, filter, and pagination
@@ -88,75 +105,6 @@ const Products = () => {
         keywords="buy pesticides online Pakistan, agricultural products catalog, insecticides price, herbicides for crops, fungicides Pakistan, fertilizers online, seeds dealer, Syngenta products, Bayer crop science, FMC pesticides Pakistan"
       />
 
-      {/* Enhanced Structured Data for Products Page */}
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "CollectionPage",
-          "name": "Agricultural Products",
-          "description": "Browse premium agricultural products including pesticides, insecticides, herbicides, fungicides, fertilizers, and seeds",
-          "url": "https://bismillahspraycenter.vercel.app/products",
-          "inLanguage": "en-PK",
-          "isPartOf": {
-            "@type": "WebSite",
-            "name": "Bismillah Spray Center",
-            "url": "https://bismillahspraycenter.vercel.app"
-          },
-          "about": {
-            "@type": "Thing",
-            "name": "Agricultural Products",
-            "description": "Pesticides, Insecticides, Herbicides, Fungicides, Fertilizers, Seeds"
-          },
-          "mainEntity": {
-            "@type": "ItemList",
-            "name": "Agricultural Products Catalog",
-            "description": "Complete catalog of agricultural products available at Bismillah Spray Center",
-            "numberOfItems": pagination.totalItems || 50,
-            "itemListElement": products.slice(0, 10).map((product, index) => ({
-              "@type": "ListItem",
-              "position": index + 1,
-              "item": {
-                "@type": "Product",
-                "name": product.name,
-                "description": product.description,
-                "image": product.image,
-                "brand": {
-                  "@type": "Brand",
-                  "name": product.brand?.name || "Bismillah Spray Center"
-                },
-                "category": product.category,
-                "offers": {
-                  "@type": "Offer",
-                  "availability": "https://schema.org/InStock",
-                  "priceCurrency": "PKR",
-                  "seller": {
-                    "@type": "Organization",
-                    "name": "Bismillah Spray Center"
-                  }
-                }
-              }
-            }))
-          },
-          "breadcrumb": {
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://bismillahspraycenter.vercel.app"
-              },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Products",
-                "item": "https://bismillahspraycenter.vercel.app/products"
-              }
-            ]
-          }
-        })}
-      </script>
-
       {/* Header with search */}
       <ProductsHeader 
         searchQuery={searchQuery}
@@ -165,9 +113,9 @@ const Products = () => {
       />
 
       {/* Products Section */}
-      <section className="section-padding bg-surface">
+      <section className="bg-surface py-8 lg:py-12">
         <div className="container-premium">
-          <div className="flex flex-col lg:flex-row gap-8">
+          <div className="flex flex-col lg:flex-row gap-8 lg:items-start">
             {/* Sidebar Filters - Lazy loaded */}
             <Suspense fallback={<div className="lg:w-64 flex-shrink-0"><Spinner /></div>}>
               <ProductsFilters

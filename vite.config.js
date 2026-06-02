@@ -142,7 +142,7 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: true,
+    sourcemap: false,
     chunkSizeWarningLimit: 1000, // Increase warning limit to 1000 KB
     rollupOptions: {
       output: {

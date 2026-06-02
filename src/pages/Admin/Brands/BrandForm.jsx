@@ -20,6 +20,7 @@ const BrandForm = () => {
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(isEditMode);
   const [logoPreview, setLogoPreview] = useState('');
+  const [logoChanged, setLogoChanged] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -91,6 +92,7 @@ const BrandForm = () => {
       const base64String = reader.result;
       setFormData((prev) => ({ ...prev, logo: base64String }));
       setLogoPreview(base64String);
+      setLogoChanged(true);
     };
     reader.readAsDataURL(file);
   };
@@ -104,22 +106,29 @@ const BrandForm = () => {
       return;
     }
 
-    if (!formData.logo) {
+    if (!formData.logo && !isEditMode) {
       toast.error('Brand logo is required');
       return;
     }
 
     try {
       setLoading(true);
+
+      // Only include logo in payload if it was changed (avoids sending huge base64 on every edit)
+      const payload = { ...formData };
+      if (isEditMode && !logoChanged) {
+        delete payload.logo;
+      }
+
       if (isEditMode) {
-        await updateBrand(id, formData);
+        await updateBrand(id, payload);
         toast.success('Brand updated successfully');
       } else {
-        await createBrand(formData);
+        await createBrand(payload);
         toast.success('Brand created successfully');
       }
       
-      // Clear brand caches
+      // Clear brand caches before navigating so list shows fresh data
       clearCacheByType('brands');
       
       // Refresh DataContext
@@ -177,7 +186,7 @@ const BrandForm = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="input-field"
+                className="w-full px-4 py-2 border border-primary-100 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent"
                 placeholder="Enter brand name"
                 required
               />
@@ -193,7 +202,7 @@ const BrandForm = () => {
                 value={formData.description}
                 onChange={handleChange}
                 rows="4"
-                className="input-field"
+                className="w-full px-4 py-2 border border-primary-100 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent"
                 placeholder="Enter brand description (optional)"
               />
             </div>
@@ -208,7 +217,7 @@ const BrandForm = () => {
                 name="website"
                 value={formData.website}
                 onChange={handleChange}
-                className="input-field"
+                className="w-full px-4 py-2 border border-primary-100 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent"
                 placeholder="https://example.com"
               />
             </div>
@@ -223,7 +232,7 @@ const BrandForm = () => {
                 name="country"
                 value={formData.country}
                 onChange={handleChange}
-                className="input-field"
+                className="w-full px-4 py-2 border border-primary-100 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent"
                 placeholder="Enter country"
               />
             </div>
@@ -238,7 +247,7 @@ const BrandForm = () => {
                 name="order"
                 value={formData.order}
                 onChange={handleChange}
-                className="input-field"
+                className="w-full px-4 py-2 border border-primary-100 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent"
                 placeholder="0"
               />
               <p className="text-xs text-primary-300 mt-1">

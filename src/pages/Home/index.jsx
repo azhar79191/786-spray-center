@@ -1,6 +1,5 @@
 import { lazy, Suspense } from 'react'
 import SEO from '../../components/common/SEO'
-import Spinner from '../../components/loaders/Spinner'
 
 // Eager load above-the-fold content
 import HeroSection from './components/HeroSection'
@@ -33,16 +32,14 @@ const Home = () => {
       <HeroSection />
       <FeaturedProducts />
 
-      {/* Below the fold - Lazy load */}
-      <Suspense fallback={<div className="flex justify-center py-12"><Spinner /></div>}>
-        <AboutPreview />
-        <WhyChooseUs />
-        <WorkingHours />
-        <ServicesPreview />
-        <Testimonials />
-        <FAQPreview />
-        <ContactCTA />
-      </Suspense>
+      {/* Below the fold - each has its own fallback so they render independently */}
+      <Suspense fallback={<div className="h-32" />}><AboutPreview /></Suspense>
+      <Suspense fallback={<div className="h-32" />}><WhyChooseUs /></Suspense>
+      <Suspense fallback={<div className="h-32" />}><WorkingHours /></Suspense>
+      <Suspense fallback={<div className="h-32" />}><ServicesPreview /></Suspense>
+      <Suspense fallback={<div className="h-32" />}><Testimonials /></Suspense>
+      <Suspense fallback={<div className="h-32" />}><FAQPreview /></Suspense>
+      <Suspense fallback={<div className="h-32" />}><ContactCTA /></Suspense>
     </>
   )
 }

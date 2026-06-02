@@ -53,15 +53,12 @@ const Navbar = () => {
     <>
 
       {/* Main navbar */}
-      <motion.nav
-        className={`sticky top-0 z-50 transition-all duration-300 ${
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled 
             ? 'bg-primary/95 backdrop-blur-md shadow-lg' 
             : 'bg-primary'
         }`}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
         role="navigation"
         aria-label="Main navigation"
       >
@@ -119,7 +116,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-      </motion.nav>
+      </nav>
     </>
   )
 }

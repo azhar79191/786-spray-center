@@ -120,5 +120,3 @@ define(['./workbox-f11c8a10'], (function (workbox) { 'use strict';
   }), 'GET');
 
 }));
-//# sourceMappingURL=sw.js.map
-//# sourceMappingURL=sw.js.map

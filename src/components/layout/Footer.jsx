@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import {
   FaPhone,
   FaEnvelope,
@@ -41,12 +40,7 @@ const Footer = () => {
       <div className="container-premium py-16">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
           {/* Brand column */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
+          <div>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-12 bg-gold rounded-lg flex items-center justify-center">
                 <FaLeaf className="w-6 h-6 text-primary" />
@@ -86,15 +80,10 @@ const Footer = () => {
                 <FaYoutube className="w-5 h-5" />
               </a>
             </div>
-          </motion.div>
+          </div>
 
           {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
+          <div>
             <h4 className="text-gold font-semibold text-lg mb-6">Quick Links</h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
@@ -108,15 +97,10 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Products */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
+          <div>
             <h4 className="text-gold font-semibold text-lg mb-6">Our Products</h4>
             <ul className="space-y-3">
               {productLinks.map((link) => (
@@ -130,15 +114,10 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
+          <div>
             <h4 className="text-gold font-semibold text-lg mb-6">Contact Us</h4>
             <ul className="space-y-4">
               <li>
@@ -194,7 +173,7 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 

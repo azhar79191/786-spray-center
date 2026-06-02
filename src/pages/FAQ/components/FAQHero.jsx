@@ -29,7 +29,7 @@ const FAQHero = memo(({ searchQuery, setSearchQuery }) => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search questions..."
-                className="w-full px-6 py-4 pl-14 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder:text-primary-400 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+                className="w-full px-6 py-4 pl-14 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-primary-400 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
                 aria-label="Search FAQs"
               />
             </div>

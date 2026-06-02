@@ -2,107 +2,89 @@ import { useState, useCallback, useEffect, useMemo } from 'react'
 import { useData } from '../contexts/DataContext'
 import apiClient from '../api/axios.js'
 
-/**
- * Custom hook for product operations
- * Uses preloaded data from DataContext for instant loading
- * Falls back to API calls for specific queries
- */
 export const useProducts = (initialFilters = {}) => {
   const dataContext = useData()
   const [products, setProducts] = useState([])
+  const [totalCount, setTotalCount] = useState(0)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [filters, setFilters] = useState(initialFilters)
 
-  // Use preloaded data from context
   const featuredProducts = dataContext.featuredProducts
   const categories = dataContext.categories
-  const brands = dataContext.brands
+  const brands = dataContext.brandList.length > 0
+    ? dataContext.brandList.filter(b => b.isActive).map(b => b.name)
+    : dataContext.brands
 
-  // Calculate pagination from filtered products
   const pagination = useMemo(() => {
     const itemsPerPage = filters.limit || 12
     const currentPage = filters.page || 1
-    const totalItems = products.length
-    const totalPages = Math.ceil(totalItems / itemsPerPage)
+    const totalPages = Math.ceil(totalCount / itemsPerPage)
+    return { currentPage, totalPages, totalItems: totalCount, itemsPerPage }
+  }, [totalCount, filters.limit, filters.page])
 
-    return {
-      currentPage,
-      totalPages,
-      totalItems,
-      itemsPerPage,
-    }
-  }, [products.length, filters.limit, filters.page])
-
-  // Fetch products with filters - uses preloaded data when possible
   const fetchProducts = useCallback(async (customFilters = {}) => {
     const mergedFilters = { ...filters, ...customFilters }
     setLoading(true)
     setError(null)
 
     try {
-      // Use preloaded data if no specific filters
-      if (!mergedFilters.search && !mergedFilters.category && !mergedFilters.brand) {
-        let allProducts = dataContext.products
-        
-        // Filter out products with stockStatus 'Out of Stock' if needed
-        allProducts = allProducts.filter(p => p.stockStatus !== 'Out of Stock')
-        
-        const page = mergedFilters.page || 1
-        const limit = mergedFilters.limit || 12
-        const start = (page - 1) * limit
-        const end = start + limit
-        
-        setProducts(allProducts.slice(start, end))
-        setLoading(false)
-        return { success: true, data: allProducts.slice(start, end) }
-      }
-
-      // Apply filters to preloaded data
-      let filtered = dataContext.filterProducts(mergedFilters)
-      
-      // Filter out 'Out of Stock' products
-      filtered = filtered.filter(p => p.stockStatus !== 'Out of Stock')
-      
       const page = mergedFilters.page || 1
       const limit = mergedFilters.limit || 12
       const start = (page - 1) * limit
       const end = start + limit
-      
-      setProducts(filtered.slice(start, end))
-      return { success: true, data: filtered.slice(start, end) }
+
+      let allFiltered = dataContext.products.filter(p => p.stockStatus !== 'Out of Stock')
+
+      // Apply category filter
+      if (mergedFilters.category) {
+        allFiltered = allFiltered.filter(p => p.category === mergedFilters.category)
+      }
+
+      // Apply brand filter
+      if (mergedFilters.brand) {
+        allFiltered = allFiltered.filter(p => {
+          const brandName = typeof p.brand === 'object' ? p.brand?.name : p.brand
+          return brandName === mergedFilters.brand
+        })
+      }
+
+      // Apply search filter
+      if (mergedFilters.search) {
+        const q = mergedFilters.search.toLowerCase()
+        allFiltered = allFiltered.filter(p =>
+          p.name?.toLowerCase().includes(q) ||
+          p.description?.toLowerCase().includes(q) ||
+          p.category?.toLowerCase().includes(q)
+        )
+      }
+
+      setTotalCount(allFiltered.length)
+      setProducts(allFiltered.slice(start, end))
+      return { success: true, data: allFiltered.slice(start, end) }
     } catch (err) {
       setError(err.message || 'Failed to fetch products')
       return null
     } finally {
       setLoading(false)
     }
-  }, [filters, dataContext])
+  }, [filters, dataContext.products])
 
-  // Fetch featured products - uses preloaded data
-  const fetchFeatured = useCallback(async (limit = 6) => {
-    return { success: true, data: featuredProducts.slice(0, limit) }
-  }, [featuredProducts])
-
-  // Fetch categories - uses preloaded data
-  const fetchCategories = useCallback(async () => {
-    return { success: true, data: categories }
-  }, [categories])
-
-  // Fetch brands - uses preloaded data
-  const fetchBrands = useCallback(async () => {
-    return { success: true, data: brands }
-  }, [brands])
-
-  // Search products - uses preloaded data
   const searchProducts = useCallback(async (searchQuery) => {
     setLoading(true)
     setError(null)
-
     try {
-      const results = dataContext.searchProducts(searchQuery)
-      const limit = filters.limit || 12
-      setProducts(results.slice(0, limit))
+      const q = searchQuery.toLowerCase()
+      const results = dataContext.products.filter(p =>
+        p.stockStatus !== 'Out of Stock' && (
+          p.name?.toLowerCase().includes(q) ||
+          p.description?.toLowerCase().includes(q) ||
+          p.category?.toLowerCase().includes(q) ||
+          (typeof p.brand === 'object' ? p.brand?.name : p.brand)?.toLowerCase().includes(q)
+        )
+      )
+      setTotalCount(results.length)
+      setProducts(results.slice(0, filters.limit || 12))
       return { success: true, data: results }
     } catch (err) {
       setError(err.message || 'Search failed')
@@ -110,37 +92,36 @@ export const useProducts = (initialFilters = {}) => {
     } finally {
       setLoading(false)
     }
-  }, [dataContext, filters.limit])
+  }, [dataContext.products, filters.limit])
 
-  // Update filters
+  const fetchFeatured = useCallback(async (limit = 6) => {
+    return { success: true, data: featuredProducts.slice(0, limit) }
+  }, [featuredProducts])
+
+  const fetchCategories = useCallback(async () => {
+    return { success: true, data: categories }
+  }, [categories])
+
+  const fetchBrands = useCallback(async () => {
+    return { success: true, data: brands }
+  }, [brands])
+
   const updateFilters = useCallback((newFilters) => {
     setFilters(prev => ({ ...prev, ...newFilters }))
   }, [])
 
-  // Reset filters
   const resetFilters = useCallback(() => {
     setFilters(initialFilters)
   }, [initialFilters])
 
-  // Fetch single product - uses preloaded data first
   const fetchProductById = useCallback(async (id) => {
     setLoading(true)
     setError(null)
-
     try {
-      // Try to get from preloaded data first
-      const cachedProduct = dataContext.getProductById(id)
-      if (cachedProduct) {
-        setLoading(false)
-        return cachedProduct
-      }
-
-      // Fallback to API if not in cache
+      const cached = dataContext.getProductById(id)
+      if (cached) { setLoading(false); return cached }
       const response = await apiClient.get(`/products/${id}`)
-      if (response.data.success) {
-        return response.data.data
-      }
-      return null
+      return response.data.success ? response.data.data : null
     } catch (err) {
       setError(err.message || 'Failed to fetch product')
       return null
@@ -149,21 +130,17 @@ export const useProducts = (initialFilters = {}) => {
     }
   }, [dataContext])
 
-  // Fetch related products - uses preloaded data
   const fetchRelatedProducts = useCallback(async (id, limit = 4) => {
     try {
-      const related = dataContext.getRelatedProducts(id, limit)
-      return related
-    } catch (err) {
-      console.error('Failed to fetch related products:', err)
+      return dataContext.getRelatedProducts(id, limit)
+    } catch {
       return []
     }
   }, [dataContext])
 
-  // Initial load - fetch products when filters change or on mount
   useEffect(() => {
     fetchProducts()
-  }, [filters.category, filters.brand, filters.page])
+  }, [filters.category, filters.brand, filters.page, dataContext.products])
 
   return {
     products,

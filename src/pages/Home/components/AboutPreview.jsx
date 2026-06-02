@@ -23,6 +23,8 @@ const AboutPreview = memo(() => {
               alt="About Bismillah Spray Center"
               className="rounded-3xl shadow-premium w-full h-[400px] object-cover"
               loading="lazy"
+              width="800"
+              height="400"
             />
           </motion.div>
 

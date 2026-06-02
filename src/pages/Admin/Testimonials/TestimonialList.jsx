@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FaStar, FaCheck, FaTimes, FaTrash, FaFilter, FaAward } from 'react-icons/fa';
+import { FaStar, FaCheck, FaTimes, FaTrash, FaFilter, FaAward, FaExclamationTriangle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import {
   getAllTestimonials,
@@ -13,6 +13,7 @@ const TestimonialList = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
+  const [confirmDelete, setConfirmDelete] = useState(null);
 
   useEffect(() => {
     fetchTestimonials();
@@ -62,14 +63,10 @@ const TestimonialList = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!id) {
-      toast.error('Invalid testimonial ID');
-      return;
-    }
-
-    if (!window.confirm('Are you sure you want to delete this testimonial?')) return;
-
+  const handleDelete = async () => {
+    if (!confirmDelete) return;
+    const id = confirmDelete;
+    setConfirmDelete(null);
     try {
       await deleteTestimonial(id);
       toast.success('Testimonial deleted successfully');
@@ -111,6 +108,25 @@ const TestimonialList = () => {
 
   return (
     <div>
+      {confirmDelete && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl p-6 shadow-xl max-w-sm w-full">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <FaExclamationTriangle className="w-5 h-5 text-red-500" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-primary">Delete Testimonial</h3>
+                <p className="text-sm text-primary-300">This action cannot be undone.</p>
+              </div>
+            </div>
+            <div className="flex gap-3 justify-end">
+              <button onClick={() => setConfirmDelete(null)} className="btn-secondary text-sm py-2 px-4">Cancel</button>
+              <button onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white text-sm py-2 px-4 rounded-lg transition-colors">Delete</button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
@@ -214,7 +230,7 @@ const TestimonialList = () => {
                       <FaCheck /> Approve
                     </button>
                     <button
-                      onClick={() => handleDelete(testimonial._id)}
+                      onClick={() => setConfirmDelete(testimonial._id)}
                       className="flex-1 bg-red-500 hover:bg-red-600 text-white text-sm py-2 rounded-lg transition-colors flex items-center justify-center gap-2"
                     >
                       <FaTimes /> Reject
@@ -239,7 +255,7 @@ const TestimonialList = () => {
                       <FaTimes /> Unapprove
                     </button>
                     <button
-                      onClick={() => handleDelete(testimonial._id)}
+                      onClick={() => setConfirmDelete(testimonial._id)}
                       className="bg-red-500 hover:bg-red-600 text-white text-sm py-2 px-4 rounded-lg transition-colors"
                     >
                       <FaTrash />

@@ -1,21 +1,13 @@
-import { memo, useEffect } from 'react'
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { FaArrowRight } from 'react-icons/fa'
 import SectionTitle from '../../../components/common/SectionTitle'
 import ProductCard from '../../../components/cards/ProductCard'
-import { useProducts } from '../../../hooks/useProducts'
+import { useData } from '../../../contexts/DataContext'
 import { SkeletonProductGrid } from '../../../components/loaders/SkeletonLoader'
 
-/**
- * Featured Products Section
- * Displays featured products with lazy loading
- */
 const FeaturedProducts = memo(() => {
-  const { featuredProducts, fetchFeatured, loading } = useProducts()
-
-  useEffect(() => {
-    fetchFeatured(6)
-  }, [fetchFeatured])
+  const { featuredProducts, loading } = useData()
 
   return (
     <section className="section-padding bg-surface">

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaPlus, FaEdit, FaTrash, FaImage, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaImage, FaEye, FaEyeSlash, FaExclamationTriangle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { getAllGalleryImages, deleteGalleryImage } from '../../../services/galleryService';
 import { useData } from '../../../contexts/DataContext';
@@ -11,6 +11,7 @@ const GalleryList = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
+  const [confirmDelete, setConfirmDelete] = useState(null);
   const { refreshData } = useData();
 
   useEffect(() => {
@@ -20,6 +21,7 @@ const GalleryList = () => {
   const fetchImages = async () => {
     try {
       setLoading(true);
+      clearCacheByType('gallery'); // always bypass cache for admin list
       const response = await getAllGalleryImages();
       setImages(response.data || []);
     } catch (error) {
@@ -29,18 +31,16 @@ const GalleryList = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this image?')) return;
-
+  const handleDelete = async () => {
+    if (!confirmDelete) return;
+    const id = confirmDelete;
+    setConfirmDelete(null);
     try {
       await deleteGalleryImage(id);
       toast.success('Image deleted successfully');
-      
-      // Clear gallery caches
       clearCacheByType('gallery');
       await refreshData('gallery');
-      
-      fetchImages();
+      setImages(prev => prev.filter(img => img._id !== id));
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to delete image');
     }
@@ -65,6 +65,26 @@ const GalleryList = () => {
 
   return (
     <div>
+      {/* Inline Delete Confirm */}
+      {confirmDelete && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl p-6 shadow-xl max-w-sm w-full">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <FaExclamationTriangle className="w-5 h-5 text-red-500" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-primary">Delete Image</h3>
+                <p className="text-sm text-primary-300">This action cannot be undone.</p>
+              </div>
+            </div>
+            <div className="flex gap-3 justify-end">
+              <button onClick={() => setConfirmDelete(null)} className="btn-secondary text-sm py-2 px-4">Cancel</button>
+              <button onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white text-sm py-2 px-4 rounded-lg transition-colors">Delete</button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
@@ -179,7 +199,7 @@ const GalleryList = () => {
                     <FaEdit /> Edit
                   </Link>
                   <button
-                    onClick={() => handleDelete(image._id)}
+                    onClick={() => setConfirmDelete(image._id)}
                     className="flex-1 bg-red-500 hover:bg-red-600 text-white text-sm py-2 rounded-lg transition-colors flex items-center justify-center gap-2"
                   >
                     <FaTrash /> Delete

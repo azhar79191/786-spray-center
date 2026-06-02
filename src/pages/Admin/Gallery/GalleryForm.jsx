@@ -20,6 +20,7 @@ const GalleryForm = () => {
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(isEditMode);
   const [imagePreview, setImagePreview] = useState('');
+  const [imageChanged, setImageChanged] = useState(false);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -91,6 +92,7 @@ const GalleryForm = () => {
       const base64String = reader.result;
       setFormData((prev) => ({ ...prev, image: base64String }));
       setImagePreview(base64String);
+      setImageChanged(true);
     };
     reader.readAsDataURL(file);
   };
@@ -104,22 +106,29 @@ const GalleryForm = () => {
       return;
     }
 
-    if (!formData.image) {
+    if (!formData.image && !isEditMode) {
       toast.error('Image is required');
       return;
     }
 
     try {
       setLoading(true);
+
+      // Only include image in payload if it was changed
+      const payload = { ...formData };
+      if (isEditMode && !imageChanged) {
+        delete payload.image;
+      }
+
       if (isEditMode) {
-        await updateGalleryImage(id, formData);
+        await updateGalleryImage(id, payload);
         toast.success('Image updated successfully');
       } else {
-        await createGalleryImage(formData);
+        await createGalleryImage(payload);
         toast.success('Image created successfully');
       }
       
-      // Clear gallery caches
+      // Clear gallery caches before navigating so list shows fresh data
       clearCacheByType('gallery');
       await refreshData('gallery');
       
@@ -174,7 +183,7 @@ const GalleryForm = () => {
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                className="input-field"
+                className="w-full px-4 py-2 border border-primary-100 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent"
                 placeholder="Enter image title"
                 required
               />
@@ -190,7 +199,7 @@ const GalleryForm = () => {
                 value={formData.description}
                 onChange={handleChange}
                 rows="4"
-                className="input-field"
+                className="w-full px-4 py-2 border border-primary-100 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent"
                 placeholder="Enter image description (optional)"
               />
             </div>
@@ -204,7 +213,7 @@ const GalleryForm = () => {
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className="input-field"
+                className="w-full px-4 py-2 border border-primary-100 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent"
                 required
               >
                 {categories.map((cat) => (
@@ -225,7 +234,7 @@ const GalleryForm = () => {
                 name="order"
                 value={formData.order}
                 onChange={handleChange}
-                className="input-field"
+                className="w-full px-4 py-2 border border-primary-100 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent"
                 placeholder="0"
               />
               <p className="text-xs text-primary-300 mt-1">

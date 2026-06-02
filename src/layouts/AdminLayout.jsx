@@ -1,10 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { 
-  FaTachometerAlt, 
-  FaBox, 
-  FaQuestionCircle, 
+import {
+  FaTachometerAlt,
+  FaBox,
+  FaQuestionCircle,
   FaEnvelope,
   FaSignOutAlt,
   FaBars,
@@ -16,7 +15,6 @@ import {
   FaStar
 } from 'react-icons/fa'
 import { toast } from 'react-toastify'
-import { useState } from 'react'
 
 /**
  * Admin Layout
@@ -199,13 +197,7 @@ const AdminLayout = () => {
 
         {/* Page Content */}
         <main className="flex-1 p-4 lg:p-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Outlet />
-          </motion.div>
+          <Outlet />
         </main>
 
         {/* Footer */}

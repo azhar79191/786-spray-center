@@ -9,7 +9,6 @@ const apiClient = axios.create({
   timeout: 15000, // Reduced timeout for faster failure detection
   headers: {
     'Content-Type': 'application/json',
-    'Accept-Encoding': 'gzip, deflate, br', // Enable compression
   },
 })
 

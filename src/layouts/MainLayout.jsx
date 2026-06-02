@@ -14,7 +14,7 @@ const MainLayout = () => {
   return (
     <div className="min-h-screen flex flex-col bg-surface">
       <Navbar />
-      <main id="main-content" className="flex-grow pb-16 md:pb-0" role="main">
+      <main id="main-content" className="flex-grow pt-20 pb-16 md:pb-0" role="main">
         <Outlet />
       </main>
       <Footer />

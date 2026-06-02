@@ -1,23 +1,20 @@
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { FaShoppingCart, FaEye, FaStar } from 'react-icons/fa'
+import { FaEye } from 'react-icons/fa'
 import { formatPrice, getCategoryColor, getStockStatusColor } from '../../utils/helpers'
 
-/**
- * Reusable product card component
- * Displays product image, info, and actions
- */
-const ProductCard = ({ product, index = 0 }) => {
+const ProductCard = memo(({ product, index = 0 }) => {
   const minPrice = product.sizes?.length > 0 
     ? Math.min(...product.sizes.map(s => s.price)) 
     : 0
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-30px' }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
       className="group bg-white rounded-2xl shadow-card overflow-hidden hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1"
     >
       {/* Image container */}
@@ -116,6 +113,8 @@ const ProductCard = ({ product, index = 0 }) => {
       </div>
     </motion.div>
   )
-}
+})
+
+ProductCard.displayName = 'ProductCard'
 
 export default ProductCard
