@@ -152,9 +152,10 @@ export const clearCache = () => {
 /**
  * Clear specific cache entry
  */
-export const clearCacheEntry = (url, params = {}) => {
-  const cacheKey = `${url}?${JSON.stringify(params)}`;
-  cache.delete(cacheKey);
+export const clearCacheEntry = (url) => {
+  for (const key of cache.keys()) {
+    if (key.startsWith(`${url}?`)) cache.delete(key)
+  }
 };
 
 /**
