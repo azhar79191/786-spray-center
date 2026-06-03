@@ -22,7 +22,7 @@ const WorkingHours = memo(() => {
               Visit Us Today
             </h2>
             <p className="text-primary/70 mb-8">
-              Our shop is conveniently located on Behramka Hithar Tehsil Michinabad District BahwalNagar. Visit us for all your agricultural needs.
+              Our shop is conveniently located on Behramka Hithar Tehsil Minchinabad District BahwalNagar. Visit us for all your agricultural needs.
             </p>
 
             <div className="space-y-4">

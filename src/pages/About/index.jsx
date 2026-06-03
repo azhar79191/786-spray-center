@@ -1,6 +1,5 @@
 import { lazy, Suspense } from 'react'
 import SEO from '../../components/common/SEO'
-import Spinner from '../../components/loaders/Spinner'
 
 // Eager load
 import AboutHero from './components/AboutHero'
@@ -23,11 +22,9 @@ const About = () => {
       <AboutHero />
       <MissionVision />
       
-      <Suspense fallback={<div className="flex justify-center py-12"><Spinner /></div>}>
-        <CoreValues />
-        <Timeline />
-        <Stats />
-      </Suspense>
+      <Suspense fallback={<div className="h-32" />}><CoreValues /></Suspense>
+      <Suspense fallback={<div className="h-32" />}><Timeline /></Suspense>
+      <Suspense fallback={<div className="h-32" />}><Stats /></Suspense>
     </>
   )
 }

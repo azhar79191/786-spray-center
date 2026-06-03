@@ -55,7 +55,7 @@ const Products = () => {
     resetFilters,
     searchProducts,
   } = useProducts({
-    page: 1,
+    page: parseInt(searchParams.get('page') || '1'),
     limit: 12,
     category: searchParams.get('category') || '',
     brand: searchParams.get('brand') || '',
@@ -84,10 +84,20 @@ const Products = () => {
   const handleBrandChange = (brand) => {
     const newBrand = filters.brand === brand ? '' : brand
     updateFilters({ brand: newBrand, page: 1 })
+    const params = {}
+    if (filters.category) params.category = filters.category
+    if (newBrand) params.brand = newBrand
+    setSearchParams(params)
   }
 
   const handlePageChange = (page) => {
     updateFilters({ page })
+    const params = {}
+    if (filters.category) params.category = filters.category
+    if (filters.brand) params.brand = filters.brand
+    if (searchQuery) params.search = searchQuery
+    if (page > 1) params.page = String(page)
+    setSearchParams(params)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 

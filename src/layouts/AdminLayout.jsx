@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
 import {
   FaTachometerAlt,
@@ -15,6 +15,7 @@ import {
   FaStar
 } from 'react-icons/fa'
 import { toast } from 'react-toastify'
+import apiClient from '../api/axios'
 
 /**
  * Admin Layout
@@ -39,20 +40,30 @@ const AdminLayout = () => {
     }
   }
 
-  useEffect(() => {
-    // Check authentication
-    const token = localStorage.getItem('adminToken')
-    if (!token) {
-      navigate('/admin/login')
-    }
-  }, [navigate])
-
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     localStorage.removeItem('adminToken')
     localStorage.removeItem('adminUser')
     toast.success('Logged out successfully')
     navigate('/admin/login')
-  }
+  }, [navigate])
+
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken')
+    if (!token) {
+      navigate('/admin/login')
+      return
+    }
+
+    // Verify token is still valid by calling /auth/me
+    apiClient.get('/auth/me').catch((err) => {
+      if (err.response?.status === 401 || err.response?.status === 403) {
+        localStorage.removeItem('adminToken')
+        localStorage.removeItem('adminUser')
+        toast.error('Session expired. Please login again.')
+        navigate('/admin/login')
+      }
+    })
+  }, [navigate])
 
   const navItems = [
     {

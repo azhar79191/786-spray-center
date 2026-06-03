@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { 
-  FaArrowLeft, 
-  FaShoppingCart, 
-  FaCheck, 
-  FaTruck, 
+import {
+  FaArrowLeft,
+  FaCheck,
+  FaTruck,
   FaShieldAlt,
   FaStar,
   FaShareAlt,
@@ -13,8 +12,7 @@ import {
 } from 'react-icons/fa'
 import SEO from '../../components/common/SEO'
 import ProductCard from '../../components/cards/ProductCard'
-import Spinner from '../../components/loaders/Spinner'
-import { SkeletonProductGrid, SkeletonText, SkeletonImage } from '../../components/loaders/SkeletonLoader'
+import { SkeletonText, SkeletonImage } from '../../components/loaders/SkeletonLoader'
 import { useProducts } from '../../hooks/useProducts'
 import { formatPrice, getCategoryColor, getStockStatusColor, getWhatsAppLink } from '../../utils/helpers'
 import { CONTACT } from '../../utils/constants'
@@ -71,7 +69,7 @@ const ProductDetails = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-surface pt-24">
+      <div className="min-h-screen bg-surface pt-20">
         <div className="container-premium">
           <div className="grid lg:grid-cols-2 gap-12">
             <SkeletonImage className="h-[500px] rounded-3xl" />
