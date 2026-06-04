@@ -3,6 +3,7 @@ import { Suspense, lazy } from 'react'
 import MainLayout from '../layouts/MainLayout'
 import AdminLayout from '../layouts/AdminLayout'
 import LoadingScreen from '../components/loaders/LoadingScreen'
+import PageTransition from '../components/common/PageTransition'
 
 // Lazy load public pages
 const Home = lazy(() => import('../pages/Home'))
@@ -40,15 +41,15 @@ const AppRoutes = () => {
     <Routes>
       {/* Public Routes */}
       <Route element={<MainLayout />}>
-        <Route path="/" element={<Suspense fallback={<LoadingScreen />}><Home /></Suspense>} />
-        <Route path="/about" element={<Suspense fallback={<LoadingScreen />}><About /></Suspense>} />
-        <Route path="/products" element={<Suspense fallback={<LoadingScreen />}><Products /></Suspense>} />
-        <Route path="/products/:id" element={<Suspense fallback={<LoadingScreen />}><ProductDetails /></Suspense>} />
-        <Route path="/services" element={<Suspense fallback={<LoadingScreen />}><Services /></Suspense>} />
-        <Route path="/brands" element={<Suspense fallback={<LoadingScreen />}><Brands /></Suspense>} />
-        <Route path="/faq" element={<Suspense fallback={<LoadingScreen />}><FAQ /></Suspense>} />
-        <Route path="/gallery" element={<Suspense fallback={<LoadingScreen />}><Gallery /></Suspense>} />
-        <Route path="/contact" element={<Suspense fallback={<LoadingScreen />}><Contact /></Suspense>} />
+        <Route path="/" element={<Suspense fallback={<LoadingScreen />}><PageTransition><Home /></PageTransition></Suspense>} />
+        <Route path="/about" element={<Suspense fallback={<LoadingScreen />}><PageTransition><About /></PageTransition></Suspense>} />
+        <Route path="/products" element={<Suspense fallback={<LoadingScreen />}><PageTransition><Products /></PageTransition></Suspense>} />
+        <Route path="/products/:id" element={<Suspense fallback={<LoadingScreen />}><PageTransition><ProductDetails /></PageTransition></Suspense>} />
+        <Route path="/services" element={<Suspense fallback={<LoadingScreen />}><PageTransition><Services /></PageTransition></Suspense>} />
+        <Route path="/brands" element={<Suspense fallback={<LoadingScreen />}><PageTransition><Brands /></PageTransition></Suspense>} />
+        <Route path="/faq" element={<Suspense fallback={<LoadingScreen />}><PageTransition><FAQ /></PageTransition></Suspense>} />
+        <Route path="/gallery" element={<Suspense fallback={<LoadingScreen />}><PageTransition><Gallery /></PageTransition></Suspense>} />
+        <Route path="/contact" element={<Suspense fallback={<LoadingScreen />}><PageTransition><Contact /></PageTransition></Suspense>} />
       </Route>
 
       {/* Admin Login (No Layout) */}

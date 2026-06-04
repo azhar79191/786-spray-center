@@ -68,8 +68,8 @@ const WorkingHours = memo(() => {
                 rel="noopener noreferrer"
                 className="group flex items-center gap-4 p-4 bg-primary-700 rounded-xl hover:bg-primary-50 transition-colors"
               >
-                <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <FaWhatsapp className="w-5 h-5 text-white" />
+                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <FaWhatsapp className="w-5 h-5 text-gold" />
                 </div>
 
                 <div>

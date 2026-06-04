@@ -33,7 +33,7 @@ const ContactCTA = memo(() => {
               href={getWhatsAppLink(CONTACT.whatsapp, 'Hello, I would like to inquire about your products.')}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg transition-all duration-300 hover:bg-green-700"
+              className="inline-flex items-center justify-center px-6 py-3 bg-primary text-gold font-semibold rounded-lg transition-all duration-300 hover:bg-primary-50 shadow-gold"
             >
               <FaWhatsapp className="w-5 h-5 mr-2" />
               WhatsApp Us

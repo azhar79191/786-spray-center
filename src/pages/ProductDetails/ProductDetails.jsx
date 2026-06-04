@@ -269,7 +269,7 @@ const ProductDetails = () => {
               <div className="flex flex-wrap gap-4 mb-8">
                 <button
                   onClick={handleWhatsAppInquiry}
-                  className="flex-1 min-w-[200px] px-6 py-4 bg-green-500 text-white font-semibold rounded-xl hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
+                  className="flex-1 min-w-[200px] px-6 py-4 bg-primary text-gold font-semibold rounded-xl hover:bg-primary-50 transition-colors flex items-center justify-center gap-2 shadow-gold"
                 >
                   <FaWhatsapp className="w-5 h-5" />
                   Inquire on WhatsApp

@@ -39,7 +39,7 @@ const TestimonialCard = ({ testimonial, index = 0 }) => {
       </div>
 
       {/* Content */}
-      <p className="text-primary-200 text-sm leading-relaxed mb-6 italic">
+      <p className="text-primary-300 text-sm leading-relaxed mb-6 italic">
         "{testimonial.content}"
       </p>
 

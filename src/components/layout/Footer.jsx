@@ -136,7 +136,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="flex items-start gap-3 text-primary-300 hover:text-gold transition-colors group"
                 >
-                  <FaWhatsapp className="w-5 h-5 mt-0.5 text-green-400 group-hover:scale-110 transition-transform" />
+                  <FaWhatsapp className="w-5 h-5 mt-0.5 text-gold group-hover:scale-110 transition-transform" />
                   <span className="text-sm">+92-{CONTACT.whatsapp.slice(2)}</span>
                 </a>
               </li>

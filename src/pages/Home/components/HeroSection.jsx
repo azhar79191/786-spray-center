@@ -2,6 +2,7 @@ import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FaArrowRight, FaLeaf } from 'react-icons/fa'
+import ParticleField from '../../../components/common/ParticleField'
 
 /**
  * Hero Section Component
@@ -12,6 +13,10 @@ const HeroSection = memo(() => {
     <section className="relative min-h-[90vh] flex items-center bg-primary overflow-hidden">
       {/* Background overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80" />
+      {/* Particle field — above overlay, below content */}
+      <div className="absolute inset-0 z-[1]">
+        <ParticleField />
+      </div>
 
       <div className="container-premium relative z-10 py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
