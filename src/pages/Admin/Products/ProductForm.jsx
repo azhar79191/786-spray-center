@@ -6,13 +6,12 @@ import SEO from '../../../components/common/SEO'
 import Spinner from '../../../components/loaders/Spinner'
 import { getProductById, createProduct, updateProduct } from '../../../services/productService'
 import { useData } from '../../../contexts/DataContext'
-import { clearCacheByType } from '../../../utils/cacheUtils'
 
 const ProductForm = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const isEdit = Boolean(id)
-  const { refreshData, brandList } = useData()
+  const { invalidateAndRefresh, brandList } = useData()
 
   const [loading, setLoading] = useState(false)
   const [imagePreview, setImagePreview] = useState('')
@@ -136,12 +135,7 @@ const ProductForm = () => {
         toast.success('Product created successfully')
       }
 
-      clearCacheByType('products')
-      await refreshData('products')
-      await refreshData('featuredProducts')
-      await refreshData('categories')
-      await refreshData('brands')
-
+      await invalidateAndRefresh(['products', 'featuredProducts', 'categories', 'brands', 'brandList'])
       navigate('/admin/products')
     } catch (error) {
       toast.error(error.response?.data?.message || error.message || 'Failed to save product')

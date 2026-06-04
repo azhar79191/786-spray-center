@@ -9,7 +9,7 @@ import apiClient from '../../../api/axios'
 import ENDPOINTS from '../../../api/endpoints'
 
 const ProductList = () => {
-  const { refreshData } = useData()
+  const { invalidateAndRefresh } = useData()
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
@@ -46,9 +46,7 @@ const ProductList = () => {
     try {
       await apiClient.delete(ENDPOINTS.products.delete(id))
       toast.success('Product deleted successfully')
-      clearCacheByType('products')
-      await refreshData('products')
-      await refreshData('featuredProducts')
+      await invalidateAndRefresh(['products', 'featuredProducts'])
       setProducts(prev => prev.filter(p => p._id !== id))
     } catch (error) {
       toast.error(error.message || 'Failed to delete product')

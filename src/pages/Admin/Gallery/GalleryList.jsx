@@ -11,7 +11,7 @@ const GalleryList = () => {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
   const [confirmDelete, setConfirmDelete] = useState(null);
-  const { refreshData } = useData();
+  const { invalidateAndRefresh } = useData();
 
   useEffect(() => {
     fetchImages();
@@ -36,8 +36,7 @@ const GalleryList = () => {
     try {
       await deleteGalleryImage(id);
       toast.success('Image deleted successfully');
-      clearCacheByType('gallery');
-      await refreshData('gallery');
+      await invalidateAndRefresh(['gallery'])
       setImages(prev => prev.filter(img => img._id !== id));
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to delete image');

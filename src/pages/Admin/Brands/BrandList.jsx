@@ -11,7 +11,7 @@ const BrandList = () => {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
   const [confirmDelete, setConfirmDelete] = useState(null);
-  const { refreshData } = useData();
+  const { invalidateAndRefresh } = useData();
 
   useEffect(() => {
     fetchBrands();
@@ -36,9 +36,7 @@ const BrandList = () => {
     try {
       await deleteBrand(id);
       toast.success('Brand deleted successfully');
-      clearCacheByType('brands');
-      await refreshData('brandList');
-      await refreshData('brands');
+      await invalidateAndRefresh(['brands', 'brandList'])
       setBrands(prev => prev.filter(b => b._id !== id));
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to delete brand');

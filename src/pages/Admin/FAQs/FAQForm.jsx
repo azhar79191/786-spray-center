@@ -7,7 +7,6 @@ import Spinner from '../../../components/loaders/Spinner'
 import apiClient from '../../../api/axios'
 import ENDPOINTS from '../../../api/endpoints'
 import { useData } from '../../../contexts/DataContext'
-import { clearCacheByType } from '../../../utils/cacheUtils'
 
 /**
  * Admin FAQ Form
@@ -17,7 +16,7 @@ const FAQForm = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const isEdit = Boolean(id)
-  const { refreshData } = useData()
+  const { invalidateAndRefresh } = useData()
 
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -80,11 +79,7 @@ const FAQForm = () => {
         toast.success('FAQ created successfully')
       }
       
-      // Clear FAQ caches
-      clearCacheByType('faqs')
-      await refreshData('faqs')
-      await refreshData('faqCategories')
-      
+      await invalidateAndRefresh(['faqs', 'faqCategories'])
       navigate('/admin/faqs')
     } catch (error) {
       toast.error(error.message || 'Failed to save FAQ')

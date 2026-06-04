@@ -8,14 +8,13 @@ import {
   getGalleryImageById,
 } from '../../../services/galleryService';
 import { useData } from '../../../contexts/DataContext';
-import { clearCacheByType } from '../../../utils/cacheUtils';
 import Spinner from '../../../components/loaders/Spinner';
 
 const GalleryForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditMode = Boolean(id);
-  const { refreshData } = useData();
+  const { invalidateAndRefresh } = useData();
 
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(isEditMode);
@@ -128,10 +127,7 @@ const GalleryForm = () => {
         toast.success('Image created successfully');
       }
       
-      // Clear gallery caches before navigating so list shows fresh data
-      clearCacheByType('gallery');
-      await refreshData('gallery');
-      
+      await invalidateAndRefresh(['gallery'])
       navigate('/admin/gallery');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to save image');

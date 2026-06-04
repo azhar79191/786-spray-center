@@ -8,14 +8,13 @@ import {
   getBrandById,
 } from '../../../services/brandService';
 import { useData } from '../../../contexts/DataContext';
-import { clearCacheByType } from '../../../utils/cacheUtils';
 import Spinner from '../../../components/loaders/Spinner';
 
 const BrandForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditMode = Boolean(id);
-  const { refreshData } = useData(); // Get refresh function from DataContext
+  const { invalidateAndRefresh } = useData();
 
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(isEditMode);
@@ -128,13 +127,7 @@ const BrandForm = () => {
         toast.success('Brand created successfully');
       }
       
-      // Clear brand caches before navigating so list shows fresh data
-      clearCacheByType('brands');
-      
-      // Refresh DataContext
-      await refreshData('brandList');
-      await refreshData('brands');
-      
+      await invalidateAndRefresh(['brands', 'brandList'])
       navigate('/admin/brands');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to save brand');

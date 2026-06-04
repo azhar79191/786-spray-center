@@ -1,83 +1,64 @@
 import axios from 'axios'
 
-/**
- * Centralized Axios instance with interceptors
- * Handles authentication, error handling, request/response transformation, and caching
- */
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'https://myshop-1sp3.onrender.com/api',
-  timeout: 15000, // Reduced timeout for faster failure detection
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  timeout: 15000,
+  headers: { 'Content-Type': 'application/json' },
 })
 
-// Simple in-memory cache for GET requests
-const cache = new Map();
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+// In-memory cache for GET requests
+const cache = new Map()
+const CACHE_TTL = 1 * 60 * 1000 // 5 minutes for public pages
 
-/**
- * Request interceptor
- * Adds auth token, logging, caching, and request metadata
- */
-apiClient.interceptors.request.use(
-  (config) => {
-    // Add timestamp for request tracking
-    config.metadata = { startTime: new Date() }
+const getCacheKey = (config) =>
+  `${config.url}?${JSON.stringify(config.params || {})}`
 
-    // Check cache for GET requests
-    if (config.method === 'get' && !config._skipCache) {
-      const cacheKey = `${config.url}?${JSON.stringify(config.params || {})}`;
-      const cached = cache.get(cacheKey);
-      
-      if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
-        config.adapter = () => {
-          return Promise.resolve({
-            data: cached.data,
-            status: 200,
-            statusText: 'OK (Cached)',
-            headers: {},
-            config,
-            request: {},
-          });
-        };
-      }
+// ─── Request interceptor ───────────────────────────────────────────────────
+apiClient.interceptors.request.use((config) => {
+  config.metadata = { startTime: Date.now() }
+
+  // Auth token
+  const token = localStorage.getItem('token') || localStorage.getItem('adminToken')
+  if (token) config.headers.Authorization = `Bearer ${token}`
+
+  // Serve from cache only if not explicitly skipped
+  if (config.method === 'get' && !config._skipCache) {
+    const key = getCacheKey(config)
+    const cached = cache.get(key)
+    if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+      config.adapter = () => Promise.resolve({
+        data: cached.data,
+        status: 200,
+        statusText: 'OK (Cached)',
+        headers: {},
+        config,
+        request: {},
+      })
     }
-
-    // Add auth token if available (check both token and adminToken)
-    const token = localStorage.getItem('token') || localStorage.getItem('adminToken')
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-
-    return config
-  },
-  (error) => {
-    return Promise.reject(error)
   }
-)
 
-/**
- * Response interceptor
- * Handles success responses, errors, caching, and token refresh
- */
+  return config
+})
+
+// ─── Response interceptor ─────────────────────────────────────────────────
 apiClient.interceptors.response.use(
   (response) => {
-    // Calculate request duration
-    const duration = new Date() - response.config.metadata?.startTime
-
     if (import.meta.env.DEV) {
-      const cached = response.statusText === 'OK (Cached)' ? ' (CACHED)' : '';
-      console.log(`[${response.config.method?.toUpperCase()}] ${response.config.url} - ${duration}ms${cached}`)
+      const ms = Date.now() - (response.config.metadata?.startTime || 0)
+      const tag = response.statusText === 'OK (Cached)' ? ' [CACHE]' : ''
+      console.log(`[${response.config.method?.toUpperCase()}] ${response.config.url} ${ms}ms${tag}`)
     }
 
-    // Cache GET responses
-    if (response.config.method === 'get' && response.status === 200) {
-      const cacheKey = `${response.config.url}?${JSON.stringify(response.config.params || {})}`;
-      cache.set(cacheKey, {
+    // Only write to cache for real (non-skipped) GET responses
+    if (
+      response.config.method === 'get' &&
+      response.status === 200 &&
+      !response.config._skipCache
+    ) {
+      cache.set(getCacheKey(response.config), {
         data: response.data,
         timestamp: Date.now(),
-      });
+      })
     }
 
     return response
@@ -85,55 +66,31 @@ apiClient.interceptors.response.use(
   (error) => {
     const { response, config } = error
 
-    // Log error in development
     if (import.meta.env.DEV) {
-      console.error('API Error:', {
-        url: config?.url,
-        method: config?.method,
-        status: response?.status,
-        message: error.message,
-      })
+      console.error('API Error:', { url: config?.url, status: response?.status, message: error.message })
     }
 
-    // Handle specific error cases
     if (!response) {
-      // Network error (no response)
       error.message = 'Network error. Please check your internet connection.'
     } else {
       switch (response.status) {
-        case 400:
-          error.message = response.data?.message || 'Bad request. Please check your input.'
-          break
+        case 400: error.message = response.data?.message || 'Bad request.'; break
         case 401:
           error.message = 'Session expired. Please login again.'
           localStorage.removeItem('token')
           localStorage.removeItem('adminToken')
           localStorage.removeItem('adminUser')
-          // Only redirect if on admin page
           if (window.location.pathname.startsWith('/admin') && !window.location.pathname.includes('/login')) {
             window.location.href = '/admin/login'
           }
           break
-        case 403:
-          error.message = 'You do not have permission to perform this action.'
-          break
-        case 404:
-          error.message = response.data?.message || 'Resource not found.'
-          break
-        case 409:
-          error.message = response.data?.message || 'Conflict. Resource already exists.'
-          break
-        case 422:
-          error.message = response.data?.message || 'Validation failed. Please check your input.'
-          break
-        case 429:
-          error.message = 'Too many requests. Please try again later.'
-          break
-        case 500:
-          error.message = 'Server error. Please try again later.'
-          break
-        default:
-          error.message = response.data?.message || 'An unexpected error occurred.'
+        case 403: error.message = 'You do not have permission to perform this action.'; break
+        case 404: error.message = response.data?.message || 'Resource not found.'; break
+        case 409: error.message = response.data?.message || 'Conflict. Resource already exists.'; break
+        case 422: error.message = response.data?.message || 'Validation failed.'; break
+        case 429: error.message = 'Too many requests. Please try again later.'; break
+        case 500: error.message = 'Server error. Please try again later.'; break
+        default:  error.message = response.data?.message || 'An unexpected error occurred.'
       }
     }
 
@@ -141,40 +98,21 @@ apiClient.interceptors.response.use(
   }
 )
 
-/**
- * Clear cache manually
- */
-export const clearCache = () => {
-  cache.clear();
-};
+export const clearCache = () => cache.clear()
 
-/**
- * Clear specific cache entry
- */
 export const clearCacheEntry = (url) => {
   for (const key of cache.keys()) {
     if (key.startsWith(`${url}?`)) cache.delete(key)
   }
-};
+}
 
-/**
- * File upload helper with multipart/form-data
- */
 export const uploadFile = async (url, file, onProgress) => {
   const formData = new FormData()
   formData.append('image', file)
-
   return apiClient.post(url, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
+    headers: { 'Content-Type': 'multipart/form-data' },
     onUploadProgress: onProgress
-      ? (progressEvent) => {
-          const percentCompleted = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          )
-          onProgress(percentCompleted)
-        }
+      ? (e) => onProgress(Math.round((e.loaded * 100) / e.total))
       : undefined,
   })
 }

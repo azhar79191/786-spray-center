@@ -6,6 +6,7 @@ import {
   approveTestimonial,
   deleteTestimonial,
 } from '../../../services/testimonialService';
+import { useData } from '../../../contexts/DataContext';
 import Spinner from '../../../components/loaders/Spinner';
 import { formatDate } from '../../../utils/helpers';
 
@@ -14,6 +15,7 @@ const TestimonialList = () => {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
   const [confirmDelete, setConfirmDelete] = useState(null);
+  const { invalidateAndRefresh } = useData();
 
   useEffect(() => {
     fetchTestimonials();
@@ -40,6 +42,7 @@ const TestimonialList = () => {
     try {
       await approveTestimonial(id, { isApproved });
       toast.success(`Testimonial ${isApproved ? 'approved' : 'rejected'} successfully`);
+      await invalidateAndRefresh(['testimonials'])
       fetchTestimonials();
     } catch (error) {
       console.error('Approve error:', error);
@@ -56,6 +59,7 @@ const TestimonialList = () => {
     try {
       await approveTestimonial(id, { isApproved: true, isFeatured });
       toast.success(`Testimonial ${isFeatured ? 'featured' : 'unfeatured'} successfully`);
+      await invalidateAndRefresh(['testimonials'])
       fetchTestimonials();
     } catch (error) {
       console.error('Feature error:', error);
@@ -70,6 +74,7 @@ const TestimonialList = () => {
     try {
       await deleteTestimonial(id);
       toast.success('Testimonial deleted successfully');
+      await invalidateAndRefresh(['testimonials'])
       fetchTestimonials();
     } catch (error) {
       console.error('Delete error:', error);
