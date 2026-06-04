@@ -6,8 +6,8 @@ import axios from '../api/axios';
  */
 
 // Get all brands
-export const getAllBrands = async (params = {}) => {
-  const response = await axios.get('/brands', { params });
+export const getAllBrands = async (params = {}, config = {}) => {
+  const response = await axios.get('/brands', { params, ...config });
   return response.data;
 };
 

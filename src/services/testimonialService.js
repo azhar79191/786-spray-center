@@ -18,8 +18,8 @@ export const getApprovedTestimonials = async (params = {}) => {
 };
 
 // Get all testimonials (admin)
-export const getAllTestimonials = async (params = {}) => {
-  const response = await axios.get('/testimonials', { params });
+export const getAllTestimonials = async (params = {}, config = {}) => {
+  const response = await axios.get('/testimonials', { params, ...config });
   return response.data;
 };
 

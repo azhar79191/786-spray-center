@@ -4,7 +4,6 @@ import { FaPlus, FaEdit, FaTrash, FaImage, FaEye, FaEyeSlash, FaExclamationTrian
 import { toast } from 'react-toastify';
 import { getAllGalleryImages, deleteGalleryImage } from '../../../services/galleryService';
 import { useData } from '../../../contexts/DataContext';
-import { clearCacheByType } from '../../../utils/cacheUtils';
 import Spinner from '../../../components/loaders/Spinner';
 
 const GalleryList = () => {
@@ -21,8 +20,7 @@ const GalleryList = () => {
   const fetchImages = async () => {
     try {
       setLoading(true);
-      clearCacheByType('gallery'); // always bypass cache for admin list
-      const response = await getAllGalleryImages();
+      const response = await getAllGalleryImages({}, { _skipCache: true });
       setImages(response.data || []);
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to fetch gallery images');

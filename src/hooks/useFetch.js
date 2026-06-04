@@ -19,6 +19,7 @@ export const useFetch = (url, options = {}) => {
     try {
       const response = await apiClient.get(url, {
         params: { ...params, ...customParams },
+        _skipCache: options._skipCache || false,
       })
       setData(response.data)
       return response.data

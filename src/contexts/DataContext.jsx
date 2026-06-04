@@ -70,43 +70,44 @@ export const DataProvider = ({ children }) => {
   }, [])
 
   const refreshData = useCallback(async (dataType) => {
+    const skip = { _skipCache: true }
     try {
       let response
       switch (dataType) {
         case 'products':
-          response = await apiClient.get('/products', { params: { limit: 100 } })
+          response = await apiClient.get('/products', { params: { limit: 100 }, ...skip })
           setData(prev => ({ ...prev, products: response.data.data || [] }))
           break
         case 'featuredProducts':
-          response = await apiClient.get('/products/featured/list', { params: { limit: 6 } })
+          response = await apiClient.get('/products/featured/list', { params: { limit: 6 }, ...skip })
           setData(prev => ({ ...prev, featuredProducts: response.data.data || [] }))
           break
         case 'categories':
-          response = await apiClient.get('/products/categories/all')
+          response = await apiClient.get('/products/categories/all', skip)
           setData(prev => ({ ...prev, categories: response.data.data || [] }))
           break
         case 'brands':
-          response = await apiClient.get('/products/brands/all')
+          response = await apiClient.get('/products/brands/all', skip)
           setData(prev => ({ ...prev, brands: response.data.data || [] }))
           break
         case 'brandList':
-          response = await apiClient.get('/brands', { params: { limit: 50, isActive: true } })
+          response = await apiClient.get('/brands', { params: { limit: 50, isActive: true }, ...skip })
           setData(prev => ({ ...prev, brandList: response.data.data || [] }))
           break
         case 'gallery':
-          response = await apiClient.get('/gallery', { params: { limit: 50, isActive: true } })
+          response = await apiClient.get('/gallery', { params: { limit: 50, isActive: true }, ...skip })
           setData(prev => ({ ...prev, gallery: response.data.data || [] }))
           break
         case 'faqs':
-          response = await apiClient.get('/faqs', { params: { limit: 100 } })
+          response = await apiClient.get('/faqs', { params: { limit: 100 }, ...skip })
           setData(prev => ({ ...prev, faqs: response.data.data || [] }))
           break
         case 'faqCategories':
-          response = await apiClient.get('/faqs/categories/all')
+          response = await apiClient.get('/faqs/categories/all', skip)
           setData(prev => ({ ...prev, faqCategories: response.data.data || [] }))
           break
         case 'testimonials':
-          response = await apiClient.get('/testimonials/approved', { params: { limit: 20 } })
+          response = await apiClient.get('/testimonials/approved', { params: { limit: 20 }, ...skip })
           setData(prev => ({ ...prev, testimonials: response.data.data || [] }))
           break
         default:

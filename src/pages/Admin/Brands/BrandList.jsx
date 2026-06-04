@@ -4,7 +4,6 @@ import { FaPlus, FaEdit, FaTrash, FaGlobe, FaEye, FaEyeSlash, FaExclamationTrian
 import { toast } from 'react-toastify';
 import { getAllBrands, deleteBrand } from '../../../services/brandService';
 import { useData } from '../../../contexts/DataContext';
-import { clearCacheByType } from '../../../utils/cacheUtils';
 import Spinner from '../../../components/loaders/Spinner';
 
 const BrandList = () => {
@@ -21,8 +20,7 @@ const BrandList = () => {
   const fetchBrands = async () => {
     try {
       setLoading(true);
-      clearCacheByType('brands'); // always bypass cache for admin list
-      const response = await getAllBrands();
+      const response = await getAllBrands({}, { _skipCache: true });
       setBrands(response.data || []);
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to fetch brands');

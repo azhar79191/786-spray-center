@@ -22,7 +22,7 @@ const TestimonialList = () => {
   const fetchTestimonials = async () => {
     try {
       setLoading(true);
-      const response = await getAllTestimonials();
+      const response = await getAllTestimonials({}, { _skipCache: true });
       setTestimonials(response.data || []);
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to fetch testimonials');

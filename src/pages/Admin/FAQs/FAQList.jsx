@@ -18,7 +18,8 @@ const FAQList = () => {
   const { refreshData } = useData()
 
   const { data, loading, refetch } = useFetch('/faqs', {
-    params: { search: searchTerm, category: selectedCategory }
+    params: { search: searchTerm, category: selectedCategory },
+    _skipCache: true,
   })
 
   const faqs = data?.data || []

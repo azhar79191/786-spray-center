@@ -6,8 +6,8 @@ import axios from '../api/axios';
  */
 
 // Get all gallery images
-export const getAllGalleryImages = async (params = {}) => {
-  const response = await axios.get('/gallery', { params });
+export const getAllGalleryImages = async (params = {}, config = {}) => {
+  const response = await axios.get('/gallery', { params, ...config });
   return response.data;
 };
 
