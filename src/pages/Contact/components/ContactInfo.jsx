@@ -2,7 +2,7 @@ import { memo } from 'react'
 import { motion } from 'framer-motion'
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaWhatsapp, FaClock, FaFacebook, FaInstagram, FaYoutube } from 'react-icons/fa'
 import { CONTACT, SOCIAL, BUSINESS_HOURS } from '../../../utils/constants'
-import { getWhatsAppLink, getPhoneLink, getEmailLink } from '../../../utils/helpers'
+import { getWhatsAppLink, getPhoneLink, getEmailLink, getGoogleMapsLink } from '../../../utils/helpers'
 
 /**
  * Contact Info Component
@@ -64,15 +64,20 @@ const ContactInfo = memo(() => {
             </div>
           </a>
 
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-gold/10 rounded-xl flex items-center justify-center flex-shrink-0">
-              <FaMapMarkerAlt className="w-5 h-5 text-gold" />
+          <a 
+            href={getGoogleMapsLink(CONTACT.address)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-start gap-4 group"
+          >
+            <div className="w-12 h-12 bg-gold/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-gold transition-colors">
+              <FaMapMarkerAlt className="w-5 h-5 text-gold group-hover:text-primary transition-colors" />
             </div>
             <div>
               <p className="text-primary-300 text-xs mb-1">Address</p>
-              <p className="text-primary font-semibold">{CONTACT.address}</p>
+              <p className="text-primary font-semibold group-hover:text-gold transition-colors">{CONTACT.address}</p>
             </div>
-          </div>
+          </a>
 
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 bg-gold/10 rounded-xl flex items-center justify-center flex-shrink-0">

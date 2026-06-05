@@ -11,7 +11,7 @@ import {
   FaClock
 } from 'react-icons/fa'
 import { CONTACT, SOCIAL, BUSINESS_HOURS } from '../../utils/constants'
-import { getWhatsAppLink, getPhoneLink, getEmailLink } from '../../utils/helpers'
+import { getWhatsAppLink, getPhoneLink, getEmailLink, getGoogleMapsLink } from '../../utils/helpers'
 
 /**
  * Premium footer component
@@ -152,13 +152,15 @@ const Footer = () => {
                   </span>
                 </a>
               </li>
-              <li className="flex items-start gap-3 text-primary-300">
+              <li>
                 <a
-                  href={getEmailLink(CONTACT.address)}
+                  href={getGoogleMapsLink(CONTACT.address)}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-start gap-3 text-primary-300 hover:text-gold transition-colors group overflow-hidden"
                 >
-                <FaMapMarkerAlt className="w-5 h-5 mt-0.5 text-gold flex-shrink-0" />
-                <span className="text-sm">{CONTACT.address}</span>
+                  <FaMapMarkerAlt className="w-5 h-5 mt-0.5 text-gold group-hover:scale-110 transition-transform flex-shrink-0" />
+                  <span className="text-sm">{CONTACT.address}</span>
                 </a>
               </li>
             </ul>

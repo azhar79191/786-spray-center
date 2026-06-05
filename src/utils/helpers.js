@@ -61,6 +61,22 @@ export const getEmailLink = (email, subject = '') => {
 }
 
 /**
+ * Generate Google Maps link
+ */
+export const getGoogleMapsLink = (address = '') => {
+  // Use the direct Google Maps link if available, otherwise generate from address
+  const mapsUrl = import.meta.env.VITE_GOOGLE_MAPS_LINK || 'https://maps.app.goo.gl/fQ84ruXiC83vPDm1A'
+  
+  // If a custom address is provided, create a search query
+  if (address && address !== import.meta.env.VITE_ADDRESS) {
+    const encodedAddress = encodeURIComponent(address)
+    return `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`
+  }
+  
+  return mapsUrl
+}
+
+/**
  * Debounce function
  */
 export const debounce = (func, wait) => {
