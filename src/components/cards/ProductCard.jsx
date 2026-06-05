@@ -1,9 +1,8 @@
 import { memo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { FaEye, FaHeart, FaRegHeart, FaShoppingCart, FaExpand } from 'react-icons/fa'
+import { FaEye, FaHeart, FaRegHeart, FaShoppingCart } from 'react-icons/fa'
 import { formatPrice, getCategoryColor, getStockStatusColor } from '../../utils/helpers'
-import QuickViewModal from '../ui/QuickViewModal'
 
 const ProductCard = memo(({ product, index = 0 }) => {
   const cardRef = useRef(null)
@@ -11,7 +10,6 @@ const ProductCard = memo(({ product, index = 0 }) => {
   const [glowPos, setGlowPos] = useState({ x: 50, y: 50 })
   const [hovered, setHovered] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
-  const [showQuickView, setShowQuickView] = useState(false)
 
   const minPrice = product.sizes?.length > 0
     ? Math.min(...product.sizes.map(s => s.price))
