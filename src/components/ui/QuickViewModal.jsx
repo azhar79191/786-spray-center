@@ -1,4 +1,5 @@
 import { memo, useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaTimes, FaWhatsapp, FaShareAlt, FaHeart, FaRegHeart } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
@@ -20,6 +21,7 @@ const QuickViewModal = memo(({ product, isOpen, onClose }) => {
       // Store original overflow value
       const originalOverflow = document.body.style.overflow
       const originalPaddingRight = document.body.style.paddingRight
+      const originalPosition = document.body.style.position
       
       // Get scrollbar width to prevent layout shift
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
@@ -27,11 +29,17 @@ const QuickViewModal = memo(({ product, isOpen, onClose }) => {
       // Lock scroll
       document.body.style.overflow = 'hidden'
       document.body.style.paddingRight = `${scrollbarWidth}px`
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
+      document.documentElement.style.overflow = 'hidden'
       
       // Cleanup: restore original values when modal closes
       return () => {
         document.body.style.overflow = originalOverflow
         document.body.style.paddingRight = originalPaddingRight
+        document.body.style.position = originalPosition
+        document.body.style.width = ''
+        document.documentElement.style.overflow = ''
       }
     }
   }, [isOpen])
@@ -48,15 +56,16 @@ const QuickViewModal = memo(({ product, isOpen, onClose }) => {
     window.open(getWhatsAppLink(CONTACT.whatsapp, message), '_blank')
   }
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-primary/90 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
+          className="fixed inset-0 z-[9999] bg-primary/90 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
           onClick={onClose}
+          style={{ margin: 0 }}
         >
           {/* Modal Content */}
           <motion.div
@@ -64,7 +73,7 @@ const QuickViewModal = memo(({ product, isOpen, onClose }) => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: 'spring', duration: 0.5 }}
-            className="bg-white rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-y-auto relative my-8"
+            className="bg-white rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-y-auto relative my-8 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
@@ -225,7 +234,8 @@ const QuickViewModal = memo(({ product, isOpen, onClose }) => {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   )
 })
 
