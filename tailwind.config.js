@@ -47,6 +47,8 @@ export default {
         'spin-slow': 'spin 3s linear infinite',
         'pulse-slow': 'pulse 3s ease-in-out infinite',
         'float': 'float 6s ease-in-out infinite',
+        'shimmer': 'shimmer 2s infinite',
+        'bounce-slow': 'bounce 3s infinite',
       },
       keyframes: {
         fadeIn: {
@@ -68,6 +70,10 @@ export default {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-20px)' },
+        },
+        shimmer: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
         },
       },
       boxShadow: {

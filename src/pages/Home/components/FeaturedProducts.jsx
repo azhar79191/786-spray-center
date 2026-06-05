@@ -4,7 +4,7 @@ import { FaArrowRight } from 'react-icons/fa'
 import SectionTitle from '../../../components/common/SectionTitle'
 import ProductCard from '../../../components/cards/ProductCard'
 import { useData } from '../../../contexts/DataContext'
-import { SkeletonProductGrid } from '../../../components/loaders/SkeletonLoader'
+import { ProductGridSkeleton } from '../../../components/ui/ProductCardSkeleton'
 
 const FeaturedProducts = memo(() => {
   const { featuredProducts, loading } = useData()
@@ -18,7 +18,7 @@ const FeaturedProducts = memo(() => {
         />
 
         {loading ? (
-          <SkeletonProductGrid count={6} />
+          <ProductGridSkeleton count={6} />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProducts.map((product, index) => (

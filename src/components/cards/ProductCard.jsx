@@ -1,14 +1,17 @@
 import { memo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { FaEye } from 'react-icons/fa'
+import { FaEye, FaHeart, FaRegHeart, FaShoppingCart, FaExpand } from 'react-icons/fa'
 import { formatPrice, getCategoryColor, getStockStatusColor } from '../../utils/helpers'
+import QuickViewModal from '../ui/QuickViewModal'
 
 const ProductCard = memo(({ product, index = 0 }) => {
   const cardRef = useRef(null)
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
   const [glowPos, setGlowPos] = useState({ x: 50, y: 50 })
   const [hovered, setHovered] = useState(false)
+  const [isFavorite, setIsFavorite] = useState(false)
+  const [showQuickView, setShowQuickView] = useState(false)
 
   const minPrice = product.sizes?.length > 0
     ? Math.min(...product.sizes.map(s => s.price))
@@ -75,14 +78,38 @@ const ProductCard = memo(({ product, index = 0 }) => {
           />
 
           {/* Overlay on hover */}
-          <div className="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+          <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                setShowQuickView(true)
+              }}
+              className="p-3 bg-white/90 backdrop-blur-sm rounded-full text-primary hover:bg-gold hover:text-white hover:scale-110 transition-all duration-200 shadow-lg"
+              title="Quick View"
+            >
+              <FaExpand className="w-5 h-5" />
+            </button>
             <Link
               to={`/products/${product.slug || product._id}`}
-              className="p-3 bg-white rounded-full text-primary hover:bg-gold hover:text-primary transition-colors duration-200"
+              className="p-3 bg-white/90 backdrop-blur-sm rounded-full text-primary hover:bg-gold hover:text-white hover:scale-110 transition-all duration-200 shadow-lg"
               title="View Details"
             >
               <FaEye className="w-5 h-5" />
             </Link>
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                setIsFavorite(!isFavorite)
+              }}
+              className="p-3 bg-white/90 backdrop-blur-sm rounded-full text-primary hover:bg-gold hover:text-white hover:scale-110 transition-all duration-200 shadow-lg"
+              title="Add to Wishlist"
+            >
+              {isFavorite ? (
+                <FaHeart className="w-5 h-5 text-red-500" />
+              ) : (
+                <FaRegHeart className="w-5 h-5" />
+              )}
+            </button>
           </div>
 
           {/* Category badge */}
@@ -95,9 +122,13 @@ const ProductCard = memo(({ product, index = 0 }) => {
           {/* Featured badge */}
           {product.featured && (
             <div className="absolute top-3 right-3">
-              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gold text-primary">
-                Featured
-              </span>
+              <motion.span
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+                className="px-3 py-1 rounded-full text-xs font-semibold bg-gold text-primary shadow-gold"
+              >
+                ⭐ Featured
+              </motion.span>
             </div>
           )}
 
@@ -150,6 +181,13 @@ const ProductCard = memo(({ product, index = 0 }) => {
             </Link>
           </div>
         </div>
+
+        {/* Quick View Modal */}
+        <QuickViewModal
+          product={product}
+          isOpen={showQuickView}
+          onClose={() => setShowQuickView(false)}
+        />
       </div>
     </motion.div>
   )

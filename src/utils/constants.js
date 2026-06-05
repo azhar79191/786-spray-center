@@ -149,6 +149,13 @@ export const WHY_CHOOSE_US = [
   },
 ]
 
+// Helper functions
+export const getWhatsAppLink = (phone, message = '') => {
+  const cleanPhone = phone.replace(/[^0-9]/g, '')
+  const encodedMessage = encodeURIComponent(message)
+  return `https://wa.me/${cleanPhone}${encodedMessage ? `?text=${encodedMessage}` : ''}`
+}
+
 // SEO meta tags helper
 export const getMetaTags = (title, description, keywords = '') => ({
   title: `${title} | ${APP_NAME}`,
