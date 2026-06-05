@@ -41,21 +41,22 @@ const ProductCard = memo(({ product, index = 0 }) => {
       transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
       style={{ perspective: '900px' }}
     >
-      <div
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={handleMouseLeave}
-        className="group bg-white rounded-2xl shadow-card overflow-hidden relative cursor-pointer"
-        style={{
-          transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${hovered ? 1.03 : 1})`,
-          transition: hovered ? 'transform 0.1s ease-out' : 'transform 0.5s ease-out',
-          transformStyle: 'preserve-3d',
-          boxShadow: hovered
-            ? '0 20px 40px -10px rgba(212,160,23,0.35), 0 8px 16px -4px rgba(0,0,0,0.15)'
-            : undefined,
-        }}
-      >
+      <Link to={`/products/${product.slug || product._id}`}>
+        <div
+          ref={cardRef}
+          onMouseMove={handleMouseMove}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={handleMouseLeave}
+          className="group bg-white rounded-2xl shadow-card overflow-hidden relative cursor-pointer"
+          style={{
+            transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${hovered ? 1.03 : 1})`,
+            transition: hovered ? 'transform 0.1s ease-out' : 'transform 0.5s ease-out',
+            transformStyle: 'preserve-3d',
+            boxShadow: hovered
+              ? '0 20px 40px -10px rgba(212,160,23,0.35), 0 8px 16px -4px rgba(0,0,0,0.15)'
+              : undefined,
+          }}
+        >
         {/* Gold radial glow that follows cursor */}
         {hovered && (
           <div
@@ -77,23 +78,13 @@ const ProductCard = memo(({ product, index = 0 }) => {
 
           {/* Overlay on hover */}
           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
-            <button
-              onClick={(e) => {
-                e.preventDefault()
-                setShowQuickView(true)
-              }}
-              className="p-3 bg-white/90 backdrop-blur-sm rounded-full text-primary hover:bg-gold hover:text-white hover:scale-110 transition-all duration-200 shadow-lg"
-              title="Quick View"
-            >
-              <FaExpand className="w-5 h-5" />
-            </button>
-            <Link
-              to={`/products/${product.slug || product._id}`}
-              className="p-3 bg-white/90 backdrop-blur-sm rounded-full text-primary hover:bg-gold hover:text-white hover:scale-110 transition-all duration-200 shadow-lg"
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              className="p-4 bg-white/90 backdrop-blur-sm rounded-full text-primary shadow-lg"
               title="View Details"
             >
-              <FaEye className="w-5 h-5" />
-            </Link>
+              <FaEye className="w-6 h-6" />
+            </motion.div>
             <button
               onClick={(e) => {
                 e.preventDefault()
@@ -170,23 +161,14 @@ const ProductCard = memo(({ product, index = 0 }) => {
               <p className="text-primary-300 text-xs">Starting from</p>
               <p className="text-gold font-bold text-lg">{formatPrice(minPrice)}</p>
             </div>
-            <Link
-              to={`/products/${product.slug || product._id}`}
-              className="btn-primary text-sm py-2 px-4"
-            >
+            <span className="btn-primary text-sm py-2 px-4 inline-flex items-center">
               <FaEye className="w-4 h-4 mr-2" />
               View
-            </Link>
+            </span>
           </div>
         </div>
-
-        {/* Quick View Modal */}
-        <QuickViewModal
-          product={product}
-          isOpen={showQuickView}
-          onClose={() => setShowQuickView(false)}
-        />
-      </div>
+        </div>
+      </Link>
     </motion.div>
   )
 })

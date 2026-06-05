@@ -10,8 +10,8 @@ import SectionTitle from '../../../components/common/SectionTitle'
 const ProductsHeader = memo(({ searchQuery, setSearchQuery, handleSearch }) => {
   return (
     <section className="relative py-20 bg-primary">
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1920&q=80')] bg-cover bg-center opacity-10" />
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/80 to-primary" />
+      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1920&q=80')] bg-cover bg-center opacity-40" />
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/60 to-primary/80" />
 
       <div className="container-premium relative z-10">
         <motion.div

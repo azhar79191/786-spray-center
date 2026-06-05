@@ -11,8 +11,11 @@ import ParticleField from '../../../components/common/ParticleField'
 const HeroSection = memo(() => {
   return (
     <section className="relative min-h-[90vh] flex items-center bg-primary overflow-hidden">
-      {/* Background overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80" />
+      {/* Background image */}
+      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1920&q=80')] bg-cover bg-center opacity-30" />
+      
+      {/* Lighter overlay to show background */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-primary/50 to-primary/40" />
       {/* Particle field — above overlay, below content */}
       <div className="absolute inset-0 z-[1]">
         <ParticleField />
