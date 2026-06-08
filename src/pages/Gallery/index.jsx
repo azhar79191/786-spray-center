@@ -52,9 +52,9 @@ const Gallery = () => {
   return (
     <>
       <SEO
-        title="Photo Gallery"
-        description="Browse our photo gallery featuring agricultural products, store images, farming equipment, crop protection solutions, and field work."
-        keywords="agricultural products photos, pesticide images, fertilizer pictures, farming equipment gallery, agricultural store photos Minchinabad, crop protection images, spray machines photos"
+        title="Photo Gallery | Agricultural Products & Store Images Minchinabad"
+        description="Browse our photo gallery featuring agricultural products, pesticides, fertilizers, seeds, store images, farming equipment, and field work. View our complete range of crop protection solutions at Bismillah Spray Center Minchinabad."
+        keywords="agricultural products photos Minchinabad, pesticide images Pakistan, fertilizer pictures, farming equipment gallery, agricultural store photos Bahawalnagar, crop protection images, spray machines photos, FFC products images, Engro fertilizer gallery"
       />
 
       <script type="application/ld+json">{GALLERY_STRUCTURED_DATA}</script>

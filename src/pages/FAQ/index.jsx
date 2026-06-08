@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import SEO from '../../components/common/SEO'
 import { useFAQs } from '../../hooks/useFAQs'
 import FAQHero from './components/FAQHero'
@@ -22,6 +22,24 @@ const FAQ = () => {
     return matchesCategory && matchesSearch
   })
 
+  // Create FAQ Schema for SEO
+  const faqSchema = useMemo(() => {
+    if (!faqs || faqs.length === 0) return null
+    
+    return {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqs.slice(0, 10).map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    }
+  }, [faqs])
+
   const clearFilters = () => {
     setSearchQuery('')
     setActiveCategory('All')
@@ -30,10 +48,17 @@ const FAQ = () => {
   return (
     <>
       <SEO 
-        title="Frequently Asked Questions" 
-        description="Find answers to common questions about agricultural products, pesticides, fertilizers, seeds, ordering, delivery, product usage, safety guidelines, and farming advice. Expert answers from experienced agronomists."
-        keywords="agricultural FAQ Pakistan, pesticide usage questions, fertilizer application guide, seed selection help, farming questions answered, crop protection FAQ, agricultural advice Pakistan"
+        title="Frequently Asked Questions | Agricultural Products Pakistan" 
+        description="Find answers to common questions about agricultural products, pesticides, fertilizers, seeds, ordering, delivery, product usage, safety guidelines at Bismillah Spray Center Minchinabad. Expert farming advice."
+        keywords="agricultural FAQ Pakistan, pesticide usage questions, fertilizer application guide, seed selection help, farming questions answered, crop protection FAQ, agricultural advice Bahawalnagar, farming tips Punjab"
       />
+      
+      {/* Add FAQ Schema */}
+      {faqSchema && (
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
+        </script>
+      )}
 
       <FAQHero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 

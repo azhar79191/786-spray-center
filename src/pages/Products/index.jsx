@@ -110,9 +110,9 @@ const Products = () => {
   return (
     <>
       <SEO 
-        title="Agricultural Products" 
-        description="Browse premium agricultural products including pesticides, insecticides, herbicides, fungicides, fertilizers, and seeds. Authorized dealer of Syngenta, Bayer, FMC, Engro. Quality products at competitive prices for Pakistani farmers."
-        keywords="buy pesticides online Pakistan, agricultural products catalog, insecticides price, herbicides for crops, fungicides Pakistan, fertilizers online, seeds dealer, Syngenta products, Bayer crop science, FMC pesticides Pakistan"
+        title="Agricultural Products Pakistan | Pesticides, Fertilizers & Seeds" 
+        description="Complete range of agricultural products: pesticides, insecticides, herbicides, fungicides, fertilizers, seeds. Authorized Warble, FFC, Engro dealer. Shop in Bahawalnagar with delivery across Punjab."
+        keywords="agricultural products Pakistan, crop protection products, pest control products Pakistan, plant nutrition products, farming supplies Bahawalnagar, agricultural chemicals Punjab, buy pesticides Pakistan, fertilizers online Pakistan"
       />
 
       {/* Header with search */}

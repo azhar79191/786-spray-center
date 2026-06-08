@@ -45,6 +45,10 @@ const SEO = ({
       <meta name="bingbot" content={robotsContent} />
       <link rel="canonical" href={finalCanonical} />
 
+      {/* Search Engine Verification */}
+      <meta name="google-site-verification" content="-LZvBkOMbMjeXIpAHr_wKl--H_Ti55F9yQisVu-XMoU" />
+      <meta name="msvalidate.01" content="8FC60F89F90D5332CD8A2F26BCC20761" />
+
       {/* Language and Region */}
       <meta name="language" content="English" />
       <meta name="geo.region" content="PK-BA" />

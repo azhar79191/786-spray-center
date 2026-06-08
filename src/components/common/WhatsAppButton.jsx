@@ -21,6 +21,18 @@ const WhatsAppButton = () => {
     CONTACT.whatsapp,
     'Assalamualaikum! I would like to inquire about your products and services.'
   )
+  
+  // Track WhatsApp clicks for analytics
+  const handleWhatsAppClick = () => {
+    // Track with Google Analytics if available
+    if (window.gtag) {
+      window.gtag('event', 'whatsapp_click', {
+        event_category: 'engagement',
+        event_label: 'WhatsApp Button',
+        value: 1
+      })
+    }
+  }
 
   if (!isVisible) return null
 
@@ -75,6 +87,9 @@ const WhatsAppButton = () => {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={handleWhatsAppClick}
+          aria-label="Contact us on WhatsApp"
+          title="Chat with us on WhatsApp - Bismillah Spray Center"
           className="relative flex items-center justify-center w-14 h-14 rounded-full shadow-lg cursor-pointer overflow-hidden"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}

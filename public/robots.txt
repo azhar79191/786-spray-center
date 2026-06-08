@@ -1,0 +1,35 @@
+# robots.txt for Bismillah Spray Center
+# https://bismillahspraycenter.vercel.app/
+
+User-agent: *
+Allow: /
+
+# Block admin and private paths
+Disallow: /admin
+Disallow: /api/
+Disallow: /private/
+Disallow: /*.json$
+
+# Allow all product and blog pages
+Allow: /products/
+Allow: /brands/
+Allow: /blog/
+Allow: /about
+Allow: /contact
+Allow: /gallery
+
+# Crawl-delay for politeness
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://bismillahspraycenter.vercel.app/sitemap.xml
+
+# Specific bot instructions
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /

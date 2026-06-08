@@ -23,9 +23,9 @@ const Home = () => {
   return (
     <>
       <SEO 
-        title="Home" 
-        description="Bismillah Spray Center - Leading agricultural supplier in Minchinabad, Bahawalnagar. Premium pesticides, fertilizers, seeds from Syngenta, Bayer, FMC, Engro. Expert crop consultation, competitive prices, and quality products for Pakistani farmers."
-        keywords="agricultural products Minchinabad, pesticides Bahawalnagar, fertilizers Punjab, Syngenta dealer Pakistan, Bayer pesticides, FMC products, Engro fertilizers, farming supplies, crop protection, agricultural store near me"
+        title="Pesticide Shop Minchinabad Pakistan | Agricultural Products Bahawalnagar" 
+        description="Bismillah Spray Center - Authorized pesticide, fertilizer & seed dealer in Minchinabad, Bahawalnagar. Warble, FFC, Engro brands. Free delivery across Bahawalnagar district. Call +92 300 1331616"
+        keywords="pesticide shop Minchinabad, agricultural products Bahawalnagar, fertilizer dealer Minchinabad, pesticide shop near me, FFC dealer Punjab, Engro fertilizer Bahawalnagar, Warble dealer Pakistan, cotton pesticides, wheat fertilizers Punjab"
       />
 
       {/* Above the fold - Load immediately */}

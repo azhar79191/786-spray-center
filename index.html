@@ -56,38 +56,116 @@
     <meta name="geo.position" content="30.225935;73.515619" />
     <meta name="ICBM" content="30.225935, 73.515619" />
     
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://bismillahspraycenter.vercel.app/" />
+    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Structured Data -->
+    <!-- Structured Data - LocalBusiness -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Store",
+      "@type": ["LocalBusiness", "Store"],
+      "@id": "https://bismillahspraycenter.vercel.app/#business",
       "name": "Bismillah Spray Center",
-      "image": "https://bismillahspraycenter.vercel.app/og-image.png",
-      "description": "Premium agricultural products supplier in Minchinabad, Pakistan",
+      "alternateName": "بسم اللہ سپرے سینٹر",
+      "description": "Authorized dealer of pesticides, insecticides, herbicides, fungicides, fertilizers and seeds in Minchinabad, Bahawalnagar. Serving cotton, wheat, sugarcane, rice and vegetable farmers across Punjab, Pakistan with quality agricultural products from Warble, Agrow Mark, FFC, Engro, and Abdullah Haseeb.",
+      "url": "https://bismillahspraycenter.vercel.app/",
+      "logo": "https://bismillahspraycenter.vercel.app/favicon-512x512.png",
+      "image": [
+        "https://bismillahspraycenter.vercel.app/og-image.png",
+        "https://bismillahspraycenter.vercel.app/icon-512.png"
+      ],
+      "telephone": "+923001331616",
+      "email": "zafarwattoo@gmail.com",
+      "priceRange": "$$",
+      "currenciesAccepted": "PKR",
+      "paymentAccepted": "Cash, Bank Transfer, Mobile Payment",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Behrmka Hithar",
-        "addressLocality": "Minchinabad",
-        "addressRegion": "Bahawalnagar",
+        "streetAddress": "Behramka Hithar, Tehsil Minchinabad",
+        "addressLocality": "Bahawalnagar",
+        "addressRegion": "Punjab",
+        "postalCode": "63350",
         "addressCountry": "PK"
       },
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": 30.225935,
-        "longitude": 73.515619
+        "latitude": "30.225935",
+        "longitude": "73.515619"
       },
-      "telephone": "+923001331616",
-      "priceRange": "$$",
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        "opens": "08:00",
-        "closes": "20:00"
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "08:00",
+          "closes": "20:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Sunday",
+          "opens": "09:00",
+          "closes": "14:00"
+        }
+      ],
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Minchinabad"
+        },
+        {
+          "@type": "City",
+          "name": "Bahawalnagar"
+        },
+        {
+          "@type": "City",
+          "name": "Chishtian"
+        },
+        {
+          "@type": "City",
+          "name": "Haroonabad"
+        },
+        {
+          "@type": "City",
+          "name": "Fort Abbas"
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/bismillahspraycenter",
+        "https://www.instagram.com/bismillahspraycenter",
+        "https://wa.me/923001331616"
+      ]
+    }
+    </script>
+    
+    <!-- Structured Data - Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://bismillahspraycenter.vercel.app/#organization",
+      "name": "Bismillah Spray Center",
+      "url": "https://bismillahspraycenter.vercel.app/",
+      "logo": "https://bismillahspraycenter.vercel.app/favicon-512x512.png",
+      "description": "Leading agricultural products supplier in Bahawalnagar district, Pakistan. Authorized dealer of top pesticide, fertilizer and seed brands.",
+      "foundingDate": "2015",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+923001331616",
+        "contactType": "Customer Service",
+        "email": "zafarwattoo@gmail.com",
+        "areaServed": "PK",
+        "availableLanguage": ["English", "Urdu", "Punjabi"]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Behramka Hithar, Tehsil Minchinabad",
+        "addressLocality": "Bahawalnagar",
+        "addressRegion": "Punjab",
+        "addressCountry": "PK"
       }
     }
     </script>

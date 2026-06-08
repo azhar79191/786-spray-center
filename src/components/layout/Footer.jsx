@@ -27,6 +27,7 @@ const Footer = () => {
   ]
 
   const productLinks = [
+    { name: 'Pesticides', path: '/products?category=Pesticides' },
     { name: 'Insecticides', path: '/products?category=Insecticides' },
     { name: 'Herbicides', path: '/products?category=Herbicides' },
     { name: 'Fungicides', path: '/products?category=Fungicides' },
@@ -34,13 +35,20 @@ const Footer = () => {
     { name: 'Seeds', path: '/products?category=Seeds' },
   ]
 
+  const brandLinks = [
+    { name: 'Warble Products', path: '/brands' },
+    { name: 'FFC Dealer', path: '/brands' },
+    { name: 'Engro Fertilizers', path: '/brands' },
+    { name: 'Agrow Mark', path: '/brands' },
+  ]
+
   return (
     <footer className="bg-primary text-white">
       {/* Main footer */}
       <div className="container-premium py-16">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-6">
           {/* Brand column */}
-          <div>
+          <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-12 bg-gold rounded-lg flex items-center justify-center">
                 <FaLeaf className="w-6 h-6 text-primary" />
@@ -51,8 +59,9 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-primary-300 text-sm leading-relaxed mb-6">
-              Your trusted partner for premium agricultural solutions in Minchinabad, Pakistan.
-              Serving farmers with genuine products since 2018.
+              Leading agricultural products supplier in Minchinabad, Bahawalnagar, Punjab. 
+              Authorized dealer of Warble, Agrow Mark, FFC, Engro, Agro One, Abdullah Haseeb. 
+              Quality pesticides, fertilizers, seeds for Pakistani farmers since 2015.
             </p>
             <div className="flex items-center gap-3">
               <a
@@ -104,6 +113,23 @@ const Footer = () => {
             <h4 className="text-gold font-semibold text-lg mb-6">Our Products</h4>
             <ul className="space-y-3">
               {productLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    to={link.path}
+                    className="text-primary-300 hover:text-gold transition-colors duration-200 text-sm"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Brands */}
+          <div>
+            <h4 className="text-gold font-semibold text-lg mb-6">Authorized Brands</h4>
+            <ul className="space-y-3">
+              {brandLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.path}

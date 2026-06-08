@@ -20,7 +20,7 @@ const CoreValues = memo(() => {
           light
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {values.map((value, index) => (
             <motion.article
               key={value.title}
@@ -28,13 +28,17 @@ const CoreValues = memo(() => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-primary-50/50 rounded-2xl p-8 border border-primary-50/30 hover:border-gold/30 transition-all duration-300"
+              className="bg-primary-50/50 rounded-xl sm:rounded-2xl p-6 sm:p-8 border border-primary-50/30 hover:border-gold/30 transition-all duration-300"
             >
-              <div className="w-14 h-14 bg-gold/10 rounded-xl flex items-center justify-center mb-6">
-                <value.icon className="w-7 h-7 text-gold" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gold/10 rounded-lg sm:rounded-xl flex items-center justify-center mb-4 sm:mb-6">
+                <value.icon className="w-6 h-6 sm:w-7 sm:h-7 text-gold" />
               </div>
-              <h3 className="text-white font-display font-bold text-xl mb-3">{value.title}</h3>
-              <p className="text-primary-400 text-sm leading-relaxed">{value.description}</p>
+              <h3 className="text-white font-display font-bold text-lg sm:text-xl mb-2 sm:mb-3">
+                {value.title}
+              </h3>
+              <p className="text-primary-400 text-xs sm:text-sm leading-relaxed">
+                {value.description}
+              </p>
             </motion.article>
           ))}
         </div>

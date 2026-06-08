@@ -31,9 +31,9 @@ const Brands = () => {
   return (
     <>
       <SEO
-        title="Premium Agricultural Brands"
-        description="Authorized dealer of world-leading agricultural brands: Syngenta, Bayer CropScience, FMC, Engro Fertilizers, Fauji Fertilizer, Pioneer Seeds, Honda Power Equipment, and Stihl. Genuine products with warranty and expert support."
-        keywords="Syngenta dealer Pakistan, Bayer authorized dealer, FMC products Pakistan, Engro fertilizers dealer, Fauji fertilizer distributor, Pioneer seeds Pakistan, Honda power equipment, Stihl dealer, agricultural brands Minchinabad"
+        title="Authorized Brands | Warble, FFC, Engro, Agrow Mark Dealer Pakistan"
+        description="Authorized dealer of leading agricultural brands in Pakistan: Warble, Agrow Mark, FFC, Engro, Agro One, Abdullah Haseeb. Genuine products, competitive prices. Shop at Bismillah Spray Center Minchinabad, Bahawalnagar."
+        keywords="Warble dealer Pakistan, FFC dealer Bahawalnagar, Engro fertilizer dealer, Agrow Mark authorized, Agro One seeds, Abdullah Haseeb products, agricultural brands Minchinabad, authorized dealer Punjab"
       />
 
       <script type="application/ld+json">{BRANDS_STRUCTURED_DATA}</script>

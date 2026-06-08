@@ -26,19 +26,28 @@ const Timeline = memo(() => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex gap-6 mb-8 last:mb-0"
+              className="flex gap-3 sm:gap-6 mb-6 sm:mb-8 last:mb-0"
             >
-              <div className="flex flex-col items-center">
-                <div className="w-14 h-14 bg-gold rounded-full flex items-center justify-center flex-shrink-0">
-                  <time className="text-primary font-bold text-sm">{milestone.year}</time>
+              {/* Timeline Circle and Line */}
+              <div className="flex flex-col items-center flex-shrink-0">
+                {/* Circle with Year */}
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gold rounded-full flex items-center justify-center shadow-lg">
+                  <time className="text-primary font-bold text-xs sm:text-sm">{milestone.year}</time>
                 </div>
+                {/* Connecting Line */}
                 {index < milestones.length - 1 && (
                   <div className="w-0.5 flex-grow bg-gold/30 mt-2" />
                 )}
               </div>
-              <div className="bg-white rounded-2xl p-6 shadow-card flex-grow">
-                <h3 className="text-primary font-display font-bold text-lg mb-2">{milestone.title}</h3>
-                <p className="text-primary-300 text-sm">{milestone.description}</p>
+              
+              {/* Content Card */}
+              <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-card flex-grow">
+                <h3 className="text-primary font-display font-bold text-base sm:text-lg mb-1.5 sm:mb-2">
+                  {milestone.title}
+                </h3>
+                <p className="text-primary-300 text-xs sm:text-sm leading-relaxed">
+                  {milestone.description}
+                </p>
               </div>
             </motion.article>
           ))}
