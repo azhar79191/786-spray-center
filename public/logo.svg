@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F172A"/>
+      <stop offset="100%" style="stop-color:#1E293B"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F4D03F"/>
+      <stop offset="50%" style="stop-color:#D4A017"/>
+      <stop offset="100%" style="stop-color:#B8860B"/>
+    </linearGradient>
+    <linearGradient id="goldGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#B8860B"/>
+      <stop offset="50%" style="stop-color:#D4A017"/>
+      <stop offset="100%" style="stop-color:#F4D03F"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="url(#bgGrad)"/>
+
+  <!-- Outer gold ring -->
+  <circle cx="256" cy="256" r="245" fill="none" stroke="url(#goldGrad)" stroke-width="3" opacity="0.6"/>
+  <circle cx="256" cy="256" r="235" fill="none" stroke="url(#goldGrad)" stroke-width="1" opacity="0.3"/>
+
+  <!-- Wheat stalk - center vertical -->
+  <line x1="256" y1="310" x2="256" y2="155" stroke="url(#goldGrad)" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Wheat grains - left side -->
+  <ellipse cx="232" cy="230" rx="18" ry="9" fill="url(#goldGrad)" transform="rotate(-35 232 230)" filter="url(#glow)"/>
+  <ellipse cx="228" cy="205" rx="16" ry="8" fill="url(#goldGrad)" transform="rotate(-38 228 205)" opacity="0.9"/>
+  <ellipse cx="230" cy="182" rx="14" ry="7" fill="url(#goldGrad)" transform="rotate(-40 230 182)" opacity="0.8"/>
+  <ellipse cx="235" cy="162" rx="12" ry="6" fill="url(#goldGrad)" transform="rotate(-42 235 162)" opacity="0.7"/>
+
+  <!-- Wheat grains - right side -->
+  <ellipse cx="280" cy="230" rx="18" ry="9" fill="url(#goldGrad2)" transform="rotate(35 280 230)" filter="url(#glow)"/>
+  <ellipse cx="284" cy="205" rx="16" ry="8" fill="url(#goldGrad2)" transform="rotate(38 284 205)" opacity="0.9"/>
+  <ellipse cx="282" cy="182" rx="14" ry="7" fill="url(#goldGrad2)" transform="rotate(40 282 182)" opacity="0.8"/>
+  <ellipse cx="277" cy="162" rx="12" ry="6" fill="url(#goldGrad2)" transform="rotate(42 277 162)" opacity="0.7"/>
+
+  <!-- Top wheat tip -->
+  <ellipse cx="256" cy="148" rx="10" ry="18" fill="url(#goldGrad)" filter="url(#glow)"/>
+
+  <!-- Small leaf sprigs at base -->
+  <path d="M256 295 Q230 270 218 255" stroke="url(#goldGrad)" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <path d="M256 295 Q282 270 294 255" stroke="url(#goldGrad)" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- Decorative horizontal line -->
+  <line x1="156" y1="325" x2="356" y2="325" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="156" cy="325" r="3" fill="#D4A017" opacity="0.7"/>
+  <circle cx="356" cy="325" r="3" fill="#D4A017" opacity="0.7"/>
+  <circle cx="256" cy="325" r="3" fill="#D4A017"/>
+
+  <!-- BSC Monogram -->
+  <text x="256" y="375"
+    font-family="Georgia, serif"
+    font-size="52"
+    font-weight="700"
+    fill="url(#goldGrad)"
+    text-anchor="middle"
+    letter-spacing="6"
+    filter="url(#glow)">BSC</text>
+
+  <!-- Full name -->
+  <text x="256" y="408"
+    font-family="Georgia, serif"
+    font-size="18"
+    font-weight="400"
+    fill="#D4A017"
+    text-anchor="middle"
+    letter-spacing="2"
+    opacity="0.9">BISMILLAH SPRAY</text>
+
+  <text x="256" y="430"
+    font-family="Georgia, serif"
+    font-size="14"
+    font-weight="400"
+    fill="#94A3B8"
+    text-anchor="middle"
+    letter-spacing="3"
+    opacity="0.8">CENTER</text>
+
+  <!-- Corner decorative dots -->
+  <circle cx="180" cy="455" r="2.5" fill="#D4A017" opacity="0.4"/>
+  <circle cx="256" cy="460" r="2.5" fill="#D4A017" opacity="0.6"/>
+  <circle cx="332" cy="455" r="2.5" fill="#D4A017" opacity="0.4"/>
+</svg>

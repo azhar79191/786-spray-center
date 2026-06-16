@@ -4,7 +4,8 @@ import { clearCache } from '../api/axios'
 
 const DataContext = createContext(null)
 
-// All fetch configs in one place — single source of truth
+// FETCHERS — used for refreshData and invalidateAndRefresh (always fresh)
+// Initial preload uses cache-enabled calls separately
 const FETCHERS = {
   featuredProducts: () => apiClient.get('/products/featured/list', { params: { limit: 6 }, _skipCache: true }),
   categories:       () => apiClient.get('/products/categories/all', { _skipCache: true }),
@@ -15,6 +16,19 @@ const FETCHERS = {
   faqs:             () => apiClient.get('/faqs', { params: { limit: 100 }, _skipCache: true }),
   faqCategories:    () => apiClient.get('/faqs/categories/all', { _skipCache: true }),
   testimonials:     () => apiClient.get('/testimonials/approved', { params: { limit: 20 }, _skipCache: true }),
+}
+
+// PRELOAD calls — use cache (memory → disk → network)
+const PRELOAD = {
+  featuredProducts: () => apiClient.get('/products/featured/list', { params: { limit: 6 } }),
+  categories:       () => apiClient.get('/products/categories/all'),
+  brands:           () => apiClient.get('/products/brands/all'),
+  products:         () => apiClient.get('/products', { params: { limit: 100 } }),
+  brandList:        () => apiClient.get('/brands', { params: { limit: 50, isActive: true } }),
+  gallery:          () => apiClient.get('/gallery', { params: { limit: 50, isActive: true } }),
+  faqs:             () => apiClient.get('/faqs', { params: { limit: 100 } }),
+  faqCategories:    () => apiClient.get('/faqs/categories/all'),
+  testimonials:     () => apiClient.get('/testimonials/approved', { params: { limit: 20 } }),
 }
 
 export const DataProvider = ({ children }) => {
@@ -31,11 +45,11 @@ export const DataProvider = ({ children }) => {
     setLoading(true)
     setError(null)
     try {
-      // Critical first — page becomes interactive fast
+      // Critical first — serve from cache instantly if available, else fetch
       const [featuredRes, categoriesRes, brandsRes] = await Promise.allSettled([
-        apiClient.get('/products/featured/list', { params: { limit: 6 } }),
-        apiClient.get('/products/categories/all'),
-        apiClient.get('/products/brands/all'),
+        PRELOAD.featuredProducts(),
+        PRELOAD.categories(),
+        PRELOAD.brands(),
       ])
       setData(prev => ({
         ...prev,
@@ -46,25 +60,27 @@ export const DataProvider = ({ children }) => {
       setIsPreloaded(true)
       setLoading(false)
 
-      // Secondary — background, non-blocking
-      Promise.allSettled([
-        apiClient.get('/products', { params: { limit: 100 } }),
-        apiClient.get('/brands', { params: { limit: 50, isActive: true } }),
-        apiClient.get('/gallery', { params: { limit: 50, isActive: true } }),
-        apiClient.get('/faqs', { params: { limit: 100 } }),
-        apiClient.get('/faqs/categories/all'),
-        apiClient.get('/testimonials/approved', { params: { limit: 20 } }),
-      ]).then(([productsRes, brandListRes, galleryRes, faqsRes, faqCategoriesRes, testimonialsRes]) => {
-        setData(prev => ({
-          ...prev,
-          products:      productsRes.status === 'fulfilled' ? productsRes.value.data.data || [] : [],
-          brandList:     brandListRes.status === 'fulfilled' ? brandListRes.value.data.data || [] : [],
-          gallery:       galleryRes.status === 'fulfilled' ? galleryRes.value.data.data || [] : [],
-          faqs:          faqsRes.status === 'fulfilled' ? faqsRes.value.data.data || [] : [],
-          faqCategories: faqCategoriesRes.status === 'fulfilled' ? faqCategoriesRes.value.data.data || [] : [],
-          testimonials:  testimonialsRes.status === 'fulfilled' ? testimonialsRes.value.data.data || [] : [],
-        }))
-      })
+      // Secondary — delay 800ms so critical render completes first
+      setTimeout(() => {
+        Promise.allSettled([
+          PRELOAD.products(),
+          PRELOAD.brandList(),
+          PRELOAD.gallery(),
+          PRELOAD.faqs(),
+          PRELOAD.faqCategories(),
+          PRELOAD.testimonials(),
+        ]).then(([productsRes, brandListRes, galleryRes, faqsRes, faqCategoriesRes, testimonialsRes]) => {
+          setData(prev => ({
+            ...prev,
+            products:      productsRes.status === 'fulfilled' ? productsRes.value.data.data || [] : [],
+            brandList:     brandListRes.status === 'fulfilled' ? brandListRes.value.data.data || [] : [],
+            gallery:       galleryRes.status === 'fulfilled' ? galleryRes.value.data.data || [] : [],
+            faqs:          faqsRes.status === 'fulfilled' ? faqsRes.value.data.data || [] : [],
+            faqCategories: faqCategoriesRes.status === 'fulfilled' ? faqCategoriesRes.value.data.data || [] : [],
+            testimonials:  testimonialsRes.status === 'fulfilled' ? testimonialsRes.value.data.data || [] : [],
+          }))
+        })
+      }, 800)
     } catch (err) {
       console.error('Failed to preload data:', err)
       setError(err.message)

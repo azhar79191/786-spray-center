@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
@@ -11,7 +10,7 @@ export default defineConfig({
       includeAssets: ['favicon.svg', 'favicon-*.png', 'apple-touch-icon.png', 'og-image.png', 'robots.txt', 'sitemap.xml'],
       manifest: {
         name: 'Bismillah Spray Center',
-        short_name: 'Bismillah Spray',
+        short_name: 'BSC',
         description: 'Premium Agricultural Solutions for Pakistan',
         theme_color: '#0F172A',
         background_color: '#0F172A',
@@ -20,159 +19,107 @@ export default defineConfig({
         start_url: '/',
         scope: '/',
         icons: [
-          {
-            src: '/icon-192.png',
-            sizes: '192x192',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/icon-192-maskable.png',
-            sizes: '192x192',
-            type: 'image/png',
-            purpose: 'maskable'
-          },
-          {
-            src: '/icon-512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: '/icon-512-maskable.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'maskable'
-          },
-          {
-            src: '/apple-touch-icon.png',
-            sizes: '180x180',
-            type: 'image/png'
-          }
+          { src: '/icon-192.png',          sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: '/icon-192-maskable.png', sizes: '192x192', type: 'image/png', purpose: 'maskable' },
+          { src: '/icon-512.png',          sizes: '512x512', type: 'image/png', purpose: 'any' },
+          { src: '/icon-512-maskable.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+          { src: '/apple-touch-icon.png',  sizes: '180x180', type: 'image/png' },
         ]
       },
       workbox: {
-        // Increase file size limit for large chunks
-        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10 MB
-        // Cache strategies
+        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'google-fonts-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              }
+              cacheName: 'google-fonts',
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] }
             }
           },
           {
             urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'gstatic-fonts-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              }
+              cacheName: 'gstatic-fonts',
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] }
             }
           },
           {
             urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'unsplash-images-cache',
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              }
+              cacheName: 'unsplash-images',
+              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              cacheableResponse: { statuses: [0, 200] }
             }
           },
           {
+            // API — StaleWhileRevalidate: show cached instantly, update in background
             urlPattern: /\/api\/.*/i,
-            handler: 'NetworkFirst',
+            handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'api-cache',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 5 // 5 minutes
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              },
-              networkTimeoutSeconds: 10
+              expiration: { maxEntries: 60, maxAgeSeconds: 60 * 15 },
+              cacheableResponse: { statuses: [0, 200] }
+            }
+          },
+          {
+            // Cloudinary images — cache aggressively
+            urlPattern: /^https:\/\/res\.cloudinary\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'cloudinary-images',
+              expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 7 },
+              cacheableResponse: { statuses: [0, 200] }
             }
           }
         ],
-        // Clean old caches
         cleanupOutdatedCaches: true,
-        // Skip waiting
         skipWaiting: true,
         clientsClaim: true,
-        // Exclude large files from precaching
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         globIgnores: ['**/node_modules/**/*'],
-        // Don't precache sitemap and robots
         navigateFallback: null
       },
-      devOptions: {
-        enabled: true // Enable in dev to test PWA
-      }
+      devOptions: { enabled: false }
     })
   ],
   server: {
     port: 5173,
     proxy: {
-      '/api': {
-        target: 'http://localhost:5000',
-        changeOrigin: true,
-      },
+      '/api': { target: 'http://localhost:5000', changeOrigin: true },
     },
   },
   build: {
     outDir: 'dist',
     sourcemap: false,
-    chunkSizeWarningLimit: 1000, // Increase warning limit to 1000 KB
+    // Minify with esbuild (default, very fast)
+    minify: 'esbuild',
+    // CSS code splitting
+    cssCodeSplit: true,
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
-          // Split node_modules into separate chunks
-          if (id.includes('node_modules')) {
-            if (id.includes('react-dom')) {
-              return 'vendor-react-dom';
-            }
-            if (id.includes('react-router')) {
-              return 'vendor-router';
-            }
-            if (id.includes('react')) {
-              return 'vendor-react';
-            }
-            if (id.includes('framer-motion')) {
-              return 'vendor-framer';
-            }
-            if (id.includes('react-icons')) {
-              return 'vendor-icons';
-            }
-            if (id.includes('axios')) {
-              return 'vendor-axios';
-            }
-            if (id.includes('react-toastify')) {
-              return 'vendor-toast';
-            }
-            // Other node_modules
-            return 'vendor-misc';
-          }
+        // Fine-grained chunk splitting — users only download what they need
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return
+          if (id.includes('react-dom'))      return 'vendor-react-dom'
+          if (id.includes('react-router'))   return 'vendor-router'
+          if (id.includes('react'))          return 'vendor-react'
+          if (id.includes('framer-motion')) return 'vendor-framer'
+          if (id.includes('react-icons'))    return 'vendor-icons'
+          if (id.includes('axios'))          return 'vendor-axios'
+          if (id.includes('react-toastify')) return 'vendor-toast'
+          if (id.includes('react-helmet'))   return 'vendor-helmet'
+          return 'vendor-misc'
         },
+        // Consistent file names for better CDN caching
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
       },
     },
   },
