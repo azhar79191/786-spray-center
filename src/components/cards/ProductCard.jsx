@@ -1,8 +1,9 @@
 import { memo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { FaEye, FaHeart, FaRegHeart, FaShoppingCart } from 'react-icons/fa'
+import { FaEye, FaHeart, FaRegHeart } from 'react-icons/fa'
 import { formatPrice, getCategoryColor, getStockStatusColor } from '../../utils/helpers'
+import LazyImage from '../common/LazyImage'
 
 const ProductCard = memo(({ product, index = 0 }) => {
   const cardRef = useRef(null)
@@ -69,11 +70,12 @@ const ProductCard = memo(({ product, index = 0 }) => {
 
         {/* Image container */}
         <div className="relative h-56 overflow-hidden bg-primary-700" style={{ transformStyle: 'preserve-3d' }}>
-          <img
+          <LazyImage
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            loading="lazy"
+            className="w-full h-full"
+            imgClassName="transition-transform duration-500 group-hover:scale-110"
+            placeholderClassName="bg-primary-700"
           />
 
           {/* Overlay on hover */}

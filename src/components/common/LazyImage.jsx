@@ -9,8 +9,10 @@ const LazyImage = ({
   src, 
   alt, 
   className = '',
+  imgClassName = '',
   onClick,
-  placeholderClassName = 'bg-primary-700 animate-pulse'
+  placeholderClassName = 'bg-primary-700 animate-pulse',
+  loading = 'lazy'
 }) => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isInView, setIsInView] = useState(false)
@@ -58,9 +60,9 @@ const LazyImage = ({
           alt={alt}
           className={`w-full h-full object-cover transition-opacity duration-300 ${
             isLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
+          } ${imgClassName}`}
           onLoad={() => setIsLoaded(true)}
-          loading="lazy"
+          loading={loading}
         />
       )}
     </div>

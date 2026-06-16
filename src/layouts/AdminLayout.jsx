@@ -16,6 +16,7 @@ import {
 } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import apiClient from '../api/axios'
+import { logout, getAdminUser } from '../services/authService'
 
 /**
  * Admin Layout
@@ -29,9 +30,8 @@ const AdminLayout = () => {
   // Get admin user info
   const getAdminName = () => {
     try {
-      const adminUser = localStorage.getItem('adminUser')
-      if (adminUser) {
-        const user = JSON.parse(adminUser)
+      const user = getAdminUser()
+      if (user) {
         return user.fullName || user.username || 'Admin'
       }
       return 'Admin'
@@ -41,24 +41,16 @@ const AdminLayout = () => {
   }
 
   const handleLogout = useCallback(() => {
-    localStorage.removeItem('adminToken')
-    localStorage.removeItem('adminUser')
+    logout()
     toast.success('Logged out successfully')
     navigate('/admin/login')
   }, [navigate])
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken')
-    if (!token) {
-      navigate('/admin/login')
-      return
-    }
-
     // Verify token is still valid by calling /auth/me
     apiClient.get('/auth/me').catch((err) => {
       if (err.response?.status === 401 || err.response?.status === 403) {
-        localStorage.removeItem('adminToken')
-        localStorage.removeItem('adminUser')
+        logout()
         toast.error('Session expired. Please login again.')
         navigate('/admin/login')
       }

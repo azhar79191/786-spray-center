@@ -23,7 +23,7 @@ const Home = () => {
   return (
     <>
       <SEO 
-        title="Pesticide Shop Minchinabad Pakistan | Agricultural Products Bahawalnagar" 
+        title="Premium Agricultural Solutions in Minchinabad" 
         description="Bismillah Spray Center - Authorized pesticide, fertilizer & seed dealer in Minchinabad, Bahawalnagar. Warble, FFC, Engro brands. Free delivery across Bahawalnagar district. Call +92 300 1331616"
         keywords="pesticide shop Minchinabad, agricultural products Bahawalnagar, fertilizer dealer Minchinabad, pesticide shop near me, FFC dealer Punjab, Engro fertilizer Bahawalnagar, Warble dealer Pakistan, cotton pesticides, wheat fertilizers Punjab"
       />

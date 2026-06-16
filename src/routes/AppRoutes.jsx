@@ -4,6 +4,7 @@ import MainLayout from '../layouts/MainLayout'
 import AdminLayout from '../layouts/AdminLayout'
 import LoadingScreen from '../components/loaders/LoadingScreen'
 import PageTransition from '../components/common/PageTransition'
+import ProtectedRoute from '../components/common/ProtectedRoute'
 
 // Lazy load public pages
 const Home = lazy(() => import('../pages/Home'))
@@ -56,7 +57,7 @@ const AppRoutes = () => {
       <Route path="/admin/login" element={<Suspense fallback={<LoadingScreen />}><AdminLogin /></Suspense>} />
 
       {/* Admin Routes (Protected) */}
-      <Route path="/admin" element={<AdminLayout />}>
+      <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
         <Route path="dashboard" element={<Suspense fallback={<LoadingScreen />}><AdminDashboard /></Suspense>} />
         <Route path="products" element={<Suspense fallback={<LoadingScreen />}><ProductList /></Suspense>} />
         <Route path="products/new" element={<Suspense fallback={<LoadingScreen />}><ProductForm /></Suspense>} />

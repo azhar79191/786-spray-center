@@ -12,10 +12,9 @@ const ProductsFilters = memo(({
 }) => {
   return (
     <aside
-      className={`lg:w-64 w-full flex-shrink-0 ${showFilters ? 'block' : 'hidden lg:block'}`}
-      style={{ position: 'sticky', top: '80px', alignSelf: 'flex-start' }}
+      className={`lg:w-64 w-full flex-shrink-0 sticky top-20 self-start ${showFilters ? 'block' : 'hidden lg:block'}`}
     >
-      <div className="bg-white rounded-2xl p-6 shadow-card max-h-[calc(100vh-90px)] overflow-y-auto">
+      <div className="bg-white rounded-2xl p-6 shadow-card max-h-[calc(100vh-85px)] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-primary font-semibold flex items-center gap-2">
             <FaFilter className="w-4 h-4 text-gold" aria-hidden="true" />

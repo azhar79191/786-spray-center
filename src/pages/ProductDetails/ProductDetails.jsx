@@ -12,6 +12,8 @@ import {
 } from 'react-icons/fa'
 import SEO from '../../components/common/SEO'
 import ProductCard from '../../components/cards/ProductCard'
+import LazyImage from '../../components/common/LazyImage'
+import TestimonialForm from '../../components/forms/TestimonialForm'
 import { SkeletonText, SkeletonImage } from '../../components/loaders/SkeletonLoader'
 import { useProducts } from '../../hooks/useProducts'
 import { formatPrice, getCategoryColor, getStockStatusColor, getWhatsAppLink } from '../../utils/helpers'
@@ -33,12 +35,15 @@ const ProductDetails = () => {
   const { fetchProductById, fetchRelatedProducts } = useProducts()
 
   useEffect(() => {
+    let isMounted = true
+
     const loadProduct = async () => {
       setLoading(true)
       setError(null)
 
       try {
         const productData = await fetchProductById(id)
+        if (!isMounted) return
         if (productData) {
           setProduct(productData)
           if (productData.sizes && productData.sizes.length > 0) {
@@ -47,20 +52,29 @@ const ProductDetails = () => {
 
           // Fetch related products
           const related = await fetchRelatedProducts(id, 4)
+          if (!isMounted) return
           setRelatedProducts(related)
         } else {
           setError('Product not found')
         }
       } catch (err) {
-        setError(err.message || 'Failed to load product')
+        if (isMounted) {
+          setError(err.message || 'Failed to load product')
+        }
       } finally {
-        setLoading(false)
+        if (isMounted) {
+          setLoading(false)
+        }
       }
     }
 
     loadProduct()
     window.scrollTo(0, 0)
-  }, [id])
+
+    return () => {
+      isMounted = false
+    }
+  }, [id, fetchProductById, fetchRelatedProducts])
 
   const handleWhatsAppInquiry = () => {
     const message = `Hello, I am interested in ${product?.name} (${selectedSize?.size || ''}). Please provide more details.`
@@ -148,10 +162,12 @@ const ProductDetails = () => {
               <div className="bg-white rounded-3xl p-4 shadow-card">
                 {/* Main Image */}
                 <div className="relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden bg-primary-700 mb-4">
-                  <img
+                  <LazyImage
+                    key={images[activeImage]}
                     src={images[activeImage]}
                     alt={product.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full"
+                    loading="eager"
                   />
                   <div className="absolute top-4 left-4">
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getCategoryColor(product.category)}`}>
@@ -178,7 +194,11 @@ const ProductDetails = () => {
                           activeImage === index ? 'border-gold' : 'border-transparent'
                         }`}
                       >
-                        <img src={img} alt={`${product.name} ${index + 1}`} className="w-full h-full object-cover" />
+                        <LazyImage
+                          src={img}
+                          alt={`${product.name} ${index + 1}`}
+                          className="w-full h-full"
+                        />
                       </button>
                     ))}
                   </div>
@@ -327,6 +347,20 @@ const ProductDetails = () => {
               </div>
             </motion.div>
           )}
+          
+          {/* Product Feedback Form */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-16"
+          >
+            <TestimonialForm 
+              productId={product._id || id} 
+              productName={product.name} 
+            />
+          </motion.div>
         </div>
       </section>
 

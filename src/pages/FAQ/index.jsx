@@ -48,7 +48,7 @@ const FAQ = () => {
   return (
     <>
       <SEO 
-        title="Frequently Asked Questions | Agricultural Products Pakistan" 
+        title="Frequently Asked Questions" 
         description="Find answers to common questions about agricultural products, pesticides, fertilizers, seeds, ordering, delivery, product usage, safety guidelines at Bismillah Spray Center Minchinabad. Expert farming advice."
         keywords="agricultural FAQ Pakistan, pesticide usage questions, fertilizer application guide, seed selection help, farming questions answered, crop protection FAQ, agricultural advice Bahawalnagar, farming tips Punjab"
       />

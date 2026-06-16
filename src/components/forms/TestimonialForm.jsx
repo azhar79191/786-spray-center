@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaStar, FaPaperPlane } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { submitTestimonial } from '../../services/testimonialService';
@@ -7,14 +7,30 @@ import { submitTestimonial } from '../../services/testimonialService';
  * Testimonial Form Component
  * Allows users to submit feedback and testimonials
  */
-const TestimonialForm = () => {
+const TestimonialForm = ({ productId, productName }) => {
   const [formData, setFormData] = useState({
     name: '',
     location: '',
     rating: 5,
     message: '',
     productUsed: '',
+    productId: productId || '',
   });
+  
+  useEffect(() => {
+    if (productName) {
+      setFormData(prev => ({
+        ...prev,
+        productUsed: productName,
+      }));
+    }
+    if (productId) {
+      setFormData(prev => ({
+        ...prev,
+        productId,
+      }));
+    }
+  }, [productId, productName]);
   const [hoveredRating, setHoveredRating] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -146,7 +162,7 @@ const TestimonialForm = () => {
         {/* Product Used */}
         <div>
           <label htmlFor="productUsed" className="block text-sm font-medium text-primary mb-2">
-            Product/Service Used (Optional)
+            Product Used {!productName && '(Optional)'}
           </label>
           <input
             type="text"
@@ -154,8 +170,9 @@ const TestimonialForm = () => {
             name="productUsed"
             value={formData.productUsed}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-primary-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-            placeholder="e.g., Pesticide, Fertilizer, Consultation"
+            disabled={!!productName}
+            className={`w-full px-4 py-3 border border-primary-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all ${productName ? 'bg-primary-700 cursor-not-allowed' : ''}`}
+            placeholder={productName ? '' : 'e.g., Pesticide, Fertilizer, Consultation'}
           />
         </div>
 

@@ -5,6 +5,7 @@
 
 const BACKEND_URL = import.meta.env.VITE_API_BASE_URL || 'https://myshop-1sp3.onrender.com/api'
 const PING_INTERVAL = 13 * 60 * 1000 // 13 min — safely under Render's 15 min sleep
+const ENABLE_CLIENT_KEEP_ALIVE = import.meta.env.VITE_ENABLE_CLIENT_KEEPALIVE === 'true'
 
 const pingBackend = async () => {
   try {
@@ -17,7 +18,7 @@ const pingBackend = async () => {
 }
 
 export const startKeepAlive = () => {
-  if (import.meta.env.DEV) return
+  if (import.meta.env.DEV || !ENABLE_CLIENT_KEEP_ALIVE) return () => {}
 
   // Immediate ping on app start — wakes Render if sleeping
   pingBackend()

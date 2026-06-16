@@ -31,7 +31,7 @@ const Brands = () => {
   return (
     <>
       <SEO
-        title="Authorized Brands | Warble, FFC, Engro, Agrow Mark Dealer Pakistan"
+        title="Authorized Brands"
         description="Authorized dealer of leading agricultural brands in Pakistan: Warble, Agrow Mark, FFC, Engro, Agro One, Abdullah Haseeb. Genuine products, competitive prices. Shop at Bismillah Spray Center Minchinabad, Bahawalnagar."
         keywords="Warble dealer Pakistan, FFC dealer Bahawalnagar, Engro fertilizer dealer, Agrow Mark authorized, Agro One seeds, Abdullah Haseeb products, agricultural brands Minchinabad, authorized dealer Punjab"
       />

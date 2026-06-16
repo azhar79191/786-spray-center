@@ -12,7 +12,8 @@ export const useFetch = (url, options = {}) => {
   const [loading, setLoading] = useState(immediate)
   const [error, setError] = useState(null)
 
-  const fetchData = useCallback(async (customParams = {}) => {
+  const fetchData = useCallback(async (customParams = {}, requestOptions = {}) => {
+    const signal = requestOptions.signal
     setLoading(true)
     setError(null)
 
@@ -20,14 +21,21 @@ export const useFetch = (url, options = {}) => {
       const response = await apiClient.get(url, {
         params: { ...params, ...customParams },
         _skipCache: options._skipCache || false,
+        signal,
       })
+      if (signal?.aborted) return null
       setData(response.data)
       return response.data
     } catch (err) {
+      if (err.name === 'CanceledError' || err.code === 'ERR_CANCELED' || signal?.aborted) {
+        return null
+      }
       setError(err.message || 'Failed to fetch data')
       return null
     } finally {
-      setLoading(false)
+      if (!signal?.aborted) {
+        setLoading(false)
+      }
     }
   }, [url, JSON.stringify(params)])
 
@@ -36,8 +44,16 @@ export const useFetch = (url, options = {}) => {
   }, [fetchData])
 
   useEffect(() => {
+    if (!immediate) return undefined
+
+    const controller = new AbortController()
+
     if (immediate) {
-      fetchData()
+      fetchData({}, { signal: controller.signal })
+    }
+
+    return () => {
+      controller.abort()
     }
   }, [immediate, fetchData, ...dependencies])
 

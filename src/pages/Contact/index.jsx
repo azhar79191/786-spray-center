@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import SEO from '../../components/common/SEO'
 import ContactForm from '../../components/forms/ContactForm'
-import TestimonialForm from '../../components/forms/TestimonialForm'
 import Spinner from '../../components/loaders/Spinner'
 
 // Eager load above-the-fold
@@ -21,7 +20,7 @@ const Contact = () => {
   return (
     <>
       <SEO 
-        title="Contact Us | Bismillah Spray Center Minchinabad Bahawalnagar" 
+        title="Contact Us" 
         description="Visit or call Bismillah Spray Center in Minchinabad. Phone: +92 300 1331616. Address: Behramka Hithar, Tehsil Minchinabad, District Bahawalnagar, Punjab. Open Mon-Sat 8AM-8PM, Sun 9AM-2PM. Expert agricultural advice available."
         keywords="agricultural shop Bahawalnagar contact, pesticide shop contact Minchinabad, agricultural supplier phone number, farming products Minchinabad, delivery Bahawalnagar district, agricultural consultation Punjab"
       />
@@ -47,21 +46,6 @@ const Contact = () => {
               <ContactForm />
             </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* Testimonial/Feedback Section */}
-      <section className="section-padding bg-white">
-        <div className="container-premium">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto"
-          >
-            <TestimonialForm />
-          </motion.div>
         </div>
       </section>
 

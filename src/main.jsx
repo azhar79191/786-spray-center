@@ -12,7 +12,7 @@ import './styles/globals.css'
 const rootElement = document.getElementById('root')
 
 // Start backend keepalive service to prevent cold starts
-startKeepAlive()
+const stopKeepAlive = startKeepAlive()
 
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
@@ -48,3 +48,8 @@ ReactDOM.createRoot(rootElement).render(
   </React.StrictMode>,
 )
 
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
+    stopKeepAlive?.()
+  })
+}

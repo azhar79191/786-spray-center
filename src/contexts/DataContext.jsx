@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react'
 import apiClient from '../api/axios'
 import { clearCache } from '../api/axios'
 
@@ -40,6 +40,8 @@ export const DataProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [isPreloaded, setIsPreloaded] = useState(false)
+  const isMountedRef = useRef(false)
+  const secondaryLoadTimeoutRef = useRef(null)
 
   const preloadData = useCallback(async () => {
     setLoading(true)
@@ -51,6 +53,7 @@ export const DataProvider = ({ children }) => {
         PRELOAD.categories(),
         PRELOAD.brands(),
       ])
+      if (!isMountedRef.current) return
       setData(prev => ({
         ...prev,
         featuredProducts: featuredRes.status === 'fulfilled' ? featuredRes.value.data.data || [] : [],
@@ -61,7 +64,10 @@ export const DataProvider = ({ children }) => {
       setLoading(false)
 
       // Secondary — delay 800ms so critical render completes first
-      setTimeout(() => {
+      if (secondaryLoadTimeoutRef.current) {
+        clearTimeout(secondaryLoadTimeoutRef.current)
+      }
+      secondaryLoadTimeoutRef.current = setTimeout(() => {
         Promise.allSettled([
           PRELOAD.products(),
           PRELOAD.brandList(),
@@ -70,6 +76,7 @@ export const DataProvider = ({ children }) => {
           PRELOAD.faqCategories(),
           PRELOAD.testimonials(),
         ]).then(([productsRes, brandListRes, galleryRes, faqsRes, faqCategoriesRes, testimonialsRes]) => {
+          if (!isMountedRef.current) return
           setData(prev => ({
             ...prev,
             products:      productsRes.status === 'fulfilled' ? productsRes.value.data.data || [] : [],
@@ -83,8 +90,10 @@ export const DataProvider = ({ children }) => {
       }, 800)
     } catch (err) {
       console.error('Failed to preload data:', err)
-      setError(err.message)
-      setLoading(false)
+      if (isMountedRef.current) {
+        setError(err.message)
+        setLoading(false)
+      }
     }
   }, [])
 
@@ -154,7 +163,18 @@ export const DataProvider = ({ children }) => {
     return filtered
   }, [data.products])
 
-  useEffect(() => { preloadData() }, [preloadData])
+  useEffect(() => {
+    isMountedRef.current = true
+    preloadData()
+
+    return () => {
+      isMountedRef.current = false
+      if (secondaryLoadTimeoutRef.current) {
+        clearTimeout(secondaryLoadTimeoutRef.current)
+        secondaryLoadTimeoutRef.current = null
+      }
+    }
+  }, [preloadData])
 
   return (
     <DataContext.Provider value={{

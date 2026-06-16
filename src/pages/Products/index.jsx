@@ -110,7 +110,7 @@ const Products = () => {
   return (
     <>
       <SEO 
-        title="Agricultural Products Pakistan | Pesticides, Fertilizers & Seeds" 
+        title="Agricultural Products" 
         description="Complete range of agricultural products: pesticides, insecticides, herbicides, fungicides, fertilizers, seeds. Authorized Warble, FFC, Engro dealer. Shop in Bahawalnagar with delivery across Punjab."
         keywords="agricultural products Pakistan, crop protection products, pest control products Pakistan, plant nutrition products, farming supplies Bahawalnagar, agricultural chemicals Punjab, buy pesticides Pakistan, fertilizers online Pakistan"
       />
