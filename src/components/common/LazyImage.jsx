@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, memo } from 'react'
 
 /**
  * Lazy Loading Image Component
  * Only loads images when they enter the viewport
  * Improves performance by reducing initial page load
  */
-const LazyImage = ({ 
+const LazyImage = memo(({ 
   src, 
   alt, 
   className = '',
@@ -15,24 +15,27 @@ const LazyImage = ({
   loading = 'lazy'
 }) => {
   const [isLoaded, setIsLoaded] = useState(false)
-  const [isInView, setIsInView] = useState(false)
   const imgRef = useRef(null)
 
+  // Optimized: Use native lazy loading with IntersectionObserver fallback
   useEffect(() => {
-    if (!imgRef.current) return
+    if (!imgRef.current || loading === 'eager') return
 
-    // Intersection Observer to detect when image enters viewport
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsInView(true)
+            const img = entry.target.querySelector('img')
+            if (img && img.dataset.src) {
+              img.src = img.dataset.src
+              delete img.dataset.src
+            }
             observer.unobserve(entry.target)
           }
         })
       },
       {
-        rootMargin: '50px', // Start loading 50px before image enters viewport
+        rootMargin: '200px 0px', // Load 200px before entering viewport for better UX
         threshold: 0.01
       }
     )
@@ -44,7 +47,7 @@ const LazyImage = ({
         observer.unobserve(imgRef.current)
       }
     }
-  }, [])
+  }, [loading])
 
   return (
     <div ref={imgRef} className={`relative ${className}`} onClick={onClick}>
@@ -53,20 +56,23 @@ const LazyImage = ({
         <div className={`absolute inset-0 ${placeholderClassName}`} />
       )}
       
-      {/* Actual image - only load when in viewport */}
-      {isInView && (
-        <img
-          src={src}
-          alt={alt}
-          className={`w-full h-full object-cover transition-opacity duration-300 ${
-            isLoaded ? 'opacity-100' : 'opacity-0'
-          } ${imgClassName}`}
-          onLoad={() => setIsLoaded(true)}
-          loading={loading}
-        />
-      )}
+      {/* Actual image */}
+      <img
+        {...(loading !== 'eager' && { 'data-src': src })}
+        src={loading === 'eager' ? src : undefined}
+        alt={alt}
+        className={`w-full h-full object-cover transition-opacity duration-300 ${
+          isLoaded ? 'opacity-100' : 'opacity-0'
+        } ${imgClassName}`}
+        onLoad={() => setIsLoaded(true)}
+        loading={loading}
+        decoding="async"
+        importance={loading === 'eager' ? 'high' : 'low'}
+      />
     </div>
   )
-}
+})
+
+LazyImage.displayName = 'LazyImage'
 
 export default LazyImage

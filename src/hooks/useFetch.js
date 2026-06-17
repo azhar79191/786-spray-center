@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import apiClient from '../api/axios.js'
 
 /**
@@ -11,6 +11,14 @@ export const useFetch = (url, options = {}) => {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(immediate)
   const [error, setError] = useState(null)
+  const paramsRef = useRef(params)
+
+  // Update params ref when params change (deep comparison)
+  useEffect(() => {
+    if (JSON.stringify(paramsRef.current) !== JSON.stringify(params)) {
+      paramsRef.current = params
+    }
+  }, [params])
 
   const fetchData = useCallback(async (customParams = {}, requestOptions = {}) => {
     const signal = requestOptions.signal
@@ -19,7 +27,7 @@ export const useFetch = (url, options = {}) => {
 
     try {
       const response = await apiClient.get(url, {
-        params: { ...params, ...customParams },
+        params: { ...paramsRef.current, ...customParams },
         _skipCache: options._skipCache || false,
         signal,
       })
@@ -37,7 +45,7 @@ export const useFetch = (url, options = {}) => {
         setLoading(false)
       }
     }
-  }, [url, JSON.stringify(params)])
+  }, [url, options._skipCache])
 
   const refetch = useCallback(() => {
     return fetchData()

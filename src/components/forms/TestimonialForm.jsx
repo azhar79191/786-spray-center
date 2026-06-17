@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo, useCallback } from 'react';
 import { FaStar, FaPaperPlane } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { submitTestimonial } from '../../services/testimonialService';
@@ -7,7 +7,7 @@ import { submitTestimonial } from '../../services/testimonialService';
  * Testimonial Form Component
  * Allows users to submit feedback and testimonials
  */
-const TestimonialForm = ({ productId, productName }) => {
+const TestimonialForm = memo(({ productId, productName }) => {
   const [formData, setFormData] = useState({
     name: '',
     location: '',
@@ -34,22 +34,22 @@ const TestimonialForm = ({ productId, productName }) => {
   const [hoveredRating, setHoveredRating] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-  };
+  }, []);
 
-  const handleRatingClick = (rating) => {
+  const handleRatingClick = useCallback((rating) => {
     setFormData((prev) => ({
       ...prev,
       rating,
     }));
-  };
+  }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
 
     // Validation
@@ -84,7 +84,7 @@ const TestimonialForm = ({ productId, productName }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [formData, productName, productId]);
 
   return (
     <div className="bg-white rounded-xl shadow-card p-6 md:p-8">
@@ -221,6 +221,8 @@ const TestimonialForm = ({ productId, productName }) => {
       </form>
     </div>
   );
-};
+});
+
+TestimonialForm.displayName = 'TestimonialForm'
 
 export default TestimonialForm;
