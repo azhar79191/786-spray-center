@@ -10,7 +10,8 @@ import {
   FaQuestionCircle,
   FaEnvelope,
   FaCogs,
-  FaEllipsisH,
+  FaBars,
+  FaTimes,
 } from 'react-icons/fa'
 
 const MobileBottomNav = () => {
@@ -71,7 +72,7 @@ const MobileBottomNav = () => {
                     onClick={() => setShowMore(false)}
                     className="text-primary-400 hover:text-white"
                   >
-                    <FaEllipsisH className="w-6 h-6" />
+                    <FaTimes className="w-6 h-6" />
                   </button>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
@@ -155,7 +156,7 @@ const MobileBottomNav = () => {
             }`}
             aria-label="More"
           >
-            <FaEllipsisH className="w-5 h-5 mb-1" />
+            <FaBars className="w-5 h-5 mb-1" />
             <span className="text-[10px] font-medium leading-none">More</span>
             {(showMore || moreNavItems.some(item => isActive(item.path))) && (
               <motion.div
