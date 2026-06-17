@@ -10,7 +10,7 @@ export default defineConfig({
       includeAssets: ['favicon.svg', 'favicon-*.png', 'apple-touch-icon.png', 'og-image.png', 'robots.txt', 'sitemap.xml'],
       manifest: {
         name: 'Bismillah Spray Center',
-        short_name: 'BSC',
+        short_name: 'Bismillah SC',
         description: 'Premium Agricultural Solutions for Pakistan',
         theme_color: '#0F172A',
         background_color: '#0F172A',

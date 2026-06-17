@@ -147,7 +147,7 @@ const MobileBottomNav = () => {
 
           {/* More Button */}
           <button
-            onClick={() => setShowMore(true)}
+            onClick={() => setShowMore(!showMore)}
             className={`relative flex flex-col items-center justify-center transition-all duration-200 ${
               showMore || moreNavItems.some(item => isActive(item.path))
                 ? 'text-gold'
