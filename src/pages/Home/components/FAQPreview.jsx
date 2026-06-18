@@ -1,6 +1,4 @@
 import { memo } from 'react'
-import { Link } from 'react-router-dom'
-import { FaArrowRight } from 'react-icons/fa'
 import SectionTitle from '../../../components/common/SectionTitle'
 import FAQItem from '../../../components/ui/FAQItem'
 import { useData } from '../../../contexts/DataContext'
@@ -17,12 +15,6 @@ const FAQPreview = memo(() => {
           {previewFaqs.map((faq, index) => (
             <FAQItem key={faq._id || index} faq={faq} index={index} />
           ))}
-        </div>
-        <div className="text-center mt-12">
-          <Link to="/faq" className="btn-primary">
-            View All FAQs
-            <FaArrowRight className="ml-2 w-4 h-4" />
-          </Link>
         </div>
       </div>
     </section>

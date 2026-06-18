@@ -29,7 +29,6 @@ const MobileBottomNav = () => {
     { name: 'Services', path: '/services', icon: FaCogs },
     { name: 'Brands', path: '/brands', icon: FaTags },
     { name: 'Gallery', path: '/gallery', icon: FaImages },
-    { name: 'FAQ', path: '/faq', icon: FaQuestionCircle },
   ]
 
   const allNavItems = [...mainNavItems, ...moreNavItems]

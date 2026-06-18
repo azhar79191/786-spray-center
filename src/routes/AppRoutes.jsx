@@ -13,7 +13,6 @@ const Products = lazy(() => import('../pages/Products'))
 const ProductDetails = lazy(() => import('../pages/ProductDetails/ProductDetails'))
 const Services = lazy(() => import('../pages/Services'))
 const Brands = lazy(() => import('../pages/Brands'))
-const FAQ = lazy(() => import('../pages/FAQ'))
 const Gallery = lazy(() => import('../pages/Gallery'))
 const Contact = lazy(() => import('../pages/Contact'))
 const NotFound = lazy(() => import('../pages/NotFound/NotFound'))
@@ -48,7 +47,6 @@ const AppRoutes = () => {
         <Route path="/products/:id" element={<Suspense fallback={<LoadingScreen />}><PageTransition><ProductDetails /></PageTransition></Suspense>} />
         <Route path="/services" element={<Suspense fallback={<LoadingScreen />}><PageTransition><Services /></PageTransition></Suspense>} />
         <Route path="/brands" element={<Suspense fallback={<LoadingScreen />}><PageTransition><Brands /></PageTransition></Suspense>} />
-        <Route path="/faq" element={<Suspense fallback={<LoadingScreen />}><PageTransition><FAQ /></PageTransition></Suspense>} />
         <Route path="/gallery" element={<Suspense fallback={<LoadingScreen />}><PageTransition><Gallery /></PageTransition></Suspense>} />
         <Route path="/contact" element={<Suspense fallback={<LoadingScreen />}><PageTransition><Contact /></PageTransition></Suspense>} />
       </Route>
