@@ -51,7 +51,7 @@ const ContactForm = () => {
 
   if (isSubmitted) {
     return (
-      <div className="bg-white rounded-3xl p-8 md:p-10 shadow-2xl relative overflow-hidden">
+      <div className="bg-white rounded-3xl p-6 md:p-8 lg:p-10 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/5 rounded-full translate-y-1/2 -translate-x-1/2" />
         
@@ -60,18 +60,18 @@ const ContactForm = () => {
           animate={{ opacity: 1, scale: 1 }}
           className="text-center py-12 relative z-10"
         >
-          <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <FaCheckCircle className="w-12 h-12 text-green-500" />
+          <div className="w-20 h-20 md:w-24 md:h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <FaCheckCircle className="w-10 h-10 md:w-12 md:h-12 text-green-500" />
           </div>
-          <h3 className="text-primary font-display font-bold text-3xl mb-3">
+          <h3 className="text-primary font-display font-bold text-2xl md:text-3xl mb-3">
             Message Sent! 🎉
           </h3>
-          <p className="text-primary-300 text-lg mb-8">
+          <p className="text-primary-300 text-base md:text-lg mb-8">
             Thank you for contacting us. We'll get back to you within 24 hours!
           </p>
           <button 
             onClick={() => setIsSubmitted(false)}
-            className="px-8 py-4 bg-gradient-to-r from-gold to-amber-600 text-primary font-bold rounded-xl"
+            className="px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-gold to-amber-600 text-primary font-bold rounded-xl"
           >
             Send Another Message
           </button>
@@ -81,7 +81,7 @@ const ContactForm = () => {
   }
 
   return (
-    <div className="bg-white rounded-3xl p-8 md:p-10 shadow-2xl relative overflow-hidden">
+    <div className="bg-white rounded-3xl p-6 md:p-8 lg:p-10 shadow-2xl relative overflow-hidden">
       <div className="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-full -translate-y-1/2 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/5 rounded-full translate-y-1/2 -translate-x-1/2" />
 
@@ -94,28 +94,28 @@ const ContactForm = () => {
         className="relative z-10"
         noValidate
       >
-        <div className="mb-8">
-          <h3 className="text-primary font-display font-bold text-3xl mb-2">
+        <div className="mb-6 md:mb-8">
+          <h3 className="text-primary font-display font-bold text-2xl md:text-3xl mb-2">
             Send Us a Message
           </h3>
-          <p className="text-primary-300">Fill out the form below and we'll get back to you soon</p>
+          <p className="text-primary-300 text-sm md:text-base">Fill out the form below and we'll get back to you soon</p>
         </div>
 
-        <div className="space-y-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="space-y-4 md:space-y-5">
+          <div className="grid grid-cols-1 gap-4 md:gap-5 sm:grid-cols-2">
             <div>
               <label className="block text-primary font-semibold text-sm mb-2">
                 Full Name <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <FaUser className="absolute left-5 top-1/2 -translate-y-1/2 text-primary-300 w-5 h-5" />
+                <FaUser className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 text-primary-300 w-4 h-4 md:w-5 md:h-5" />
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Your full name"
-                  className={`w-full pl-14 pr-5 py-4 bg-primary-5 border-2 border-primary-10 rounded-2xl text-primary focus:border-gold focus:ring-4 focus:ring-gold/10 outline-none transition-all ${errors.name ? 'border-red-500 focus:ring-red-500' : ''}`}
+                  className={`w-full pl-12 md:pl-14 pr-4 md:pr-5 py-3 md:py-4 bg-primary-5 border-2 border-primary-10 rounded-2xl text-primary focus:border-gold focus:ring-4 focus:ring-gold/10 outline-none transition-all ${errors.name ? 'border-red-500 focus:ring-red-500' : ''}`}
                 />
               </div>
               {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
@@ -126,34 +126,34 @@ const ContactForm = () => {
                 Email Address <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <FaEnvelope className="absolute left-5 top-1/2 -translate-y-1/2 text-primary-300 w-5 h-5" />
+                <FaEnvelope className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 text-primary-300 w-4 h-4 md:w-5 md:h-5" />
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="your@email.com"
-                  className={`w-full pl-14 pr-5 py-4 bg-primary-5 border-2 border-primary-10 rounded-2xl text-primary focus:border-gold focus:ring-4 focus:ring-gold/10 outline-none transition-all ${errors.email ? 'border-red-500 focus:ring-red-500' : ''}`}
+                  className={`w-full pl-12 md:pl-14 pr-4 md:pr-5 py-3 md:py-4 bg-primary-5 border-2 border-primary-10 rounded-2xl text-primary focus:border-gold focus:ring-4 focus:ring-gold/10 outline-none transition-all ${errors.email ? 'border-red-500 focus:ring-red-500' : ''}`}
                 />
               </div>
               {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 gap-4 md:gap-5 sm:grid-cols-2">
             <div>
               <label className="block text-primary font-semibold text-sm mb-2">
                 Phone Number
               </label>
               <div className="relative">
-                <FaPhone className="absolute left-5 top-1/2 -translate-y-1/2 text-primary-300 w-5 h-5" />
+                <FaPhone className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 text-primary-300 w-4 h-4 md:w-5 md:h-5" />
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="+92-300-1234567"
-                  className={`w-full pl-14 pr-5 py-4 bg-primary-5 border-2 border-primary-10 rounded-2xl text-primary focus:border-gold focus:ring-4 focus:ring-gold/10 outline-none transition-all ${errors.phone ? 'border-red-500 focus:ring-red-500' : ''}`}
+                  className={`w-full pl-12 md:pl-14 pr-4 md:pr-5 py-3 md:py-4 bg-primary-5 border-2 border-primary-10 rounded-2xl text-primary focus:border-gold focus:ring-4 focus:ring-gold/10 outline-none transition-all ${errors.phone ? 'border-red-500 focus:ring-red-500' : ''}`}
                 />
               </div>
               {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
@@ -164,14 +164,14 @@ const ContactForm = () => {
                 Subject <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <FaComment className="absolute left-5 top-1/2 -translate-y-1/2 text-primary-300 w-5 h-5" />
+                <FaComment className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 text-primary-300 w-4 h-4 md:w-5 md:h-5" />
                 <input
                   type="text"
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
                   placeholder="How can we help?"
-                  className={`w-full pl-14 pr-5 py-4 bg-primary-5 border-2 border-primary-10 rounded-2xl text-primary focus:border-gold focus:ring-4 focus:ring-gold/10 outline-none transition-all ${errors.subject ? 'border-red-500 focus:ring-red-500' : ''}`}
+                  className={`w-full pl-12 md:pl-14 pr-4 md:pr-5 py-3 md:py-4 bg-primary-5 border-2 border-primary-10 rounded-2xl text-primary focus:border-gold focus:ring-4 focus:ring-gold/10 outline-none transition-all ${errors.subject ? 'border-red-500 focus:ring-red-500' : ''}`}
                 />
               </div>
               {errors.subject && <p className="text-red-500 text-xs mt-1">{errors.subject}</p>}
@@ -187,8 +187,8 @@ const ContactForm = () => {
               value={formData.message}
               onChange={handleChange}
               placeholder="Tell us about your requirements..."
-              rows={5}
-              className={`w-full px-5 py-4 bg-primary-5 border-2 border-primary-10 rounded-2xl text-primary focus:border-gold focus:ring-4 focus:ring-gold/10 outline-none transition-all resize-none ${errors.message ? 'border-red-500 focus:ring-red-500' : ''}`}
+              rows={4}
+              className={`w-full px-4 md:px-5 py-3 md:py-4 bg-primary-5 border-2 border-primary-10 rounded-2xl text-primary focus:border-gold focus:ring-4 focus:ring-gold/10 outline-none transition-all resize-none ${errors.message ? 'border-red-500 focus:ring-red-500' : ''}`}
             />
             {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
           </div>
@@ -197,7 +197,7 @@ const ContactForm = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-gradient-to-r from-gold to-amber-600 hover:from-amber-600 hover:to-gold text-primary font-bold rounded-2xl transition-all hover:shadow-lg hover:shadow-gold/30 disabled:opacity-70"
+              className="w-full flex items-center justify-center gap-2 md:gap-3 px-6 py-4 md:px-8 md:py-5 bg-gradient-to-r from-gold to-amber-600 hover:from-amber-600 hover:to-gold text-primary font-bold rounded-2xl transition-all hover:shadow-lg hover:shadow-gold/30 disabled:opacity-70"
             >
               {isSubmitting ? (
                 <>
@@ -207,7 +207,7 @@ const ContactForm = () => {
               ) : (
                 <>
                   <span>Send Message</span>
-                  <FaPaperPlane className="w-5 h-5" />
+                  <FaPaperPlane className="w-4 h-4 md:w-5 md:h-5" />
                 </>
               )}
             </button>

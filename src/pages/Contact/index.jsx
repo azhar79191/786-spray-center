@@ -67,7 +67,7 @@ const Contact = () => {
           </motion.div>
 
           {/* Main Content */}
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8">
             {/* Left - Info Cards */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -77,56 +77,56 @@ const Contact = () => {
               className="space-y-6"
             >
               {/* Info Card 1 - Quick Contacts */}
-              <div className="bg-primary-90 border border-primary-70 rounded-3xl p-8">
-                <h3 className="text-2xl font-display font-bold text-white mb-6">Quick Contact</h3>
+              <div className="bg-primary-90 border border-primary-70 rounded-3xl p-6 md:p-8">
+                <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-4 md:mb-6">Quick Contact</h3>
                 <div className="space-y-4">
                   <a 
                     href={getWhatsAppLink(CONTACT.whatsapp)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition-all group"
+                    className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition-all group"
                   >
-                    <div className="w-14 h-14 bg-green-500/20 rounded-2xl flex items-center justify-center group-hover:bg-green-500 transition-all">
-                      <FaWhatsapp className="w-7 h-7 text-green-400 group-hover:text-white transition-all" />
+                    <div className="w-12 h-12 md:w-14 md:h-14 bg-green-500/20 rounded-2xl flex items-center justify-center group-hover:bg-green-500 transition-all">
+                      <FaWhatsapp className="w-5 h-5 md:w-7 md:h-7 text-green-400 group-hover:text-white transition-all" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-primary-300 text-sm">WhatsApp</p>
-                      <p className="text-white font-bold text-lg">{CONTACT.whatsapp}</p>
+                      <p className="text-primary-300 text-xs md:text-sm">WhatsApp</p>
+                      <p className="text-white font-bold text-base md:text-lg">{CONTACT.whatsapp}</p>
                     </div>
                   </a>
                   
                   <a 
                     href={getPhoneLink(CONTACT.phone)}
-                    className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition-all group"
+                    className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition-all group"
                   >
-                    <div className="w-14 h-14 bg-gold/20 rounded-2xl flex items-center justify-center group-hover:bg-gold transition-all">
-                      <FaPhone className="w-7 h-7 text-gold group-hover:text-primary transition-all" />
+                    <div className="w-12 h-12 md:w-14 md:h-14 bg-gold/20 rounded-2xl flex items-center justify-center group-hover:bg-gold transition-all">
+                      <FaPhone className="w-5 h-5 md:w-7 md:h-7 text-gold group-hover:text-primary transition-all" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-primary-300 text-sm">Phone</p>
-                      <p className="text-white font-bold text-lg">{CONTACT.phone}</p>
+                      <p className="text-primary-300 text-xs md:text-sm">Phone</p>
+                      <p className="text-white font-bold text-base md:text-lg">{CONTACT.phone}</p>
                     </div>
                   </a>
 
                   <a 
                     href={getEmailLink(CONTACT.email)}
-                    className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition-all group"
+                    className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition-all group"
                   >
-                    <div className="w-14 h-14 bg-gold/20 rounded-2xl flex items-center justify-center group-hover:bg-gold transition-all">
-                      <FaEnvelope className="w-7 h-7 text-gold group-hover:text-primary transition-all" />
+                    <div className="w-12 h-12 md:w-14 md:h-14 bg-gold/20 rounded-2xl flex items-center justify-center group-hover:bg-gold transition-all">
+                      <FaEnvelope className="w-5 h-5 md:w-7 md:h-7 text-gold group-hover:text-primary transition-all" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-primary-300 text-sm">Email</p>
-                      <p className="text-white font-bold text-lg">{CONTACT.email}</p>
+                      <p className="text-primary-300 text-xs md:text-sm">Email</p>
+                      <p className="text-white font-bold text-base md:text-lg">{CONTACT.email}</p>
                     </div>
                   </a>
                 </div>
               </div>
 
               {/* Info Card 2 - Features */}
-              <div className="bg-primary-90 border border-primary-70 rounded-3xl p-8">
-                <h3 className="text-2xl font-display font-bold text-white mb-6">Why Choose Us?</h3>
-                <div className="grid grid-cols-2 gap-4">
+              <div className="bg-primary-90 border border-primary-70 rounded-3xl p-6 md:p-8">
+                <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-4 md:mb-6">Why Choose Us?</h3>
+                <div className="grid grid-cols-2 gap-3 md:gap-4">
                   {features.map((feature, index) => (
                     <motion.div
                       key={index}
@@ -134,13 +134,13 @@ const Contact = () => {
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: index * 0.1 }}
-                      className="p-5 bg-white/5 rounded-2xl"
+                      className="p-4 md:p-5 bg-white/5 rounded-2xl"
                     >
-                      <div className="w-12 h-12 bg-gold/20 rounded-xl flex items-center justify-center mb-4">
-                        <feature.icon className="w-6 h-6 text-gold" />
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-gold/20 rounded-xl flex items-center justify-center mb-3 md:mb-4">
+                        <feature.icon className="w-5 h-5 md:w-6 md:h-6 text-gold" />
                       </div>
-                      <h4 className="font-bold text-white mb-1">{feature.title}</h4>
-                      <p className="text-primary-300 text-sm">{feature.desc}</p>
+                      <h4 className="font-bold text-white mb-1 text-sm md:text-base">{feature.title}</h4>
+                      <p className="text-primary-300 text-xs md:text-sm">{feature.desc}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -153,19 +153,19 @@ const Contact = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-16"
+              className="space-y-6 md:space-y-16"
             >
               <ContactForm />
               
               {/* Info Card 3 - Address (moved from left) */}
-              <div className="bg-gold/10 border border-gold/20 rounded-3xl p-8 ">
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 bg-gold/20 rounded-2xl flex items-center justify-center flex-shrink-0">
-                    <FaEnvelope className="w-7 h-7 text-gold" />
+              <div className="bg-gold/10 border border-gold/20 rounded-3xl p-6 md:p-8">
+                <div className="flex items-start gap-3 md:gap-4">
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-gold/20 rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <FaEnvelope className="w-5 h-5 md:w-7 md:h-7 text-gold" />
                   </div>
                   <div>
-                    <p className="text-primary-300 text-sm mb-1">Visit Us At</p>
-                    <p className="text-white font-bold text-lg leading-relaxed">{CONTACT.address}</p>
+                    <p className="text-primary-300 text-xs md:text-sm mb-1">Visit Us At</p>
+                    <p className="text-white font-bold text-base md:text-lg leading-relaxed">{CONTACT.address}</p>
                   </div>
                 </div>
               </div>
