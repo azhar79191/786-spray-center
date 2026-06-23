@@ -47,7 +47,7 @@ export const useTestimonials = (initialFilters = {}) => {
 
   return {
     testimonials,
-    loading: dataContext.loading,
+    loading: dataContext.loading || dataContext.secondaryLoading,
     error: dataContext.error,
     filters,
     updateFilters,

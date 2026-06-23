@@ -47,7 +47,7 @@ export const useGallery = (initialFilters = {}) => {
 
   return {
     galleryImages,
-    loading: dataContext.loading,
+    loading: dataContext.loading || dataContext.secondaryLoading,
     error: dataContext.error,
     filters,
     updateFilters,

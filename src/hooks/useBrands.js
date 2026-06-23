@@ -71,7 +71,7 @@ export const useBrands = (initialFilters = {}) => {
   return {
     brands,
     featuredBrands,
-    loading: dataContext.loading,
+    loading: dataContext.loading || dataContext.secondaryLoading,
     error: dataContext.error,
     filters,
     updateFilters,

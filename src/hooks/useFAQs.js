@@ -77,7 +77,7 @@ export const useFAQs = (initialFilters = {}) => {
     faqs,
     faqsByCategory,
     categories,
-    loading: dataContext.loading,
+    loading: dataContext.loading || dataContext.secondaryLoading,
     error: dataContext.error,
     filters,
     updateFilters,

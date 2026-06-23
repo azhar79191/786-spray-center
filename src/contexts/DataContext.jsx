@@ -38,6 +38,7 @@ export const DataProvider = ({ children }) => {
     faqs: [], faqCategories: [], testimonials: [],
   })
   const [loading, setLoading] = useState(true)
+  const [secondaryLoading, setSecondaryLoading] = useState(true)
   const [error, setError] = useState(null)
   const [isPreloaded, setIsPreloaded] = useState(false)
   const isMountedRef = useRef(false)
@@ -45,6 +46,7 @@ export const DataProvider = ({ children }) => {
 
   const preloadData = useCallback(async () => {
     setLoading(true)
+    setSecondaryLoading(true)
     setError(null)
     try {
       // Critical first — serve from cache instantly if available, else fetch
@@ -86,6 +88,7 @@ export const DataProvider = ({ children }) => {
             faqCategories: faqCategoriesRes.status === 'fulfilled' ? faqCategoriesRes.value.data.data || [] : [],
             testimonials:  testimonialsRes.status === 'fulfilled' ? testimonialsRes.value.data.data || [] : [],
           }))
+          setSecondaryLoading(false)
         })
       }, 800)
     } catch (err) {
@@ -93,6 +96,7 @@ export const DataProvider = ({ children }) => {
       if (isMountedRef.current) {
         setError(err.message)
         setLoading(false)
+        setSecondaryLoading(false)
       }
     }
   }, [])
@@ -178,7 +182,7 @@ export const DataProvider = ({ children }) => {
 
   return (
     <DataContext.Provider value={{
-      ...data, loading, error, isPreloaded,
+      ...data, loading, secondaryLoading, error, isPreloaded,
       preloadData, refreshData, invalidateAndRefresh,
       clearCache: clearCacheCtx,
       getProductById, getRelatedProducts, searchProducts, filterProducts,

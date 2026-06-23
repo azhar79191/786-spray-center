@@ -3,7 +3,6 @@ import Navbar from '../components/layout/Navbar'
 import Footer from '../components/layout/Footer'
 import MobileBottomNav from '../components/layout/MobileBottomNav'
 import WhatsAppButton from '../components/common/WhatsAppButton'
-import ScrollToTopButton from '../components/common/ScrollToTopButton'
 
 /**
  * Main layout wrapper
@@ -20,7 +19,6 @@ const MainLayout = () => {
       <Footer />
       <MobileBottomNav />
       <WhatsAppButton />
-      <ScrollToTopButton />
     </div>
   )
 }
