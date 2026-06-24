@@ -15,7 +15,15 @@
     </filter>
   </defs>
 
+  <!-- Extra padding for maskable icons to prevent cut-off -->
   <circle cx="256" cy="256" r="256" fill="url(#bgGrad)"/>
-  <circle cx="256" cy="256" r="210" fill="none" stroke="url(#goldGrad)" stroke-width="14" opacity="1"/>
-  <text x="256" y="292" font-family="Georgia, 'Times New Roman', serif" font-size="200" font-weight="800" fill="url(#goldGrad)" text-anchor="middle" dominant-baseline="middle" filter="url(#glow)">B</text>
+  <circle cx="256" cy="256" r="195" fill="none" stroke="url(#goldGrad)" stroke-width="13" opacity="1"/>
+  <text x="256" y="292"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="185"
+        font-weight="800"
+        fill="url(#goldGrad)"
+        text-anchor="middle"
+        dominant-baseline="middle"
+        filter="url(#glow)">B</text>
 </svg>
