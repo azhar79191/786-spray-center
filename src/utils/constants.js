@@ -16,8 +16,8 @@ export const CONTACT = {
 
 // Social media links
 export const SOCIAL = {
-  facebook: 'https://facebook.com/bismillahspraycenter',
-  instagram: 'https://instagram.com/bismillahspraycenter',
+  facebook: 'https://www.facebook.com/profile.php?id=100012235385727',
+  instagram: 'https://www.instagram.com/muhammadzafarwattoo/',
   youtube: 'https://youtube.com/bismillahspraycenter',
 }
 
@@ -39,9 +39,6 @@ export const CATEGORIES = [
 
 // Brand partners
 export const BRANDS = [
-  { name: 'Syngenta', country: 'Switzerland', logo: 'Syngenta' },
-  { name: 'Bayer', country: 'Germany', logo: 'Bayer' },
-  { name: 'FMC', country: 'USA', logo: 'FMC' },
   { name: 'Engro', country: 'Pakistan', logo: 'Engro' },
   { name: 'Warble', country: 'Pakistan', logo: 'Fauji' },
   { name: 'Agrow Mark', country: 'USA', logo: 'Pioneer' },

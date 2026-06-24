@@ -72,8 +72,8 @@ export const localBusinessSchema = {
     }
   ],
   "sameAs": [
-    "https://www.facebook.com/bismillahspraycenter",
-    "https://www.instagram.com/bismillahspraycenter",
+    "https://www.facebook.com/profile.php?id=100012235385727",
+    "https://www.instagram.com/muhammadzafarwattoo/",
     "https://wa.me/923001331616"
   ],
   "hasOfferCatalog": {
@@ -139,8 +139,8 @@ export const organizationSchema = {
     "addressCountry": "PK"
   },
   "sameAs": [
-    "https://www.facebook.com/bismillahspraycenter",
-    "https://www.instagram.com/bismillahspraycenter"
+    "https://www.facebook.com/profile.php?id=100012235385727",
+    "https://www.instagram.com/muhammadzafarwattoo/"
   ]
 };
 

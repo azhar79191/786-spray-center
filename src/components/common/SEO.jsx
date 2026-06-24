@@ -152,8 +152,8 @@ const SEO = ({
             "geoRadius": "50000"
           },
           "sameAs": [
-            "https://facebook.com/bismillahspraycenter",
-            "https://instagram.com/bismillahspraycenter"
+            "https://www.facebook.com/profile.php?id=100012235385727",
+            "https://www.instagram.com/muhammadzafarwattoo/"
           ]
         })}
       </script>

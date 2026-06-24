@@ -15,6 +15,8 @@ const Services = lazy(() => import('../pages/Services'))
 const Brands = lazy(() => import('../pages/Brands'))
 const Gallery = lazy(() => import('../pages/Gallery'))
 const Contact = lazy(() => import('../pages/Contact'))
+const PrivacyPolicy = lazy(() => import('../pages/PrivacyPolicy'))
+const TermsAndConditions = lazy(() => import('../pages/Terms'))
 const NotFound = lazy(() => import('../pages/NotFound/NotFound'))
 
 // Lazy load admin pages
@@ -49,6 +51,8 @@ const AppRoutes = () => {
         <Route path="/brands" element={<Suspense fallback={<LoadingScreen />}><PageTransition><Brands /></PageTransition></Suspense>} />
         <Route path="/gallery" element={<Suspense fallback={<LoadingScreen />}><PageTransition><Gallery /></PageTransition></Suspense>} />
         <Route path="/contact" element={<Suspense fallback={<LoadingScreen />}><PageTransition><Contact /></PageTransition></Suspense>} />
+        <Route path="/privacy-policy" element={<Suspense fallback={<LoadingScreen />}><PageTransition><PrivacyPolicy /></PageTransition></Suspense>} />
+        <Route path="/terms-and-conditions" element={<Suspense fallback={<LoadingScreen />}><PageTransition><TermsAndConditions /></PageTransition></Suspense>} />
       </Route>
 
       {/* Admin Login (No Layout) */}

@@ -132,14 +132,14 @@ const ProductCard = memo(({ product, index = 0 }) => {
         </div>
 
         {/* Content */}
-        <div className="p-5">
+        <div className="p-4 md:p-5">
           <p className="text-gold text-xs font-semibold tracking-wider uppercase mb-1">
             {product.brand}
           </p>
-          <h3 className="text-primary font-display font-bold text-lg mb-2 line-clamp-1 group-hover:text-gold transition-colors">
+          <h3 className="text-primary font-display font-bold text-lg md:text-xl mb-2 line-clamp-1 group-hover:text-gold transition-colors">
             {product.name}
           </h3>
-          <p className="text-primary-300 text-sm mb-4 line-clamp-2">
+          <p className="text-primary-300 text-sm md:text-base mb-4 line-clamp-2">
             {product.description}
           </p>
 
@@ -161,10 +161,10 @@ const ProductCard = memo(({ product, index = 0 }) => {
           <div className="flex items-center justify-between pt-3 border-t border-primary-600">
             <div>
               <p className="text-primary-300 text-xs">Starting from</p>
-              <p className="text-gold font-bold text-lg">{formatPrice(minPrice)}</p>
+              <p className="text-gold font-bold text-lg md:text-xl">{formatPrice(minPrice)}</p>
             </div>
-            <span className="btn-primary text-sm py-2 px-4 inline-flex items-center">
-              <FaEye className="w-4 h-4 mr-2" />
+            <span className="btn-primary text-xs md:text-sm py-2 px-3 md:px-4 inline-flex items-center">
+              <FaEye className="w-3 h-3 md:w-4 md:h-4 mr-2" />
               View
             </span>
           </div>

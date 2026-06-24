@@ -131,8 +131,8 @@ export const organizationSchema = {
     "longitude": "73.515619"
   },
   "sameAs": [
-    "https://www.facebook.com/bismillahspraycenter",
-    "https://www.instagram.com/bismillahspraycenter",
+    "https://www.facebook.com/profile.php?id=100012235385727",
+    "https://www.instagram.com/muhammadzafarwattoo/",
     "https://wa.me/923001331616"
   ]
 }

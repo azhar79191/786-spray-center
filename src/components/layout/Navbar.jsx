@@ -110,7 +110,7 @@ const Navbar = () => {
                 to="/contact"
                 className="btn-primary text-sm"
               >
-                Get a Quote
+                Contact Us
               </Link>
             </div>
           </div>
