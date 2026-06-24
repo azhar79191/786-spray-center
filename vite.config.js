@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'favicon-*.png', 'apple-touch-icon.png', 'og-image.png', 'robots.txt', 'sitemap.xml'],
+      includeAssets: ['favicon.svg', 'favicon-*.png', 'apple-touch-icon.png', 'og-image.png', 'robots.txt', 'sitemap.xml', 'icon-*.png'],
       manifest: {
         name: 'Bismillah Spray Center',
         short_name: 'Bismillah SC',
